@@ -52,11 +52,8 @@ fi
 
 echo "---Prepare Server---"
 if [ ! -f ${DATA_DIR}/.steam/sdk32/steamclient.so ]; then
-	if [ ! -d ${DATA_DIR}/.steam ]; then
-    	mkdir ${DATA_DIR}/.steam
-    fi
 	if [ ! -d ${DATA_DIR}/.steam/sdk32 ]; then
-    	mkdir ${DATA_DIR}/.steam/sdk32
+    	mkdir -p ${DATA_DIR}/.steam/sdk32
     fi
     cp -R ${STEAMCMD_DIR}/linux32/* ${DATA_DIR}/.steam/sdk32/
 fi
