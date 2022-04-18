@@ -2,10 +2,9 @@ FROM ich777/debian-baseimage
 
 LABEL maintainer="admin@minenet.at"
 
-RUN echo "deb http://deb.debian.org/debian/ jessie main" >> /etc/apt/sources.list && \
-	dpkg --add-architecture i386 && \
+RUN dpkg --add-architecture i386 && \
 	apt-get update && \
-	apt-get -y install --no-install-recommends lib32z1 libncurses5:i386 libbz2-1.0:i386 lib32gcc-s1 lib32stdc++6 libtinfo5:i386 libcurl4-gnutls-dev:i386 libssl1.0.0:i386 && \
+	apt-get -y install --no-install-recommends lib32z1 libncurses5:i386 libbz2-1.0:i386 lib32gcc-s1 lib32stdc++6 libtinfo5:i386 libcurl4-gnutls-dev:i386 libssl1.1:i386 && \
 	rm -rf /var/lib/apt/lists/*
 
 ENV DATA_DIR="/serverdata"
