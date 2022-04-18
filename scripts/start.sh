@@ -19,11 +19,12 @@ else
     echo "---No optional script found, continuing---"
 fi
 
-echo "---Starting...---"
+echo "---Taking ownership of data...---"
 chown -R root:${GID} /opt/scripts
 chmod -R 750 /opt/scripts
 chown -R ${UID}:${GID} ${DATA_DIR}
 
+echo "---Starting...---"
 term_handler() {
 	kill -SIGINT $(pgrep TheForestDedica)
 	tail --pid=$(pgrep TheForestDedica) -f 2>/dev/null
