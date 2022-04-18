@@ -2,8 +2,7 @@ FROM ich777/winehq-baseimage
 
 LABEL maintainer="admin@minenet.at"
 
-RUN rm -R /etc/apt/sources.list.d/wine-obs.list && \
-	apt-get update && \
+RUN apt-get update && \
 	apt-get -y install lib32gcc-s1 winbind xvfb screen && \
 	rm -rf /var/lib/apt/lists/*
 
