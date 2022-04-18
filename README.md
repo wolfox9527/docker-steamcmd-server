@@ -1,5 +1,9 @@
 # SteamCMD in Docker optimized for Unraid
-This Docker will download and install SteamCMD. It will also install Counter-Strike: Source and run it. Update Notice: Simply restart the container if a newer version of the game is available.
+This Docker will download and install SteamCMD. It will also install Day of Defeat: Source and run it.
+
+**PASSWORD:** The initial password is 'Docker', if you want to change or delete the password edit the file 'server.cfg'.
+
+**Update Notice:** Simply restart the container if a newer version of the game is available.
 
 ## Env params
 | Name | Value | Example |
@@ -12,7 +16,7 @@ This Docker will download and install SteamCMD. It will also install Counter-Str
 | UID | User Identifier | 99 |
 | GID | Group Identifier | 100 |
 | GAME_PORT | Port the server will be running on | 27015 |
-| VALIDATE | Validates the game data | true |
+| VALIDATE | Validates the game data | blank |
 | USERNAME | Leave blank for anonymous login | blank |
 | PASSWRD | Leave blank for anonymous login | blank |
 
