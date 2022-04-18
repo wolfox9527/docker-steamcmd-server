@@ -24,6 +24,7 @@ chown -R root:${GID} /opt/scripts
 chmod -R 750 /opt/scripts
 chown -R ${UID}:${GID} ${DATA_DIR}
 
+echo "---Starting...---"
 term_handler() {
 	kill -SIGINT $(pidof 7DaysToDieServer.x86_64)
 	tail --pid=$(pidof 7DaysToDieServer.x86_64) -f 2>/dev/null
