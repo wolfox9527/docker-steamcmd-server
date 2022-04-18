@@ -4,7 +4,7 @@ LABEL maintainer="admin@minenet.at"
 
 RUN dpkg --add-architecture i386 && \
 	apt-get update && \
-	apt-get -y install --no-install-recommends lib32gcc1 libssl1.1:i386 libstdc++6:i386 zlib1g:i386 libxrandr2:i386 libxi6:i386 && \
+	apt-get -y install --no-install-recommends lib32gcc-s1 libssl1.1:i386 libstdc++6:i386 zlib1g:i386 libxrandr2:i386 libxi6:i386 && \
 	rm -rf /var/lib/apt/lists/*
 
 ENV DATA_DIR="/serverdata"
