@@ -25,7 +25,7 @@ This Docker will download and install SteamCMD. It will also install ATLAS and r
 ```
 docker run --name ATLAS -d \
 	-p 57550:57550/udp -p 5750-5751:5750-5751/udp -p 32330:32330/udp -p 27000:27000/udp \
-	--env 'GAME_ID=232330' \
+	--env 'GAME_ID=1006030' \
 	--env 'MAP_NAME=Ocean' \
 	--env 'EXTRA_GAME_PARAMS=-log -server -NoBattlEye' \
 	--env 'GAME_PARAMS=?ServerX=0?ServerY=0?AltSaveDirectoryName=00?MaxPlayers=50?ReservedPlayerSlots=10?QueryPort=57550?Port=5750' \
