@@ -19,11 +19,12 @@ else
     echo "---No optional script found, continuing---"
 fi
 
-echo "---Starting...---"
+echo "---Taking ownership of data...---"
 chown -R root:${GID} /opt/scripts
 chmod -R 750 /opt/scripts
 chown -R ${UID}:${GID} ${DATA_DIR}
 
+echo "---Starting...---"
 term_handler() {
 	screenpid="$(su $USER -c "screen -list | grep "Detached" | grep "Necesse" | cut -d '.' -f1")"
 	su $USER -c "screen -S Necesse -X stuff 'stop^M'" >/dev/null
