@@ -2,11 +2,11 @@ FROM ich777/debian-baseimage
 
 LABEL maintainer="admin@minenet.at"
 
-RUN wget https://packages.microsoft.com/config/ubuntu/19.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb && \
-	dpkg -i packages-microsoft-prod.deb && \
+RUN wget https://packages.microsoft.com/config/debian/11/packages-microsoft-prod.deb -O /tmp/packages-microsoft-prod.deb && \
+	cd /tmp && dpkg -i packages-microsoft-prod.deb && \
 	apt-get update && \
-	apt-get -y install --no-install-recommends lib32gcc1 screen ca-certificates apt-transport-https dotnet-runtime-3.1 && \
-	rm -rf /var/lib/apt/lists/*
+	apt-get -y install --no-install-recommends lib32gcc-s1 screen ca-certificates apt-transport-https dotnet-runtime-3.1 && \
+	rm -rf /var/lib/apt/lists/* /tmp/packages-microsoft-prod.deb
 
 ENV DATA_DIR="/serverdata"
 ENV STEAMCMD_DIR="${DATA_DIR}/steamcmd"
