@@ -19,7 +19,7 @@ else
     echo "---No optional script found, continuing---"
 fi
 
-echo "---Starting...---"
+echo "---Taking ownership of data...---"
 mkdir -p $DATA_DIR/".local/share/Arma 3" && mkdir -p $DATA_DIR/".local/share/Arma 3 - Other Profiles"
 chown -R root:${GID} /opt/scripts
 chmod -R 750 /opt/scripts
@@ -28,6 +28,7 @@ chown -R ${UID}:${GID} $DATA_DIR/.local
 chmod -R 770 ${DATA_DIR}/".local/share/Arma 3"
 chmod -R 770 ${DATA_DIR}/".local/share/Arma 3 - Other Profiles"
 
+echo "---Starting...---"
 term_handler() {
 	kill -SIGTERM "$killpid"
 	wait "$killpid" -f 2>/dev/null
