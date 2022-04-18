@@ -1,18 +1,23 @@
 # SteamCMD in Docker optimized for Unraid
-This Docker will download and install SteamCMD. It will also install Counter-Strike: Source and run it. Update Notice: Simply restart the container if a newer version of the game is available.
+This Docker will download and install SteamCMD. It will also install Colony Survival and run it.
+
+**CONSOLE:** To connect to the console open up a terminal and type in: 'docker exec -u steam -ti NAMEOFYOURCONTAINER screen -xS ColonySurvival' (without quotes),
+
+**Update Notice:** Simply restart the container if a newer version of the game is available.
 
 ## Env params
 | Name | Value | Example |
 | --- | --- | --- |
 | STEAMCMD_DIR | Folder for SteamCMD | /serverdata/steamcmd |
 | SERVER_DIR | Folder for gamefile | /serverdata/serverfiles |
-| GAME_ID | SteamID for server | 232330 |
-| GAME_NAME | SRCDS gamename | cstrike |
-| GAME_PARAMS | Values to start the server | -secure +maxplayers 32 +map de_dust2 |
+| GAME_ID | The GAME_ID that the container downloads at startup. If you want to install a static or beta version of the game change the value to: '748090 -beta YOURBRANCH' (without quotes, replace YOURBRANCH with the branch or version you want to install). | 748090 |
+| SRV_NAME | Enter you preferred servername. | Colony Survival Docker |
+| SRV_WORLDNAME | Enter your preferred world name. | ColonySurvival |
+| GAME_PARAMS | Enter your start up commands for the server (If you want a password on your server please add for example: '+server.password Docker' without quotes. In this case 'Docker' is the password. You can also enter multiple commands like: '+server.maxplayers +server.password Docker' without quotes) | +server.gameport 27016 |
+| SRV_NETTYPE | Choose between: 'LAN' -allows connecting from localhost through the ingame button | 'SteamLAN' -steam networking, does not port forward or check authentication | 'SteamOnline' -steam networking, port forwards and checks authentication | SteamOnline |
 | UID | User Identifier | 99 |
 | GID | Group Identifier | 100 |
-| GAME_PORT | Port the server will be running on | 27015 |
-| VALIDATE | Validates the game data | true |
+| VALIDATE | Validates the game data | blank |
 | USERNAME | Leave blank for anonymous login | blank |
 | PASSWRD | Leave blank for anonymous login | blank |
 
@@ -24,22 +29,22 @@ This Docker will download and install SteamCMD. It will also install Counter-Str
 
 ## Run example
 ```
-docker run --name CSSource -d \
-	-p 27015:27015 -p 27015:27015/udp \
-	--env 'GAME_ID=232330' \
-	--env 'GAME_NAME=cstrike' \
-	--env 'GAME_PORT=27015' \
-	--env 'GAME_PARAMS=-secure +maxplayers 32 +map de_dust2' \
+docker run --name ColonySurvival -d \
+	-p 27016:27016/udp \
+	--env 'GAME_ID=748090' \
+	--env 'SRV_NAME=Colony Survival Docker' \
+	--env 'SRV_WORLDNAME=Colony Survival' \
+	--env 'SRV_NETTYPE=SteamOnline' \
+	--env 'GAME_PARAMS=+server.gameport 27016' \
 	--env 'UID=99' \
 	--env 'GID=100' \
-	--volume /mnt/user/appdata/steamcmd:/serverdata/steamcmd \
-	--volume /mnt/user/appdata/cstrikesource:/serverdata/serverfiles \
-	ich777/steamcmd:latest
+	--volume /path/to/steamcmd:/serverdata/steamcmd \
+	--volume /path/to/colonysurvival:/serverdata/serverfiles \
+	ich777/steamcmd:colonysurvival
 ```
->**NOTE** port 26900 is the port for vac, in case of multiple servers make sure these are not the same
-
 
 This Docker was mainly edited for better use with Unraid, if you don't use Unraid you should definitely try it!
 
-
 This Docker is forked from mattieserver, thank you for this wonderfull Docker.
+
+### Support Thread: https://forums.unraid.net/topic/79530-support-ich777-gameserver-dockers/
