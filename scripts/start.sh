@@ -24,6 +24,7 @@ chown -R root:${GID} /opt/scripts
 chmod -R 750 /opt/scripts
 chown -R ${UID}:${GID} ${DATA_DIR}
 
+echo "---Starting...---"
 term_handler() {
 	kill -SIGINT $(pidof ShooterGameServer)
 	tail --pid=$(pidof ShooterGameServer) -f 2>/dev/null
