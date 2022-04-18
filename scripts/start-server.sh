@@ -75,10 +75,10 @@ if [ "${WORKSHOP_MAN_INST}" == "true" ]; then
 		echo "------------------------------------------------------------------------------"
 		echo "---Workshop installation set to manual please install the modfiles manually---"
 		echo "--------with this command when you opened a console for the container:--------"
-		echo "${STEAMCMD_DIR}/steamcmd.sh +login [USERNAME] +force_install_dir ${SERVER_DIR} +workshop_download_item 107410 1339410397 +quit"
+		echo "${STEAMCMD_DIR}/steamcmd.sh +force_install_dir ${SERVER_DIR} +login [USERNAME] +workshop_download_item 107410 1339410397 +quit"
 		echo
 		echo "-----or with this command when you are running the console from the host:-----"
-		echo "docker exec -u steam -ti [NAMEOFYOURCONTAINER] ${STEAMCMD_DIR}/steamcmd.sh +login [USERNAME] +force_install_dir ${SERVER_DIR} +workshop_download_item 107410 1339410397 +quit"
+		echo "docker exec -u steam -ti [NAMEOFYOURCONTAINER] ${STEAMCMD_DIR}/steamcmd.sh +force_install_dir ${SERVER_DIR} +login [USERNAME] +workshop_download_item 107410 1339410397 +quit"
 		echo
 		echo "-----------Please replace [USERNAME] with your Steam username and-------------"
 		echo "-----[NAMEOFYOURCONTAINER] with the name of your containername if you are-----"
