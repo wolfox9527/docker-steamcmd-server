@@ -22,14 +22,14 @@ if [ "${USERNAME}" == "" ]; then
     if [ "${VALIDATE}" == "true" ]; then
     	echo "---Validating installation---"
         ${STEAMCMD_DIR}/steamcmd.sh \
-        +login anonymous \
         +force_install_dir ${SERVER_DIR} \
+        +login anonymous \
         +app_update ${GAME_ID} validate \
         +quit
     else
         ${STEAMCMD_DIR}/steamcmd.sh \
-        +login anonymous \
         +force_install_dir ${SERVER_DIR} \
+        +login anonymous \
         +app_update ${GAME_ID} \
         +quit
     fi
@@ -37,14 +37,14 @@ else
     if [ "${VALIDATE}" == "true" ]; then
     	echo "---Validating installation---"
         ${STEAMCMD_DIR}/steamcmd.sh \
-        +login ${USERNAME} ${PASSWRD} \
         +force_install_dir ${SERVER_DIR} \
+        +login ${USERNAME} ${PASSWRD} \
         +app_update ${GAME_ID} validate \
         +quit
     else
         ${STEAMCMD_DIR}/steamcmd.sh \
-        +login ${USERNAME} ${PASSWRD} \
         +force_install_dir ${SERVER_DIR} \
+        +login ${USERNAME} ${PASSWRD} \
         +app_update ${GAME_ID} \
         +quit
     fi
@@ -54,4 +54,4 @@ echo "---Prepare Server---"
 chmod -R ${DATA_PERM} ${DATA_DIR}
 
 echo "---Start Server---"
-${SERVER_DIR}/srcds_run -console ${GAME_PARAMS} -port ${GAME_PORT}
+${SERVER_DIR}/srcds_run -console -port ${GAME_PORT} ${GAME_PARAMS}
