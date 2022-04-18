@@ -23,7 +23,7 @@ This Docker will download and install SteamCMD. It will also install AssettoCors
 ```
 docker run --name AssettoCorsa -d \
 	-p 9600:9600 -p 9600:9600/udp -p 8081:8081 -p 50041:50041 -p 8772:8772 \
-	--env 'GAME_ID=232330' \
+	--env 'GAME_ID=302550' \
 	--env 'USERNAME=YOURSTEAMUSER' \
 	--env 'PASSWRD=YOURSTEAMPASSWORD' \
 	--env 'UID=99' \
