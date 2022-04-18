@@ -4,7 +4,7 @@ LABEL maintainer="admin@minenet.at"
 
 RUN rm -R /etc/apt/sources.list.d/wine-obs.list && \
 	apt-get update && \
-	apt-get -y install lib32gcc1 winbind xvfb screen && \
+	apt-get -y install lib32gcc-s1 winbind xvfb screen && \
 	rm -rf /var/lib/apt/lists/*
 
 ENV DATA_DIR="/serverdata"
