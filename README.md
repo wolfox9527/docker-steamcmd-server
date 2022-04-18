@@ -20,7 +20,6 @@ This Docker will download and install SteamCMD. It will also install RUST and ru
 | USERNAME | Leave blank for anonymous login | blank |
 | PASSWRD | Leave blank for anonymous login | blank |
 
-
 ## Run example
 ```
 docker run --name RUST -d \
@@ -38,7 +37,6 @@ docker run --name RUST -d \
 ```
 
 This Docker was mainly edited for better use with Unraid, if you don't use Unraid you should definitely try it!
-
 
 This Docker is forked from mattieserver, thank you for this wonderfull Docker.
 
