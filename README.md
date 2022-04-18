@@ -18,13 +18,7 @@ This Docker will download and install SteamCMD and the according game that is pu
 | USERNAME | Leave blank for anonymous login | blank |
 | PASSWRD | Leave blank for anonymous login | blank |
 
-**ATTENTION: You have to disable Steam Guard for games that require authentication, but not all games need Steam credentials, Steam recommends to create a seperate account for dedicated servers **
-
->**NOTE** GAME_ID values can be found [here](https://developer.valvesoftware.com/wiki/Dedicated_Servers_List)
-
-> And for GAME_NAME there is no list, so a quick search should give you the result
-
-## Run example for CS:Source
+## Run example
 ```
 docker run --name CSSource -d \
 	-p 27015:27015 -p 27015:27015/udp \
@@ -34,17 +28,13 @@ docker run --name CSSource -d \
 	--env 'GAME_PARAMS=-secure +maxplayers 32 +map de_dust2' \
 	--env 'UID=99' \
 	--env 'GID=100' \
-	--volume /mnt/user/appdata/steamcmd:/serverdata/steamcmd \
-	--volume /mnt/user/appdata/cstrikesource:/serverdata/serverfiles \
+	--volume /path/to/steamcmd:/serverdata/steamcmd \
+	--volume /path/to/cstrikesource:/serverdata/serverfiles \
 	ich777/steamcmd:latest
 ```
->**NOTE** port 26900 is the port for vac, in case of multiple servers make sure these are not the same
-
 
 This Docker was mainly edited for better use with Unraid, if you don't use Unraid you should definitely try it!
 
-
 This Docker is forked from mattieserver, thank you for this wonderfull Docker.
-
 
 #### Support Thread: https://forums.unraid.net/topic/79530-support-ich777-gameserver-dockers/
