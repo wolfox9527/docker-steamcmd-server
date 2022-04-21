@@ -65,6 +65,9 @@ else
     echo "---'serversettings.xml' found..."
 fi
 echo "---Checking if everything is in place---"
+if [ ! -d "${SERVER_DIR}/.local/share/Daedalic Entertainment GmbH/Barotrauma/WorkshopMods/Installed" ]; then
+    mkdir -p "${SERVER_DIR}/.local/share/Daedalic Entertainment GmbH/Barotrauma/WorkshopMods/Installed"
+fi
 if [ ! -f ${DATA_DIR}/.steam/sdk64/steamclient.so ]; then
 	echo "---Correcting errors---"
 	if [ ! -d ${DATA_DIR}/.steam/sdk64 ]; then
