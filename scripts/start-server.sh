@@ -68,12 +68,12 @@ echo "---Checking if everything is in place---"
 if [ ! -d "${SERVER_DIR}/.local/share/Daedalic Entertainment GmbH/Barotrauma/WorkshopMods/Installed" ]; then
     mkdir -p "${SERVER_DIR}/.local/share/Daedalic Entertainment GmbH/Barotrauma/WorkshopMods/Installed"
 fi
-if [ ! -f ${DATA_DIR}/.steam/sdk64/steamclient.so ]; then
+if [ ! -f ${SERVER_DIR}/.steam/sdk64/steamclient.so ]; then
 	echo "---Correcting errors---"
-	if [ ! -d ${DATA_DIR}/.steam/sdk64 ]; then
-		mkdir -p ${DATA_DIR}/.steam/sdk64
+	if [ ! -d ${SERVER_DIR}/.steam/sdk64 ]; then
+		mkdir -p ${SERVER_DIR}/.steam/sdk64
 	fi
-	cp ${STEAMCMD_DIR}/linux64/steamclient.so ${DATA_DIR}/.steam/sdk64/
+	cp ${STEAMCMD_DIR}/linux64/steamclient.so ${SERVER_DIR}/.steam/sdk64/
 	if [ ! -f ${STEAMCMD_DIR}/linux64/steamclient.so ]; then
 		echo "---Something went wrong, can't copy 'steamclient.so' putting server into sleep mode---"
 		sleep infinity
