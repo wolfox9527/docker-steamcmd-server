@@ -5,7 +5,7 @@ LABEL org.opencontainers.image.source="https://github.com/ich777/docker-steamcmd
 
 RUN dpkg --add-architecture i386 && \
 	apt-get update && \
-	apt-get -y install --no-install-recommends lib32gcc-s1 lib32stdc++6 libcurl4-gnutls-dev:i386 screen && \
+	apt-get -y install --no-install-recommends lib32gcc-s1 lib32stdc++6 libcurl4-gnutls-dev:i386 libcurl4-gnutls-dev screen && \
 	rm -rf /var/lib/apt/lists/*
 
 ENV DATA_DIR="/serverdata"
@@ -14,6 +14,7 @@ ENV SERVER_DIR="${DATA_DIR}/serverfiles"
 ENV GAME_ID="template"
 ENV GAME_NAME="template"
 ENV GAME_PARAMS="template"
+ENV FORCE_X64="true"
 ENV GAME_PORT=27015
 ENV CAVES=""
 ENV VALIDATE=""
