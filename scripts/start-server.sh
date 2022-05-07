@@ -53,6 +53,7 @@ fi
 echo "---Prepare Server---"
 if [ "${FORCE_X64}" == "true" ]; then
   X64_MODE="_x64"
+  X64_PATH="64"
 fi
 if [ ! -f ${DATA_DIR}/.klei/DoNotStarveTogether/Cluster_1/cluster_token.txt ]; then
     echo "---No cluster_token.txt found, downloading template, please create your own to run the server!!!...---"
@@ -155,9 +156,9 @@ if [ "${CAVES}" == "true" ]; then
     find $SERVER_DIR -name "masterLog.*" -exec rm -f {} \;
     find $SERVER_DIR -name "cavesLog.*" -exec rm -f {} \;
     echo "---Start Server---"
-    cd ${SERVER_DIR}/bin${X64_MODE#_*}
-    screen -S Master -L -Logfile $SERVER_DIR/masterLog.0 -d -m ${SERVER_DIR}/bin${X64_MODE#_*}/dontstarve_dedicated_server_nullrenderer${X64_MODE} -shard Master
-    screen -S Caves -L -Logfile $SERVER_DIR/cavesLog.0 -d -m ${SERVER_DIR}/bin${X64_MODE#_*}/dontstarve_dedicated_server_nullrenderer${X64_MODE} -shard Caves
+    cd ${SERVER_DIR}/bin${X64_PATH}
+    screen -S Master -L -Logfile $SERVER_DIR/masterLog.0 -d -m ${SERVER_DIR}/bin${X64_PATH}/dontstarve_dedicated_server_nullrenderer${X64_MODE} -shard Master
+    screen -S Caves -L -Logfile $SERVER_DIR/cavesLog.0 -d -m ${SERVER_DIR}/bin${X64_PATH}/dontstarve_dedicated_server_nullrenderer${X64_MODE} -shard Caves
     sleep 2
     screen -S watchdog -d -m /opt/scripts/start-watchdog.sh
     tail -f ${SERVER_DIR}/masterLog.0 ${SERVER_DIR}/cavesLog.0
@@ -166,5 +167,5 @@ else
     find $SERVER_DIR -name "cavesLog.*" -exec rm -f {} \;
     echo "---Start Server---"
     cd ${SERVER_DIR}/bin${X64_MODE#_*}
-    ${SERVER_DIR}/bin${X64_MODE#_*}/dontstarve_dedicated_server_nullrenderer${X64_MODE} -shard Master
+    ${SERVER_DIR}/bin${X64_PATH}/dontstarve_dedicated_server_nullrenderer${X64_MODE} -shard Master
 fi
