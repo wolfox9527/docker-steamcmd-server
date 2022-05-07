@@ -26,7 +26,11 @@ chown -R ${UID}:${GID} ${DATA_DIR}
 
 echo "---Starting...---"
 term_handler() {
-	kill -SIGTERM $(pidof dontstarve_dedicated_server_nullrenderer)
+	if [ "${FORCE_X64}" == "true" ]; then
+		kill -SIGTERM $(pidof dontstarve_dedicated_server_nullrenderer_x64)
+	else
+		kill -SIGTERM $(pidof dontstarve_dedicated_server_nullrenderer)
+	fi
 	wait "$killpid" -f 2>/dev/null
 	exit 143;
 }
