@@ -1,8 +1,8 @@
 #!/bin/bash
 if [ "${FORCE_X64}" == "true" ]; then
-  killpid="$(pidof dontstarve_dedicated_server_nullrenderer)"
-else
   killpid="$(pidof dontstarve_dedicated_server_nullrenderer_x64)"
+else
+  killpid="$(pidof dontstarve_dedicated_server_nullrenderer)"
 fi
 while true
 do
