@@ -82,5 +82,5 @@ screen -S watchdog -d -m /opt/scripts/start-watchdog.sh
 while [ ! -f ${SERVER_DIR}/GameID.txt ]; do
         sleep 1
 done
-echo "Server Game ID: $(cat ${SERVER_DIR}/GameID.txt)"
+echo "Server Game ID: $(cat ${SERVER_DIR}/GameID.txt 2 >/dev/null)"
 sleep infinity
