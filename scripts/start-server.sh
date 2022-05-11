@@ -79,5 +79,8 @@ fi
 ${SERVER_DIR}/CoreKeeperServer -batchmode -logfile ${SERVER_DIR}/CoreKeeperServerLog.txt -world ${WORLD_INDEX} -worldname "${WORLD_NAME}" -datapath "${SERVER_DIR}/Save" ${GAME_PARAMS} 2 >/dev/null &
 sleep 2
 screen -S watchdog -d -m /opt/scripts/start-watchdog.sh
+while [ ! -f ${SERVER_DIR}/GameID.txt ]; do
+        sleep 1
+done
 echo "Server Game ID: $(cat ${SERVER_DIR}/GameID.txt)"
 sleep infinity
