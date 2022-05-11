@@ -3,6 +3,6 @@ killpid="$(pidof CoreKeeperServer)"
 while true
 do
 	tail --pid=$killpid -f /dev/null
-	kill "$(pidof tail)"
+	kill $(pidof sleep)
 exit 0
 done
