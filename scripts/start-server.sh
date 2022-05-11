@@ -74,4 +74,11 @@ sleep 3
 echo "---Start Server---"
 export DISPLAY=:99
 cd ${SERVER_DIR}
+if [ -f ${SERVER_DIR}/GameID.txt ]; then
+  rm -f ${SERVER_DIR}/GameID.txt
+fi
 ${SERVER_DIR}/CoreKeeperServer -batchmode -logfile ${SERVER_DIR}/CoreKeeperServerLog.txt -world ${WORLD_INDEX} -worldname "${WORLD_NAME}" -datapath "${SERVER_DIR}/Save" ${GAME_PARAMS}
+sleep 2
+screen -S watchdog -d -m /opt/scripts/start-watchdog.sh
+echo "Server Game ID: $(cat ${SERVER_DIR}/GameID.txt)"
+sleep infinity
