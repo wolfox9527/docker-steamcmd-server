@@ -66,7 +66,7 @@ if [ -f ${SERVER_DIR}/steamclient.so ]; then
   rm ${SERVER_DIR}/steamclient.so
 fi
 echo "---Server ready---"
-
+sleep infinity
 echo "---Starting Xvfb server---"
 screen -S Xvfb -L -Logfile ${SERVER_DIR}/XvfbLog.0 -d -m /opt/scripts/start-Xvfb.sh
 sleep 3
