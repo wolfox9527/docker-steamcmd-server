@@ -7,7 +7,7 @@ This Docker will download and install SteamCMD. It will also install CoreKeeper 
 
 Update Notice: Simply restart the container if a newer version of the game is available.
 
-## Example Env params for CS:Source
+## Example Env params
 | Name | Value | Example |
 | --- | --- | --- |
 | STEAMCMD_DIR | Folder for SteamCMD | /serverdata/steamcmd |
