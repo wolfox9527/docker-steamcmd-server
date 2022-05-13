@@ -65,6 +65,9 @@ else
     sleep 5
 fi
 
+echo "---Container under construction!---"
+sleep infinity
+
 echo "---Prepare Server---"
 echo "---Searching for grid files...---"
 if [ ! -f ${SERVER_DIR}/ShooterGame/ServerGrid.jpg ]; then
