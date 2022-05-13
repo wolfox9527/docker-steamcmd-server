@@ -5,7 +5,11 @@ LABEL org.opencontainers.image.source="https://github.com/ich777/docker-steamcmd
 
 RUN dpkg --add-architecture i386 && \
 	apt-get update && \
-	apt-get -y install --no-install-recommends lib32gcc-s1 perl-modules curl lsof libc6-i386 bzip2 jq redis-server screen && \
+	apt-get -y install --no-install-recommends lib32gcc-s1 perl-modules curl lsof libc6-i386 bzip2 jq redis-server screen libidn11 && \
+	cd /tmp && \
+	wget -q -nc --show-progress --progress=bar:force:noscroll http://ftp.fr.debian.org/debian/pool/main/p/protobuf/libprotobuf10_3.0.0-9_amd64.deb && \
+	dpkg -i /tmp/libprotobuf10_3.0.0-9_amd64.deb && \
+	rm /tmp/libprotobuf10_3.0.0-9_amd64.deb && \
 	rm -rf /var/lib/apt/lists/*
 
 ENV DATA_DIR="/serverdata"
