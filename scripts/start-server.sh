@@ -55,4 +55,4 @@ chmod -R ${DATA_PERM} ${DATA_DIR}
 
 echo "---Start Server---"
 cd ${SERVER_DIR}/Insurgency/Binaries/Linux
-${SERVER_DIR}/Insurgency/Binaries/Linux/InsurgencyServer-Linux-Shipping -Port=${GAME_PORT} -QueryPort=${QUERY_PORT} -log -hostname=${SERVER_NAME} ${GAME_PARAMS}
+${SERVER_DIR}/Insurgency/Binaries/Linux/InsurgencyServer-Linux-Shipping ${GAME_PARAMS} -Port=${GAME_PORT} -QueryPort=${QUERY_PORT} -log -hostname=${SERVER_NAME}
