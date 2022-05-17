@@ -57,6 +57,9 @@ if [ ! -f ${DATA_DIR}/.steam/sdk64/steamclient.so ]; then
     fi
     cp -R ${STEAMCMD_DIR}/linux64/* ${DATA_DIR}/.steam/sdk64/
 fi
+if $(! grep "903950" ${SERVER_DIR}/Mist/Binaries/Linux/steam_appid.txt >/dev/null 2>&1) ; then
+  echo "903950" > ${SERVER_DIR}/Mist/Binaries/Linux/steam_appid.txt
+fi
 chmod -R ${DATA_PERM} ${DATA_DIR}
 echo "---Server ready---"
 
