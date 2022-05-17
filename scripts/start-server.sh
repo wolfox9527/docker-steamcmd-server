@@ -64,5 +64,5 @@ echo "---Sleep zZzZz---"
 sleep infinity
 
 echo "---Start Server---"
-cd ${SERVER_DIR}
-${SERVER_DIR}/srcds_run -game ${GAME_NAME} ${GAME_PARAMS} -console +port ${GAME_PORT}
+cd ${SERVER_DIR}/Mist/Binaries/Linux
+./MistServer-Linux-Shipping -log -force_steamclient_link -messaging -backendapiurloverride="backend.last-oasis.com" -identifier="${IDENTIFIER}" -CustomerKey="${CUSTOMER_KEY}" -ProviderKey="${PROVIDER_KEY}" -slots="${SLOTS}" -OverrideConnectionAddress="0.0.0.0" ${GAME_PARAMS}
