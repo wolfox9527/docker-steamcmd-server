@@ -54,13 +54,43 @@ else
     fi
 fi
 
-echo "---Prepare Server---"
+export WINEARCH=win64
+export WINEPREFIX=/serverdata/serverfiles/WINE64
+echo "---Checking if WINE workdirectory is present---"
+if [ ! -d ${SERVER_DIR}/WINE64 ]; then
+	echo "---WINE workdirectory not found, creating please wait...---"
+    mkdir ${SERVER_DIR}/WINE64
+else
+	echo "---WINE workdirectory found---"
+fi
+echo "---Checking if WINE is properly installed---"
+if [ ! -d ${SERVER_DIR}/WINE64/drive_c/windows ]; then
+	echo "---Setting up WINE---"
+    cd ${SERVER_DIR}
+    winecfg > /dev/null 2>&1
+    sleep 15
+else
+	echo "---WINE properly set up---"
+fi
+if [ ! -f ${SERVER_DIR}/VRisingServer_Data/StreamingAssets/Settings/ServerHostSettings.json ]; then
+    mkdir -p ${SERVER_DIR}/VRisingServer_Data/StreamingAssets/Settings
+    cd ${SERVER_DIR}/VRisingServer_Data/StreamingAssets/Settings
+    if wget -q -nc --show-progress --progress=bar:force:noscroll ${SERVER_DIR}/VRisingServer_Data/StreamingAssets/Settings/ServerHostSettings.json https://raw.githubusercontent.com/ich777/docker-steamcmd-server/vrising/config/ServerHostSettings.json ; then
+		echo "---Sucessfully downloaded 'ServerHostSettings.json'---"
+	else
+		echo "---Something went wrong, can't download 'ServerHostSettings.json', putting server in sleep mode---"
+		sleep infinity
+	fi
+fi
+echo "---Checking for old display lock files---"
+find /tmp -name ".X99*" -exec rm -f {} \; > /dev/null 2>&1
+screen -wipe 2&>/dev/null
 chmod -R ${DATA_PERM} ${DATA_DIR}
 echo "---Server ready---"
 
-echo "---Sleep zZzZz---"
-sleep infinity
-
 echo "---Start Server---"
 cd ${SERVER_DIR}
-${SERVER_DIR}/srcds_run -game ${GAME_NAME} ${GAME_PARAMS} -console +port ${GAME_PORT}
+xvfb-run --auto-servernum --server-args='-screen 0 640x480x24:32' wine64 ${SERVER_DIR}/VRisingServer.exe -persistentDataPath ${SERVER_DIR}/save-data -serverName "${SERVER_NAME}" -saveName "${WORLD_NAME}" -logFile ${SERVER_DIR}/logs/VRisingServer.log >/dev/null 2>&1
+sleep 3
+screen -S watchdog -d -m /opt/scripts/start-watchdog.sh
+tail -f ${SERVER_DIR}/logs/VRisingServer.log
