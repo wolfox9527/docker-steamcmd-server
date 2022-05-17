@@ -72,16 +72,6 @@ if [ ! -d ${SERVER_DIR}/WINE64/drive_c/windows ]; then
 else
 	echo "---WINE properly set up---"
 fi
-if [ ! -f ${SERVER_DIR}/VRisingServer_Data/StreamingAssets/Settings/ServerHostSettings.json ]; then
-    mkdir -p ${SERVER_DIR}/VRisingServer_Data/StreamingAssets/Settings
-    cd ${SERVER_DIR}/VRisingServer_Data/StreamingAssets/Settings
-    if wget -q -nc --show-progress --progress=bar:force:noscroll ${SERVER_DIR}/VRisingServer_Data/StreamingAssets/Settings/ServerHostSettings.json https://raw.githubusercontent.com/ich777/docker-steamcmd-server/vrising/config/ServerHostSettings.json ; then
-		echo "---Sucessfully downloaded 'ServerHostSettings.json'---"
-	else
-		echo "---Something went wrong, can't download 'ServerHostSettings.json', putting server in sleep mode---"
-		sleep infinity
-	fi
-fi
 echo "---Checking for old display lock files---"
 find /tmp -name ".X99*" -exec rm -f {} \; > /dev/null 2>&1
 chmod -R ${DATA_PERM} ${DATA_DIR}
