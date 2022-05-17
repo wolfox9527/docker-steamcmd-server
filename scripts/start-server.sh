@@ -84,13 +84,12 @@ if [ ! -f ${SERVER_DIR}/VRisingServer_Data/StreamingAssets/Settings/ServerHostSe
 fi
 echo "---Checking for old display lock files---"
 find /tmp -name ".X99*" -exec rm -f {} \; > /dev/null 2>&1
-screen -wipe 2&>/dev/null
 chmod -R ${DATA_PERM} ${DATA_DIR}
 echo "---Server ready---"
 
 echo "---Start Server---"
 cd ${SERVER_DIR}
 xvfb-run --auto-servernum --server-args='-screen 0 640x480x24:32' wine64 ${SERVER_DIR}/VRisingServer.exe -persistentDataPath ${SERVER_DIR}/save-data -serverName "${SERVER_NAME}" -saveName "${WORLD_NAME}" -logFile ${SERVER_DIR}/logs/VRisingServer.log >/dev/null 2>&1
-sleep 3
-screen -S watchdog -d -m /opt/scripts/start-watchdog.sh
+sleep 5
+/opt/scripts/start-watchdog.sh &
 tail -f ${SERVER_DIR}/logs/VRisingServer.log
