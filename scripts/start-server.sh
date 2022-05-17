@@ -22,12 +22,14 @@ if [ "${USERNAME}" == "" ]; then
     if [ "${VALIDATE}" == "true" ]; then
     	echo "---Validating installation---"
         ${STEAMCMD_DIR}/steamcmd.sh \
+        +@sSteamCmdForcePlatformType windows \
         +force_install_dir ${SERVER_DIR} \
         +login anonymous \
         +app_update ${GAME_ID} validate \
         +quit
     else
         ${STEAMCMD_DIR}/steamcmd.sh \
+        +@sSteamCmdForcePlatformType windows \
         +force_install_dir ${SERVER_DIR} \
         +login anonymous \
         +app_update ${GAME_ID} \
@@ -37,12 +39,14 @@ else
     if [ "${VALIDATE}" == "true" ]; then
     	echo "---Validating installation---"
         ${STEAMCMD_DIR}/steamcmd.sh \
+        +@sSteamCmdForcePlatformType windows \
         +force_install_dir ${SERVER_DIR} \
         +login ${USERNAME} ${PASSWRD} \
         +app_update ${GAME_ID} validate \
         +quit
     else
         ${STEAMCMD_DIR}/steamcmd.sh \
+        +@sSteamCmdForcePlatformType windows \
         +force_install_dir ${SERVER_DIR} \
         +login ${USERNAME} ${PASSWRD} \
         +app_update ${GAME_ID} \
@@ -51,12 +55,6 @@ else
 fi
 
 echo "---Prepare Server---"
-if [ ! -f ${DATA_DIR}/.steam/sdk32/steamclient.so ]; then
-	if [ ! -d ${DATA_DIR}/.steam/sdk32 ]; then
-    	mkdir -p ${DATA_DIR}/.steam/sdk32
-    fi
-    cp -R ${STEAMCMD_DIR}/linux32/* ${DATA_DIR}/.steam/sdk32/
-fi
 chmod -R ${DATA_PERM} ${DATA_DIR}
 echo "---Server ready---"
 
