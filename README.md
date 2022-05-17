@@ -28,7 +28,7 @@ This Docker will download and install SteamCMD. It will also install Last Oasis 
 ## Run example
 ```
 docker run --name LastOasis -d \
-	-p 27015:27015 -p 27015:27015/udp \
+	-p 5555:5555/udp -p 27015:27015/udp \
 	--env 'GAME_ID=232330' \
 	--env 'IDENTIFIER=Last Oasis Docker' \
 	--env 'SRV_PASSWORD=Docker' \
