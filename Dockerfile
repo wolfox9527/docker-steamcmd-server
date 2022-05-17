@@ -1,10 +1,10 @@
-FROM ich777/debian-baseimage
+FROM ich777/winehq-baseimage
 
 LABEL org.opencontainers.image.authors="admin@minenet.at"
 LABEL org.opencontainers.image.source="https://github.com/ich777/docker-steamcmd-server"
 
 RUN apt-get update && \
-	apt-get -y install --no-install-recommends lib32gcc-s1 lib32stdc++6 && \
+	apt-get -y install --no-install-recommends lib32gcc-s1 screen xvfb winbind && \
 	rm -rf /var/lib/apt/lists/*
 
 ENV DATA_DIR="/serverdata"
