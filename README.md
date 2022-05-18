@@ -1,6 +1,9 @@
 # SteamCMD in Docker optimized for Unraid
 This Docker will download and install SteamCMD. It will also install V Rising and run it.
 
+**Save Files:** The save files are located in: .../vrising/save-data/Saves
+**Config Files:** The config files are located in: .../vrising/save-data/Settings
+
 **ATTENTION:** First Startup can take very long since it downloads the gameserver files!
 
 **Update Notice:** Simply restart the container if a newer version of the game is available.
