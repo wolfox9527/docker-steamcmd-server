@@ -1,3 +1,5 @@
+# DEPRECATED
+
 # SteamCMD in Docker optimized for Unraid
 This Docker will download and install SteamCMD. It will also install ATLAS and run it (this docker does also have a built in Redis server for quick server setup, you also can disable it in the variables below).
 
