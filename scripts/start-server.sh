@@ -51,6 +51,12 @@ else
 fi
 
 echo "---Prepare Server---"
+if [ ! -f ${DATA_DIR}/.steam/sdk64/steamclient.so ]; then
+	if [ ! -d ${DATA_DIR}/.steam/sdk64 ]; then
+    	mkdir -p ${DATA_DIR}/.steam/sdk64
+    fi
+    cp -R ${STEAMCMD_DIR}/linux64/* ${DATA_DIR}/.steam/sdk64/
+fi
 echo "---Checking if 'Game.ini' exists---"
 if [ ! -f ${SERVER_DIR}/Pavlov/Saved/Config/LinuxServer/Game.ini ]; then
 	echo "---'Game.ini' not found, downloading...---"
