@@ -21,7 +21,7 @@ This Docker will download and install SteamCMD. It will also install Pavlov VR a
 ## Run example
 ```
 docker run --name PavlovVR -d \
-	-p 27015:27015 -p 27015:27015/udp \
+	-p 7777:7777 -p 7777:7777/udp -p 8177:8177/udp -p 7977:7977/udp \
 	--env 'GAME_ID=622970' \
 	--env 'UID=99' \
 	--env 'GID=100' \
