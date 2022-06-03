@@ -53,9 +53,90 @@ else
         +quit
     fi
 fi
+BEPINEX_VR_TS_API_URL=https://thunderstore.io/c/v-rising/api/v1/package/b86fcaaf-297a-45c8-82a0-fcbd7806fdc4/
+BEPINEX_VR_TS_URL=https://v-rising.thunderstore.io/package/BepInEx/BepInExPack_V_Rising/
+BEPINEX_VR_TS_JSON=${SERVER_DIR}/BepInExPack_V_Rising.json
+
+if [ "${ENABLE_BEPINEX}" == "true" ]; then
+    export  WINEDLLOVERRIDES="winhttp=n,b"
+    echo "---BepInEx for V Rising enabled!---"
+    CUR_V="$(find ${SERVER_DIR} -maxdepth 1 -name "BepInEx-*" | cut -d '-' -f2)"
+    curl -X GET ${BEPINEX_VR_TS_API_URL} -H "accept: application/json" -o ${BEPINEX_VR_TS_JSON}
+    LAT_V="$(cat ${BEPINEX_VR_TS_JSON}|jq .versions[0].version_number)"
+    LAT_V=${LAT_V//\"/}
+
+    if [ -z "${LAT_V}" ] && [ -z "${CUR_V}" ]; then
+        echo "---Can't get latest version of BepInEx for V Rising!---"
+        echo "---Please try to run the Container without BepInEx for V Rising, putting Container into sleep mode!---"
+        sleep infinity
+    fi
+
+    if [ -f ${SERVER_DIR}/BepInEx.zip ]; then
+	    rm -rf ${SERVER_DIR}/BepInEx.zip
+    fi
+
+    echo "---BepInEx for V Rising Version Check---"
+    echo
+    echo "---${BEPINEX_VR_TS_URL}---"
+    echo
+
+    BEPINEX_VR_TS_DOWNLOAD_URL="$(cat ${BEPINEX_VR_TS_JSON}|jq .versions[0].download_url)"
+    BEPINEX_VR_TS_DOWNLOAD_URL=${BEPINEX_VR_TS_DOWNLOAD_URL//\"/}
+    if [ -z "${CUR_V}" ]; then
+        echo "---BepInEx for V Rising not found, downloading and installing v${LAT_V}...---"
+        cd ${SERVER_DIR}
+        rm -rf ${SERVER_DIR}/BepInEx-*
+
+        if wget -q -nc --show-progress --progress=bar:force:noscroll -O ${SERVER_DIR}/BepInEx.zip --user-agent=Mozilla --content-disposition -E -c "${BEPINEX_VR_TS_DOWNLOAD_URL}" ; then
+            echo "---Successfully downloaded BepInEx for V Rising v${LAT_V}---"
+        else
+            echo "---Something went wrong, can't download BepInEx for V Rising v${LAT_V}, putting container into sleep mode!---"
+            sleep infinity
+        fi
+        mkdir -p /tmp/BepInEx
+        unzip -o ${SERVER_DIR}/BepInEx.zip -d /tmp/BepInEx
+        if [ $? -eq 0 ];then
+            touch ${SERVER_DIR}/BepInEx-${LAT_V}
+            cp -rf /tmp/BepInEx/BepInEx*/* ${SERVER_DIR}/
+            cp /tmp/BepInEx/README* ${SERVER_DIR}/README_BepInEx_for_VRising
+            rm -rf ${SERVER_DIR}/BepInEx.zip /tmp/BepInEx
+        else
+            echo "---Unable to unzip BepInEx archive! Putting container into sleep mode!---"
+            sleep infinity
+        fi
+    elif [ "$CUR_V" != "${LAT_V}" ]; then
+        echo "---Version missmatch, BepInEx v$CUR_V installed, downloading and installing v${LAT_V}...---"
+        cd ${SERVER_DIR}
+        rm -rf ${SERVER_DIR}/BepInEx-$CUR_V
+        mkdir /tmp/Backup
+        cp -R ${SERVER_DIR}/BepInEx/config /tmp/Backup/
+        if wget -q -nc --show-progress --progress=bar:force:noscroll -O ${SERVER_DIR}/BepInEx.zip --user-agent=Mozilla --content-disposition -E -c "${BEPINEX_VR_TS_DOWNLOAD_URL}" ; then
+            echo "---Successfully downloaded BepInEx for V Rising v${LAT_V}---"
+        else
+            echo "---Something went wrong, can't download BepInEx for V Rising v${LAT_V}, putting container into sleep mode!---"
+            sleep infinity
+        fi
+        unzip -o ${SERVER_DIR}/BepInEx.zip -d /tmp/BepInEx 
+        if [ $? -eq 0 ];then
+            cp -rf /tmp/BepInEx/BepInEx*/* ${SERVER_DIR}/
+            cp /tmp/BepInEx/README* ${SERVER_DIR}/README_BepInEx_for_VRising
+            touch ${SERVER_DIR}/BepInEx-${LAT_V}
+            cp -R /tmp/Backup/config ${SERVER_DIR}/BepInEx/
+            rm -rf ${SERVER_DIR}/BepInEx.zip /tmp/BepInEx /tmp/Backup
+        else
+            echo "---Unable to unzip BepInEx archive! Putting container into sleep mode!---"
+            sleep infinity
+        fi
+    elif [ "${CUR_V}" == "${LAT_V}" ]; then
+        echo "---BepInEx v$CUR_V up-to-date---"
+    fi
+else
+    echo "---BepInEx for V Rising disabled!---"
+fi
 
 export WINEARCH=win64
 export WINEPREFIX=/serverdata/serverfiles/WINE64
+
 echo "---Checking if WINE workdirectory is present---"
 if [ ! -d ${SERVER_DIR}/WINE64 ]; then
 	echo "---WINE workdirectory not found, creating please wait...---"
