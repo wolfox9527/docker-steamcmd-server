@@ -61,7 +61,7 @@ if [ "${ENABLE_BEPINEX}" == "true" ]; then
     export  WINEDLLOVERRIDES="winhttp=n,b"
     echo "---BepInEx for V Rising enabled!---"
     CUR_V="$(find ${SERVER_DIR} -maxdepth 1 -name "BepInEx-*" | cut -d '-' -f2)"
-    curl -X GET ${BEPINEX_VR_TS_API_URL} -H "accept: application/json" -o ${BEPINEX_VR_TS_JSON}
+    curl -s -X GET ${BEPINEX_VR_TS_API_URL} -H "accept: application/json" -o ${BEPINEX_VR_TS_JSON}
     LAT_V="$(cat ${BEPINEX_VR_TS_JSON}|jq .versions[0].version_number)"
     LAT_V=${LAT_V//\"/}
 
