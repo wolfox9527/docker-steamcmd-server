@@ -70,6 +70,9 @@ if [ "${ENABLE_BEPINEX}" == "true" ]; then
     if [ -f ${SERVER_DIR}/BepInEx.zip ]; then
 	    rm -rf ${SERVER_DIR}/BepInEx.zip
     fi
+    if [ -f ${SERVER_DIR}/doorstop_config.ini ]; then
+        sed -i "/enabled=false/c\enabled=true" ${SERVER_DIR}/doorstop_config.ini
+    fi
 
     echo "---BepInEx for V Rising Version Check---"
     echo
@@ -113,7 +116,7 @@ if [ "${ENABLE_BEPINEX}" == "true" ]; then
         unzip -o ${SERVER_DIR}/BepInEx.zip -d /tmp/BepInEx 
         if [ $? -eq 0 ];then
             cp -rf /tmp/BepInEx/BepInEx*/* ${SERVER_DIR}/
-            cp /tmp/BepInEx/README* ${SERVER_DIR}/README_BepInEx_for_VRising
+            cp /tmp/BepInEx/README* ${SERVER_DIR}/README_BepInEx_for_VRising.txt
             touch ${SERVER_DIR}/BepInEx-${LAT_V}
             cp -R /tmp/Backup/config ${SERVER_DIR}/BepInEx/
             rm -rf ${SERVER_DIR}/BepInEx.zip /tmp/BepInEx /tmp/Backup
