@@ -53,17 +53,13 @@ else
         +quit
     fi
 fi
-BEPINEX_VR_TS_API_URL=https://thunderstore.io/c/v-rising/api/v1/package/b86fcaaf-297a-45c8-82a0-fcbd7806fdc4/
-BEPINEX_VR_TS_URL=https://v-rising.thunderstore.io/package/BepInEx/BepInExPack_V_Rising/
-BEPINEX_VR_TS_JSON=${SERVER_DIR}/BepInExPack_V_Rising.json
 
 if [ "${ENABLE_BEPINEX}" == "true" ]; then
-    export  WINEDLLOVERRIDES="winhttp=n,b"
+    BEPINEX_VR_TS_URL=https://v-rising.thunderstore.io/package/BepInEx/BepInExPack_V_Rising/
     echo "---BepInEx for V Rising enabled!---"
     CUR_V="$(find ${SERVER_DIR} -maxdepth 1 -name "BepInEx-*" | cut -d '-' -f2)"
-    curl -s -X GET ${BEPINEX_VR_TS_API_URL} -H "accept: application/json" -o ${BEPINEX_VR_TS_JSON}
-    LAT_V="$(cat ${BEPINEX_VR_TS_JSON}|jq .versions[0].version_number)"
-    LAT_V=${LAT_V//\"/}
+    BEPINEX_VR_API_DATA="$(curl -s -X GET https://thunderstore.io/c/v-rising/api/v1/package/b86fcaaf-297a-45c8-82a0-fcbd7806fdc4/ -H "accept: application/json")"
+    LAT_V="$(echo ${BEPINEX_VR_API_DATA} | jq -r '.versions[0].version_number')"
 
     if [ -z "${LAT_V}" ] && [ -z "${CUR_V}" ]; then
         echo "---Can't get latest version of BepInEx for V Rising!---"
@@ -80,13 +76,11 @@ if [ "${ENABLE_BEPINEX}" == "true" ]; then
     echo "---${BEPINEX_VR_TS_URL}---"
     echo
 
-    BEPINEX_VR_TS_DOWNLOAD_URL="$(cat ${BEPINEX_VR_TS_JSON}|jq .versions[0].download_url)"
-    BEPINEX_VR_TS_DOWNLOAD_URL=${BEPINEX_VR_TS_DOWNLOAD_URL//\"/}
+    BEPINEX_VR_TS_DOWNLOAD_URL="$(echo ${BEPINEX_VR_API_DATA} | jq -r '.versions[0].download_url')"
     if [ -z "${CUR_V}" ]; then
         echo "---BepInEx for V Rising not found, downloading and installing v${LAT_V}...---"
         cd ${SERVER_DIR}
         rm -rf ${SERVER_DIR}/BepInEx-*
-
         if wget -q -nc --show-progress --progress=bar:force:noscroll -O ${SERVER_DIR}/BepInEx.zip --user-agent=Mozilla --content-disposition -E -c "${BEPINEX_VR_TS_DOWNLOAD_URL}" ; then
             echo "---Successfully downloaded BepInEx for V Rising v${LAT_V}---"
         else
@@ -98,7 +92,7 @@ if [ "${ENABLE_BEPINEX}" == "true" ]; then
         if [ $? -eq 0 ];then
             touch ${SERVER_DIR}/BepInEx-${LAT_V}
             cp -rf /tmp/BepInEx/BepInEx*/* ${SERVER_DIR}/
-            cp /tmp/BepInEx/README* ${SERVER_DIR}/README_BepInEx_for_VRising
+            cp /tmp/BepInEx/README* ${SERVER_DIR}/README_BepInEx_for_VRising.txt
             rm -rf ${SERVER_DIR}/BepInEx.zip /tmp/BepInEx
         else
             echo "---Unable to unzip BepInEx archive! Putting container into sleep mode!---"
@@ -131,12 +125,14 @@ if [ "${ENABLE_BEPINEX}" == "true" ]; then
         echo "---BepInEx v$CUR_V up-to-date---"
     fi
 else
+    if [ -f ${SERVER_DIR}/doorstop_config.ini ]; then
+        sed -i "/enabled=true/c\enabled=false" ${SERVER_DIR}/doorstop_config.ini
+    fi
     echo "---BepInEx for V Rising disabled!---"
 fi
 
 export WINEARCH=win64
 export WINEPREFIX=/serverdata/serverfiles/WINE64
-
 echo "---Checking if WINE workdirectory is present---"
 if [ ! -d ${SERVER_DIR}/WINE64 ]; then
 	echo "---WINE workdirectory not found, creating please wait...---"
