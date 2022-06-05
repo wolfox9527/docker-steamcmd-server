@@ -4,7 +4,7 @@ LABEL org.opencontainers.image.authors="admin@minenet.at"
 LABEL org.opencontainers.image.source="https://github.com/ich777/docker-steamcmd-server"
 
 RUN apt-get update && \
-	apt-get -y install --no-install-recommends lib32gcc-s1 screen xvfb winbind xauth && \
+	apt-get -y install --no-install-recommends curl unzip jq lib32gcc-s1 screen xvfb winbind xauth && \
 	rm -rf /var/lib/apt/lists/*
 
 ENV DATA_DIR="/serverdata"
@@ -16,6 +16,7 @@ ENV WORLD_NAME="world1"
 ENV GAME_NAME="template"
 ENV GAME_PARAMS="template"
 ENV GAME_PORT=27015
+ENV ENABLE_BEPINEX=""
 ENV VALIDATE=""
 ENV UMASK=000
 ENV UID=99
