@@ -17,7 +17,7 @@ This Docker will download and install SteamCMD. It will also install V Rising an
 | SERVER_NAME | Enter your preferred server name. | V Rising Docker |
 | WORLD_NAME | Enter your prefered world name. | world1 |
 | GAME_PARAMS | Enter additional game startup parameters if needed, otherwise leave empty. | empty |
-| ENABLE_BEPINEX | If you want to enable BepInEx for V Rising set this variable to 'true' (without quotes). For more help please refer to this site: [Click](https://v-rising.thunderstore.io/package/BepInEx/BepInExPack_V_Rising/) | false |
+| ENABLE_BEPINEX | If you want to enable BepInEx for V Rising set this variable to 'true' (without quotes). For more help please refer to this site: [Click](https://v-rising.thunderstore.io/package/BepInEx/BepInExPack_V_Rising/) | empty |
 | UID | User Identifier | 99 |
 | GID | Group Identifier | 100 |
 | GAME_PORT | Port the server will be running on | 27015 |
