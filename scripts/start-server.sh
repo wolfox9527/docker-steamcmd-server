@@ -52,7 +52,7 @@ fi
 
 echo "---Prepare Server---"
 if [ -d ${SERVER_DIR}/.config/unity3d/IronGate/Valheim/worlds ]; then
-    echo "---Found old save directory... Moveing to new location...!---"
+    echo "---Found old save directory... Moving saves directory to new location...!---"
     mv ${SERVER_DIR}/.config/unity3d/IronGate/Valheim/worlds ${SERVER_DIR}/.config/unity3d/IronGate/Valheim/worlds_local
 fi
 if [ "${ENABLE_VALHEIMPLUS}" != "true" ]; then
