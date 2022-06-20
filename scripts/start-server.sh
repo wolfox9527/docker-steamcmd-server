@@ -51,6 +51,10 @@ else
 fi
 
 echo "---Prepare Server---"
+if [ -d ${SERVER_DIR}/.config/unity3d/IronGate/Valheim/worlds ]; then
+    echo "---Found old save directory... Moveing to new location...!---"
+    mv ${SERVER_DIR}/.config/unity3d/IronGate/Valheim/worlds ${SERVER_DIR}/.config/unity3d/IronGate/Valheim/worlds_local
+fi
 if [ "${ENABLE_VALHEIMPLUS}" != "true" ]; then
     export LD_LIBRARY_PATH=${SERVER_DIR}/linux64:$LD_LIBRARY_PATH
     export templdpath=$LD_LIBRARY_PATH
