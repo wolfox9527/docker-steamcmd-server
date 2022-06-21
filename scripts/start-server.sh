@@ -64,8 +64,12 @@ else
 	echo "---Configuration file 'default.ini' found---"
 fi
 chmod -R ${DATA_PERM} ${DATA_DIR}
+find $SERVER_DIR -name "masterLog.*" -exec rm -f {} \;
 echo "---Server ready---"
 
 echo "---Start Server---"
 cd ${SERVER_DIR}
-${SERVER_DIR}/rocketstation_DedicatedServer.x86_64 -autostart -batchmode -nographics ${GAME_PARAMS}
+screen -S Stationeers -L -Logfile $SERVER_DIR/masterLog.0 -d -m ${SERVER_DIR}/rocketstation_DedicatedServer.x86_64 -autostart -batchmode -nographics ${GAME_PARAMS}
+sleep 2
+/opt/scripts/start-watchdog.sh &
+tail -f ${SERVER_DIR}/masterLog.0
