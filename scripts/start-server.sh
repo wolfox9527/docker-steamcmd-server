@@ -68,4 +68,4 @@ echo "---Server ready---"
 
 echo "---Start Server---"
 cd ${SERVER_DIR}
-xvfb-run --auto-servernum --server-args='-screen 0 640x480x24:32' ${SERVER_DIR}/rocketstation_DedicatedServer.x86_64 -autostart -batchmode -nographics ${GAME_PARAMS}
+${SERVER_DIR}/rocketstation_DedicatedServer.x86_64 -autostart -batchmode -nographics ${GAME_PARAMS}
