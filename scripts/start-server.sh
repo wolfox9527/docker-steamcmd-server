@@ -109,7 +109,7 @@ if [ "${ENABLE_VALHEIMPLUS}" == "true" ]; then
         unzip -o ${SERVER_DIR}/ValheimPlus.zip
 	    touch ${SERVER_DIR}/ValheimPlus-$LAT_V
         rm ${SERVER_DIR}/ValheimPlus.zip
-    elif [ "${CUR_V%%-*}" != "${LAT_V%%-*}" ]; then
+    elif [ "${CUR_V}" != "${LAT_V}" ]; then
         echo "---Version missmatch, ValheimPlus v$CUR_V installed, downloading and installing v$LAT_V...---"
         cd ${SERVER_DIR}
     	rm -rf ${SERVER_DIR}/ValheimPlus-$CUR_V
