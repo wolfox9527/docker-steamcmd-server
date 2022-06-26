@@ -125,7 +125,7 @@ if [ "${ENABLE_VALHEIMPLUS}" == "true" ]; then
 	    touch ${SERVER_DIR}/ValheimPlus-$LAT_V
         cp -R /tmp/Backup/config ${SERVER_DIR}/BepInEx/
         rm -rf ${SERVER_DIR}/ValheimPlus.zip /tmp/Backup
-    elif [ "${CUR_V%%-*}" == "${LAT_V%%-*}" ]; then
+    elif [ "${CUR_V}" == "${LAT_V}" ]; then
         echo "---ValheimPlus v${CUR_V%%-*} up-to-date---"
     fi
 fi
