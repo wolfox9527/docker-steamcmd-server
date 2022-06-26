@@ -69,7 +69,4 @@ echo "---Server ready---"
 
 echo "---Start Server---"
 cd ${SERVER_DIR}
-screen -S Stationeers -L -Logfile $SERVER_DIR/masterLog.0 -d -m ${SERVER_DIR}/rocketstation_DedicatedServer.x86_64 -autostart -batchmode -nographics ${GAME_PARAMS}
-sleep 2
-/opt/scripts/start-watchdog.sh &
-tail -f ${SERVER_DIR}/masterLog.0
+${SERVER_DIR}/rocketstation_DedicatedServer.x86_64 -autostart -batchmode -nographics ${GAME_PARAMS}
