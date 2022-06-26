@@ -85,7 +85,7 @@ fi
 if [ "${ENABLE_VALHEIMPLUS}" == "true" ]; then
     echo "---ValheimPlus enabled!---"
     CUR_V="$(find ${SERVER_DIR} -maxdepth 1 -name "ValheimPlus-*" | cut -d '-' -f2)"
-    LAT_V="$(wget -qO- https://api.github.com/repos/valheimPlus/ValheimPlus/releases/latest | grep tag_name | cut -d '"' -f4 | cut -d 'v' -f2)"
+    LAT_V="$(wget -qO- https://api.github.com/repos/valheimPlus/ValheimPlus/releases/latest | grep tag_name | cut -d '"' -f4 | cut -d 'v' -f2 | cut -d '-' -f1)"
     if [ -z "${LAT_V}" ] && [ -z "${CUR_V}" ]; then
         echo "---Can't get latest version of Valheim Plus!---"
         echo "---Please try to run the Container without ValheimPlus, putting Container into sleep mode!---"
