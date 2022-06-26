@@ -84,8 +84,8 @@ fi
 
 if [ "${ENABLE_VALHEIMPLUS}" == "true" ]; then
     echo "---ValheimPlus enabled!---"
-    CUR_V="$(find ${SERVER_DIR} -maxdepth 1 -name "ValheimPlus-*" | cut -d '-' -f2)"
-    LAT_V="$(wget -qO- https://api.github.com/repos/valheimPlus/ValheimPlus/releases/latest | grep tag_name | cut -d '"' -f4 | cut -d 'v' -f2 | cut -d '-' -f1)"
+    CUR_V="$(find ${SERVER_DIR} -maxdepth 1 -name "ValheimPlus-*" | cut -d '-' -f2-)"
+    LAT_V="$(wget -qO- https://api.github.com/repos/valheimPlus/ValheimPlus/releases/latest | grep tag_name | cut -d '"' -f4 | cut -d 'v' -f2)"
     if [ -z "${LAT_V}" ] && [ -z "${CUR_V}" ]; then
         echo "---Can't get latest version of Valheim Plus!---"
         echo "---Please try to run the Container without ValheimPlus, putting Container into sleep mode!---"
@@ -109,7 +109,7 @@ if [ "${ENABLE_VALHEIMPLUS}" == "true" ]; then
         unzip -o ${SERVER_DIR}/ValheimPlus.zip
 	    touch ${SERVER_DIR}/ValheimPlus-$LAT_V
         rm ${SERVER_DIR}/ValheimPlus.zip
-    elif [ "$CUR_V" != "$LAT_V" ]; then
+    elif [ "${CUR_V%%-*}" != "${LAT_V%%-*}" ]; then
         echo "---Version missmatch, ValheimPlus v$CUR_V installed, downloading and installing v$LAT_V...---"
         cd ${SERVER_DIR}
     	rm -rf ${SERVER_DIR}/ValheimPlus-$CUR_V
@@ -125,8 +125,8 @@ if [ "${ENABLE_VALHEIMPLUS}" == "true" ]; then
 	    touch ${SERVER_DIR}/ValheimPlus-$LAT_V
         cp -R /tmp/Backup/config ${SERVER_DIR}/BepInEx/
         rm -rf ${SERVER_DIR}/ValheimPlus.zip /tmp/Backup
-    elif [ "${CUR_V}" == "${LAT_V}" ]; then
-        echo "---ValheimPlus v$CUR_V up-to-date---"
+    elif [ "${CUR_V%%-*}" == "${LAT_V%%-*}" ]; then
+        echo "---ValheimPlus v${CUR_V%%-*} up-to-date---"
     fi
 fi
 
