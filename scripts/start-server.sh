@@ -52,14 +52,18 @@ fi
 
 echo "---Prepare Server---"
 chmod -R ${DATA_PERM} ${DATA_DIR}
-if [ ! -d ${SERVER_DIR}/save ]; then
-    mkdir -p ${SERVER_DIR}/save
+if [ ! -d ${SERVER_DIR}/saves ]; then
+    mkdir -p ${SERVER_DIR}/saves
 fi
-if [ ! -f ${SERVER_DIR}/save/serverDZ.cfg ]; then
-    cp ${SERVER_DIR}/serverDZ.cfg ${SERVER_DIR}/save/serverDZ.cfg
+if [ ! -f ${SERVER_DIR}/saves/serverDZ.cfg ]; then
+    cp ${SERVER_DIR}/serverDZ.cfg ${SERVER_DIR}/saves/serverDZ.cfg
+    sleep 1
+    sed -i 's/\hostname = "EXAMPLE NAME";/hostname = "Docker DayZ";/g' ${SERVER_DIR}/saves/serverDZ.cfg
+    sed -i 's/\password = "";/password = "Docker";/g' ${SERVER_DIR}/saves/serverDZ.cfg
+    sed -i 's/\passwordAdmin = "";/passwordAdmin = "adminDocker";/g' ${SERVER_DIR}/saves/serverDZ.cfg
 fi
 echo "---Server ready---"
 
 echo "---Start Server---"
 cd ${SERVER_DIR}
-${SERVER_DIR}/sDayZServer -port=${GAME_PORT} -profiles ${SERVER_DIR}/save -config=${SERVER_DIR}/save/serverDZ.cfg ${GAME_PARAMS}
+${SERVER_DIR}/DayZServer -port=${GAME_PORT} -profiles ${SERVER_DIR}/saves -config=${SERVER_DIR}/saves/serverDZ.cfg ${GAME_PARAMS}
