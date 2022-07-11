@@ -49,6 +49,9 @@ fi
 if [ "${FORCE_X86}" == "true" ]; then
     cp ${STEAMCMD_DIR}/linux32/* ${SERVER_DIR}
     chmod -R ${DATA_PERM} ${DATA_DIR}
+    if [ -f ${SERVER_DIR}/libstdc++.so.6 ]; then
+        rm -rf ${SERVER_DIR}/libstdc++.so.6
+    fi
 
     echo "---Start Server---"
     cd ${SERVER_DIR}
@@ -56,6 +59,9 @@ if [ "${FORCE_X86}" == "true" ]; then
 else
     cp ${STEAMCMD_DIR}/linux64/* ${SERVER_DIR}
     chmod -R ${DATA_PERM} ${DATA_DIR}
+    if [ -f ${SERVER_DIR}/libstdc++.so.6 ]; then
+        rm -rf ${SERVER_DIR}/libstdc++.so.6
+    fi
 
     echo "---Start Server---"
     cd ${SERVER_DIR}
