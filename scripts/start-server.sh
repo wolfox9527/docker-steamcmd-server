@@ -51,18 +51,15 @@ else
 fi
 
 echo "---Prepare Server---"
-if [ ! -f ${DATA_DIR}/.steam/sdk32/steamclient.so ]; then
-	if [ ! -d ${DATA_DIR}/.steam/sdk32 ]; then
-    	mkdir -p ${DATA_DIR}/.steam/sdk32
-    fi
-    cp -R ${STEAMCMD_DIR}/linux32/* ${DATA_DIR}/.steam/sdk32/
-fi
 chmod -R ${DATA_PERM} ${DATA_DIR}
+if [ ! -d ${SERVER_DIR}/save ]; then
+    mkdir -p ${SERVER_DIR}/save
+fi
+if [ ! -f ${SERVER_DIR}/save/serverDZ.cfg ]; then
+    cp ${SERVER_DIR}/serverDZ.cfg ${SERVER_DIR}/save/serverDZ.cfg
+fi
 echo "---Server ready---"
-
-echo "---Sleep zZzZz---"
-sleep infinity
 
 echo "---Start Server---"
 cd ${SERVER_DIR}
-${SERVER_DIR}/srcds_run -game ${GAME_NAME} ${GAME_PARAMS} -console +port ${GAME_PORT}
+${SERVER_DIR}/sDayZServer -port=${GAME_PORT} -profiles ${SERVER_DIR}/save -config=${SERVER_DIR}/save/serverDZ.cfg ${GAME_PARAMS}
