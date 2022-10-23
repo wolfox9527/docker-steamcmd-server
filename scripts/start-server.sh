@@ -140,7 +140,7 @@ if [ "${CAVES}" == "true" ]; then
             mkdir ${DATA_DIR}/.klei/DoNotStarveTogether/Cluster_1/Caves
         fi
         cd ${DATA_DIR}/.klei/DoNotStarveTogether/Cluster_1/Caves
-        if wget -q -nc --show-progress --progress=bar:force:noscroll https://raw.githubusercontent.com/ich777/docker-steamcmd-server/dontstarve/config/caves_worldgenoverride.lua ; then
+        if wget -q -nc --show-progress --progress=bar:force:noscroll -O ${DATA_DIR}/.klei/DoNotStarveTogether/Cluster_1/Caves/worldgenoverride.lua https://raw.githubusercontent.com/ich777/docker-steamcmd-server/dontstarve/config/caves_worldgenoverride.lua ; then
     		echo "---Sucessfully downloaded 'caves_worldgenoverride.lua'---"
 		else
     		echo "---Can't download 'caves_worldgenoverride.lua', putting server into sleep mode---"
