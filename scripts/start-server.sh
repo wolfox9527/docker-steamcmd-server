@@ -51,18 +51,15 @@ else
 fi
 
 echo "---Prepare Server---"
-if [ ! -f ${DATA_DIR}/.steam/sdk32/steamclient.so ]; then
-	if [ ! -d ${DATA_DIR}/.steam/sdk32 ]; then
-    	mkdir -p ${DATA_DIR}/.steam/sdk32
+if [ ! -f ${DATA_DIR}/.steam/sdk64/steamclient.so ]; then
+	if [ ! -d ${DATA_DIR}/.steam/sdk64 ]; then
+    	mkdir -p ${DATA_DIR}/.steam/sdk64
     fi
-    cp -R ${STEAMCMD_DIR}/linux32/* ${DATA_DIR}/.steam/sdk32/
+    cp -R ${STEAMCMD_DIR}/linux64/* ${DATA_DIR}/.steam/sdk64/
 fi
 chmod -R ${DATA_PERM} ${DATA_DIR}
 echo "---Server ready---"
 
-echo "---Sleep zZzZz---"
-sleep infinity
-
 echo "---Start Server---"
-cd ${SERVER_DIR}
-${SERVER_DIR}/srcds_run -game ${GAME_NAME} ${GAME_PARAMS} -console +port ${GAME_PORT}
+cd ${SERVER_DIR}/Vein/Binaries/Linux
+./VeinServer ${GAME_PARAMS}
