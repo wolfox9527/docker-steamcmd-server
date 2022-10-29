@@ -1,5 +1,5 @@
 # SteamCMD in Docker optimized for Unraid
-This Docker will download and install SteamCMD. It will also install ARK: Survival Evolved and run it.
+This Docker will download and install SteamCMD. It will also install VEIN and run it.
 
 **Update Notice:** Simply restart the container if a newer version of the game is available.
 
@@ -22,7 +22,7 @@ This Docker will download and install SteamCMD. It will also install ARK: Surviv
 docker run --name Vein -d \
 	-p 7777:7777/udp -p 27015:27015/udp \
 	--env 'GAME_ID=2131400' \
-	--env 'GAME_PARAMS_EXTRA= -log' \
+	--env 'GAME_PARAMS_EXTRA=-log' \
 	--env 'UID=99' \
 	--env 'GID=100' \
 	--volume /path/to/steamcmd:/serverdata/steamcmd \
