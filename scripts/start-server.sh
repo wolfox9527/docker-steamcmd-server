@@ -61,5 +61,5 @@ chmod -R ${DATA_PERM} ${DATA_DIR}
 echo "---Server ready---"
 
 echo "---Start Server---"
-cd ${SERVER_DIR}/Vein/Binaries/Linux
-./VeinServer ${GAME_PARAMS}
+cd ${SERVER_DIR}
+${SERVER_DIR}/Vein/Binaries/Linux/VeinServer ${GAME_PARAMS}
