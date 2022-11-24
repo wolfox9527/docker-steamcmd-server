@@ -65,4 +65,4 @@ echo "---Server ready---"
 
 echo "---Start Server---"
 cd ${SERVER_DIR}/Mist/Binaries/Linux
-./MistServer-Linux-Shipping -log -force_steamclient_link -messaging -backendapiurloverride="backend.last-oasis.com" -identifier="${IDENTIFIER}" -CustomerKey=${CUSTOMER_KEY} -ProviderKey=${PROVIDER_KEY} -slots=${SLOTS} -overrideconnectionaddress ${GAME_PARAMS}
+./MistServer -log -force_steamclient_link -messaging -backendapiurloverride="${BACKENDAPIURLOVERRIDE}" -identifier="${IDENTIFIER}" -CustomerKey=${CUSTOMER_KEY} -ProviderKey=${PROVIDER_KEY} -slots=${SLOTS} -overrideconnectionaddress ${GAME_PARAMS}
