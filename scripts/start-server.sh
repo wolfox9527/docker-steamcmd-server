@@ -57,6 +57,33 @@ if [ ! -f ${DATA_DIR}/.steam/sdk64/steamclient.so ]; then
     fi
     cp -R ${STEAMCMD_DIR}/linux64/* ${DATA_DIR}/.steam/sdk64/
 fi
+echo "---Looking if World is already in place---"
+if [ ! -d ${SERVER_DIR}/PlayfulCorp/CreativerseServer/worlddata/worlds ]; then
+  mkdir -p ${SERVER_DIR}/PlayfulCorp/CreativerseServer/worlddata/worlds
+fi
+WORLD_NAME="$(grep -oE '\-worldId\S+' <<< ${GAME_PARAMS})"
+if [ "${WORLD_NAME#*=}" == "unraid_world" ]; then
+  if [ ! -d ${SERVER_DIR}/PlayfulCorp/CreativerseServer/worlddata/worlds/unraid_world ]; then
+    echo "---Default world 'unraid_world' not found, please wait, installing...---"
+    mkdir -p ${SERVER_DIR}/PlayfulCorp/CreativerseServer/worlddata/worlds/unraid_world
+    tar -C ${SERVER_DIR}/PlayfulCorp/CreativerseServer/worlddata/worlds/unraid_world -xvf /opt/world.tar
+  else
+    echo "---Default world 'unraid_world' found!---"
+  fi
+else
+  if [ ! -d ${SERVER_DIR}/PlayfulCorp/CreativerseServer/worlddata/worlds/${WORLD_NAME#*=} ]; then
+    echo
+    echo "+-------------------------------------------------------------------------------"
+    echo "| World '${WORLD_NAME#*=}' not found, please copy it over to:"
+    echo "| '.../PlayfulCorp/CreativerseServer/worlddata/worlds/${WORLD_NAME#*=}'"
+    echo "| and restart the container!"
+    echo "|"
+    echo "| Putting Container into sleep mode!"
+    echo "+-------------------------------------------------------------------------------"
+  else
+    echo "---World '${WORLD_NAME#*=}' found!---"
+  fi
+fi  
 chmod -R ${DATA_PERM} ${DATA_DIR}
 echo "---Server ready---"
 
