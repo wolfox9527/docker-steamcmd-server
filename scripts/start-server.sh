@@ -197,7 +197,8 @@ if [ "${BACKUP_FILES}" == "true" ]; then
 fi
 
 if [ "${UPDATE_CHECK}" == "true" ]; then
-    /opt/scripts/start-updatecheck.sh &
+    echo "---Update check deprecated!---"
+#    /opt/scripts/start-updatecheck.sh &
 fi
 
 echo "---Start Server---"
