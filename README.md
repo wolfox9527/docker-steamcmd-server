@@ -26,7 +26,7 @@ You can also run multiple servers with only one SteamCMD directory!
 ## Run example
 ```
 docker run --name Creativerse -d \
-	-p 26900:26900/udp -p 26901:26901/udp -p 26902:26902/udp \
+	-p 26900:26900/udp -p 26901:26901/udp -p 26902:26902 \
 	--env 'GAME_ID=1098260' \
 	--env 'GAME_PARAMS=-worldId=unraid_world' \
 	--env 'UID=99' \
