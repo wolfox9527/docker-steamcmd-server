@@ -80,6 +80,8 @@ else
     echo "|"
     echo "| Putting Container into sleep mode!"
     echo "+-------------------------------------------------------------------------------"
+    chmod -R ${DATA_PERM} ${SERVER_DIR}/PlayfulCorp
+    sleep infinity
   else
     echo "---World '${WORLD_NAME#*=}' found!---"
   fi
