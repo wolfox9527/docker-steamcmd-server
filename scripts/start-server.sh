@@ -87,9 +87,6 @@ fi
 chmod -R ${DATA_PERM} ${DATA_DIR}
 echo "---Server ready---"
 
-echo "---Sleep zZzZz---"
-sleep infinity
-
 echo "---Start Server---"
 cd ${SERVER_DIR}
 ${SERVER_DIR}/CreativerseServer ${GAME_PARAMS}
