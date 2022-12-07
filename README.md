@@ -7,6 +7,8 @@ This Docker will download and install SteamCMD. It will also install Creativerse
 
 You can also run multiple servers with only one SteamCMD directory!
 
+**ServerAdmin:** To become server admin please open up the file '.../PlayfulCorp/CreativerseServer/worlddata/worlds/unraid_world/config_world.json' and change the value from 'WorldOwnerSteamId' to your SteamID64 (you can get your SteamID here: https://steamid.io/).
+
 **Note:** As time of creating the container the WebGUI isn't working but you should be able to do all things from in game. The developers from the game will implement this later on.
 
 ## Example Env params
