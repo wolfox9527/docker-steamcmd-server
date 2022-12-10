@@ -71,8 +71,6 @@ fi
 chmod -R ${DATA_PERM} ${DATA_DIR}
 echo "---Server ready---"
 
-sleep infinity
-
 echo "---Start Server---"
 export LD_LIBRARY_PATH=$SERVER_DIR/linux64
 cd ${SERVER_DIR}/bin/linux_x64
