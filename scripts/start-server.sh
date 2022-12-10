@@ -51,6 +51,17 @@ else
 fi
 
 echo "---Prepare Server---"
+echo "---Looking if Server config is in place---"
+if [ ! -d "$SERVER_DIR/.local/share/Euro Truck Simulator 2" ]; then
+  mkdir -p "$SERVER_DIR/.local/share/Euro Truck Simulator 2"
+fi
+if [ ! -f "$SERVER_DIR/.local/share/Euro Truck Simulator 2/server_packages.dat" ]; then
+  "---Server config not found, copying default...---"
+  tar -C "$SERVER_DIR/.local/share/Euro Truck Simulator 2" -xvf /opt/config.tar
+else
+  echo "---Server config found!---"
+fi
+
 if [ ! -f ${DATA_DIR}/.steam/sdk64/steamclient.so ]; then
 	if [ ! -d ${DATA_DIR}/.steam/sdk64 ]; then
     	mkdir -p ${DATA_DIR}/.steam/sdk64
@@ -59,9 +70,6 @@ if [ ! -f ${DATA_DIR}/.steam/sdk64/steamclient.so ]; then
 fi
 chmod -R ${DATA_PERM} ${DATA_DIR}
 echo "---Server ready---"
-
-echo "---Sleep zZzZz---"
-sleep infinity
 
 echo "---Start Server---"
 export LD_LIBRARY_PATH=$SERVER_DIR/linux64
