@@ -56,7 +56,7 @@ if [ ! -d "$SERVER_DIR/.local/share/Euro Truck Simulator 2" ]; then
   mkdir -p "$SERVER_DIR/.local/share/Euro Truck Simulator 2"
 fi
 if [ ! -f "$SERVER_DIR/.local/share/Euro Truck Simulator 2/server_packages.dat" ]; then
-  "---Server config not found, copying default...---"
+  echo "---Server config not found, copying default...---"
   tar -C "$SERVER_DIR/.local/share/Euro Truck Simulator 2" -xvf /opt/config.tar
 else
   echo "---Server config found!---"
