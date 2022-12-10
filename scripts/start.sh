@@ -28,8 +28,8 @@ chown -R ${UID}:${GID} ${DATA_DIR}
 
 echo "---Starting...---"
 term_handler() {
-	kill -SIGINT $(pidof pidof eurotrucks2_server)
-	tail --pid=$(pidof pidof eurotrucks2_server) -f 2>/dev/null
+	kill -SIGINT $(pidof pidof amtrucks_server)
+	tail --pid=$(pidof pidof amtrucks_server) -f 2>/dev/null
 	exit 143;
 }
 
