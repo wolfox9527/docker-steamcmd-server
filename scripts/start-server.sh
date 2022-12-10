@@ -51,16 +51,16 @@ else
 fi
 
 echo "---Prepare Server---"
-#echo "---Looking if Server config is in place---"
-#if [ ! -d "$SERVER_DIR/.local/share/Euro Truck Simulator 2" ]; then
-#  mkdir -p "$SERVER_DIR/.local/share/Euro Truck Simulator 2"
-#fi
-#if [ ! -f "$SERVER_DIR/.local/share/Euro Truck Simulator 2/server_packages.dat" ]; then
-#  echo "---Server config not found, copying default...---"
-#  tar -C "$SERVER_DIR/.local/share/Euro Truck Simulator 2" -xvf /opt/config.tar
-#else
-#  echo "---Server config found!---"
-#fi
+echo "---Looking if Server config is in place---"
+if [ ! -d "$SERVER_DIR/.local/share/American Truck Simulator" ]; then
+  mkdir -p "$SERVER_DIR/.local/share/American Truck Simulator"
+fi
+if [ ! -f "$SERVER_DIR/.local/share/American Truck Simulator/server_packages.dat" ]; then
+  echo "---Server config not found, copying default...---"
+  tar -C "$SERVER_DIR/.local/share/American Truck Simulator" -xvf /opt/config.tar
+else
+  echo "---Server config found!---"
+fi
 
 if [ ! -f ${DATA_DIR}/.steam/sdk64/steamclient.so ]; then
 	if [ ! -d ${DATA_DIR}/.steam/sdk64 ]; then
@@ -76,4 +76,4 @@ sleep infinity
 echo "---Start Server---"
 export LD_LIBRARY_PATH=$SERVER_DIR/linux64
 cd ${SERVER_DIR}/bin/linux_x64
-${SERVER_DIR}/bin/linux_x64/eurotrucks2_server ${GAME_PARAMS}
+${SERVER_DIR}/bin/linux_x64/amtrucks_server ${GAME_PARAMS}
