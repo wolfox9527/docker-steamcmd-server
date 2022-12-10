@@ -64,5 +64,6 @@ echo "---Sleep zZzZz---"
 sleep infinity
 
 echo "---Start Server---"
-cd ${SERVER_DIR}
-${SERVER_DIR}/srcds_run -game ${GAME_NAME} ${GAME_PARAMS} -console +port ${GAME_PORT}
+export LD_LIBRARY_PATH=$SERVER_DIR/linux64
+cd ${SERVER_DIR}/bin/linux_x64
+cd ${SERVER_DIR}/bin/linux_x64/eurotrucks2_server ${GAME_PARAMS}
