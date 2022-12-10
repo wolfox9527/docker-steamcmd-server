@@ -32,7 +32,7 @@ RUN mkdir $DATA_DIR && \
 
 ADD /scripts/ /opt/scripts/
 RUN chmod -R 770 /opt/scripts/
-COPY config.tar /opt/config.tar
+#COPY config.tar /opt/config.tar
 
 #Server Start
 ENTRYPOINT ["/opt/scripts/start.sh"]
