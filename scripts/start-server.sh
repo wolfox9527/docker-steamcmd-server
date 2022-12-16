@@ -83,6 +83,9 @@ if [ ! -f ${SERVER_DIR}/Icarus/Saved/Config/WindowsServer/ServerSettings.ini ]; 
 else
   echo "---'ServerSettings.ini' found---"
 fi
+echo "---Checking for old display lock files---"
+find /tmp -name ".X99*" -exec rm -f {} \; > /dev/null 2>&1
+chmod -R ${DATA_PERM} ${DATA_DIR}
 
 echo "---Starting Xvfb server---"
 export DISPLAY=:99
