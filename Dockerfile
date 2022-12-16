@@ -34,6 +34,7 @@ RUN mkdir $DATA_DIR && \
 
 ADD /scripts/ /opt/scripts/
 RUN chmod -R 770 /opt/scripts/
+COPY ServerSettings.ini /opt/ServerSettings.ini
 
 #Server Start
 ENTRYPOINT ["/opt/scripts/start.sh"]
