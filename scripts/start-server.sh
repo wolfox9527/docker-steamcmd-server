@@ -94,7 +94,7 @@ Xvfb :99 -screen scrn 640x480x16 2>/dev/null &
 echo "---Checking if VC Runtime is installed---"
 if [ ! -d ${SERVER_DIR}/WINE64/drive_c/windows/Installer ]; then
   echo "---VC Runtime not installed, please wait installing...---"
-  /usr/bin/winetricks -q vcrun2019
+  timeout 120 /usr/bin/winetricks -q vcrun2019 >/dev/null 2>&1
 else
   echo "---VC Runtime found---"
 fi
