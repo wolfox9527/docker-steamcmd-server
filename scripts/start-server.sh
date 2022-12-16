@@ -70,6 +70,7 @@ if [ ! -d ${SERVER_DIR}/WINE64/drive_c/windows ]; then
     cd ${SERVER_DIR}
     winecfg > /dev/null 2>&1
     sleep 15
+    wineserver -k >/dev/null 2>&1
 else
 	echo "---WINE properly set up---"
 fi
