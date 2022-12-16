@@ -3,7 +3,8 @@ FROM ich777/winehq-baseimage
 LABEL org.opencontainers.image.authors="admin@minenet.at"
 LABEL org.opencontainers.image.source="https://github.com/ich777/docker-steamcmd-server"
 
-RUN apt-get update && \
+RUN dpkg --add-architecture i386 && \
+	apt-get update && \
 	apt-get -y install lib32gcc-s1 screen xvfb winbind cabextract && \
 	wget -q -O /usr/bin/winetricks https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks && \
 	chmod +x /usr/bin/winetricks && \
