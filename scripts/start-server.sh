@@ -89,12 +89,12 @@ chmod -R ${DATA_PERM} ${DATA_DIR}
 
 echo "---Starting Xvfb server---"
 export DISPLAY=:99
-Xvfb :99 -screen scrn 640x480x16 &
+Xvfb :99 -screen scrn 640x480x16 2>/dev/null &
 
 echo "---Checking if VC Runtime is installed---"
 if [ ! -d ${SERVER_DIR}/WINE64/drive_c/windows/Installer ]; then
   echo "---VC Runtime not installed, please wait installing...---"
-  /usr/bin/winetricks -q --unattended vcrun2019
+  /usr/bin/winetricks -q vcrun2019
 else
   echo "---VC Runtime found---"
 fi
