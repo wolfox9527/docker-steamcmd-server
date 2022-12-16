@@ -94,14 +94,15 @@ Xvfb :99 -screen scrn 640x480x16 2>/dev/null &
 
 echo "---Checking if VC Runtime is installed---"
 if [ ! -d ${SERVER_DIR}/WINE64/drive_c/windows/Installer ]; then
-  echo "---VC Runtime not installed, please wait installing...---"
-  timeout 120 /usr/bin/winetricks -q vcrun2019 #>/dev/null 2>&1
+  echo "---VC Runtime not installed, this can take some time, please wait, installing...---"
+  timeout 120 /usr/bin/winetricks -q vcrun2019 >/dev/null 2>&1
+  wineserver -k
 else
   echo "---VC Runtime found---"
 fi
 chmod -R ${DATA_PERM} ${DATA_DIR}
 echo "---Server ready---"
-sleep infinity
+
 echo "---Start Server---"
 cd ${SERVER_DIR}
 wine64 ${SERVER_DIR}/IcarusServer.exe -log ${GAME_PARAMS}
