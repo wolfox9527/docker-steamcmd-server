@@ -76,9 +76,18 @@ fi
 chmod -R ${DATA_PERM} ${DATA_DIR}
 echo "---Server ready---"
 
-echo "---Sleep zZzZz---"
-sleep infinity
+echo "---Starting Xvfb server---"
+export DISPLAY=:99
+Xvfb :99 -screen scrn 640x480x16 &
+
+echo "---Checking if VC Runtime is installed---"
+if [ ! -f ${SERVER_DIR}/WINE64/drive_c/windows/syswow64/msvcp140.dll ]; then
+  echo "---VC Runtime not installed, please wait installing...---"
+  /usr/bin/winetricks -q --unattended vcrun2019
+else
+  echo "---VC Runtime found---"
+fi
 
 echo "---Start Server---"
 cd ${SERVER_DIR}
-${SERVER_DIR}/srcds_run -game ${GAME_NAME} ${GAME_PARAMS} -console +port ${GAME_PORT}
+${SERVER_DIR}/IcarusServer.exe -log ${GAME_PARAMS}
