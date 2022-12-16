@@ -92,7 +92,7 @@ export DISPLAY=:99
 Xvfb :99 -screen scrn 640x480x16 &
 
 echo "---Checking if VC Runtime is installed---"
-if [ ! -f ${SERVER_DIR}/WINE64/drive_c/windows/syswow64/msvcp140.dll ]; then
+if [ ! -d ${SERVER_DIR}/WINE64/drive_c/windows/Installer ]; then
   echo "---VC Runtime not installed, please wait installing...---"
   /usr/bin/winetricks -q --unattended vcrun2019
 else
