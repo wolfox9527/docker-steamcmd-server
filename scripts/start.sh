@@ -22,6 +22,8 @@ fi
 echo "---Taking ownership of data...---"
 chown -R root:${GID} /opt/scripts
 chmod -R 750 /opt/scripts
+chown ${UID}:${GID} /opt/ServerSettings.ini
+chmod 750 /opt/ServerSettings.ini
 chown -R ${UID}:${GID} ${DATA_DIR}
 
 echo "---Starting...---"
