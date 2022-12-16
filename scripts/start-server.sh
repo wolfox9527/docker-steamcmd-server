@@ -73,8 +73,16 @@ if [ ! -d ${SERVER_DIR}/WINE64/drive_c/windows ]; then
 else
 	echo "---WINE properly set up---"
 fi
-chmod -R ${DATA_PERM} ${DATA_DIR}
-echo "---Server ready---"
+echo "---Looking 'ServerSettings.ini' file is in place---"
+if [ ! -f ${SERVER_DIR}/Icarus/Saved/Config/WindowsServer/ServerSettings.ini ]; then
+  echo "---'ServerSettings.ini' not found, copying template...---"
+  if [ ! -d ${SERVER_DIR}/Icarus/Saved/Config/WindowsServer ]; then
+    mkdir -p ${SERVER_DIR}/Icarus/Saved/Config/WindowsServer
+  fi
+  cp /opt/ServerSettings.ini ${SERVER_DIR}/Icarus/Saved/Config/WindowsServer/
+else
+  echo "---'ServerSettings.ini' found---"
+fi
 
 echo "---Starting Xvfb server---"
 export DISPLAY=:99
@@ -87,7 +95,9 @@ if [ ! -f ${SERVER_DIR}/WINE64/drive_c/windows/syswow64/msvcp140.dll ]; then
 else
   echo "---VC Runtime found---"
 fi
+chmod -R ${DATA_PERM} ${DATA_DIR}
+echo "---Server ready---"
 
 echo "---Start Server---"
 cd ${SERVER_DIR}
-${SERVER_DIR}/IcarusServer.exe -log ${GAME_PARAMS}
+wine64 ${SERVER_DIR}/IcarusServer.exe -log ${GAME_PARAMS}
