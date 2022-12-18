@@ -88,6 +88,8 @@ echo "---Checking for old display lock files---"
 find /tmp -name ".X99*" -exec rm -f {} \; > /dev/null 2>&1
 chmod -R ${DATA_PERM} ${DATA_DIR}
 
+sleep infinity
+
 echo "---Starting Xvfb server---"
 export DISPLAY=:99
 Xvfb :99 -screen scrn 640x480x16 2>/dev/null &
