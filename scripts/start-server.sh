@@ -51,18 +51,9 @@ else
 fi
 
 echo "---Prepare Server---"
-if [ ! -f ${DATA_DIR}/.steam/sdk64/steamclient.so ]; then
-	if [ ! -d ${DATA_DIR}/.steam/sdk64 ]; then
-    	mkdir -p ${DATA_DIR}/.steam/sdk64
-    fi
-    cp -R ${STEAMCMD_DIR}/linux64/* ${DATA_DIR}/.steam/sdk64/
-fi
 chmod -R ${DATA_PERM} ${DATA_DIR}
 echo "---Server ready---"
 
-echo "---Sleep zZzZz---"
-sleep infinity
-
 echo "---Start Server---"
-cd ${SERVER_DIR}
-${SERVER_DIR}/srcds_run -game ${GAME_NAME} ${GAME_PARAMS} -console +port ${GAME_PORT}
+cd ${SERVER_DIR}/DeadMatter/Binaries/Linux
+./DeadMatterServer-Linux-Shipping -log ${GAME_PARAMS} -port=${GAME_PORT} -queryport=${QUERY_PORT}
