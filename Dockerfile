@@ -10,9 +10,11 @@ RUN apt-get update && \
 ENV DATA_DIR="/serverdata"
 ENV STEAMCMD_DIR="${DATA_DIR}/steamcmd"
 ENV SERVER_DIR="${DATA_DIR}/serverfiles"
+ENV PORT=7777
+ENV QUERY_PORT=7778
 ENV GAME_ID="template"
 ENV GAME_NAME="template"
-ENV GAME_PARAMS="template"
+ENV GAME_PARAMS="-SteamServerName=Dead Matter Docker"
 ENV GAME_PORT=27015
 ENV VALIDATE=""
 ENV UMASK=000
