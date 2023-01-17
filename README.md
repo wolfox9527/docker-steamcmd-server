@@ -1,36 +1,41 @@
 # SteamCMD in Docker optimized for Unraid
-This Docker will download and install SteamCMD and the according game that is pulled via specifying the Tag.
+This Docker will download and install SteamCMD. It will also install American Truck Simulator and run it.
 
-**Please see the different Tags/Branches which games are available.**
+**Server Credentials:** The default name from the server is: **Docker Server** and the password is: **Docker**
 
-## Example Env params for CS:Source
+**ATTENTION:** First Startup can take very long since it downloads the gameserver files and the world template!
+
+**Server Configuration:** For more information see the file 'server_readme.txt' in the main directory from the dedicated server.
+
+**Save Path:** The configuration files and save data is located in: '.../.local/share/American Truck Simulator '.
+
+**Update Notice:** Simply restart the container if a newer version of the game is available.
+
+You can also run multiple servers with only one SteamCMD directory!
+
+## Example Env params
 | Name | Value | Example |
 | --- | --- | --- |
 | STEAMCMD_DIR | Folder for SteamCMD | /serverdata/steamcmd |
 | SERVER_DIR | Folder for gamefile | /serverdata/serverfiles |
-| GAME_ID | The GAME_ID that the container downloads at startup. If you want to install a static or beta version of the game change the value to: '232330 -beta YOURBRANCH' (without quotes, replace YOURBRANCH with the branch or version you want to install). | 232330 |
-| GAME_NAME | SRCDS gamename | cstrike |
-| GAME_PARAMS | Values to start the server | -secure +maxplayers 32 +map de_dust2 |
+| GAME_ID | The GAME_ID that the container downloads at startup. If you want to install a static or beta version of the game change the value to: '2239530 -beta YOURBRANCH' (without quotes, replace YOURBRANCH with the branch or version you want to install). | 2239530 |
+| GAME_PARAMS | Enter your game parameters (only change the worldId if you know what you are doing!) | empty |
 | UID | User Identifier | 99 |
 | GID | Group Identifier | 100 |
-| GAME_PORT | Port the server will be running on | 27015 |
-| VALIDATE | Validates the game data | true |
+| VALIDATE | Validates the game data | false |
 | USERNAME | Leave blank for anonymous login | blank |
 | PASSWRD | Leave blank for anonymous login | blank |
 
 ## Run example
 ```
-docker run --name CSSource -d \
-	-p 27015:27015 -p 27015:27015/udp \
-	--env 'GAME_ID=232330' \
-	--env 'GAME_NAME=cstrike' \
-	--env 'GAME_PORT=27015' \
-	--env 'GAME_PARAMS=-secure +maxplayers 32 +map de_dust2' \
+docker run --name AmericanTruckSimulator -d \
+	-p 27015-27016:27015-27016/udp \
+	--env 'GAME_ID=2239530' \
 	--env 'UID=99' \
 	--env 'GID=100' \
 	--volume /path/to/steamcmd:/serverdata/steamcmd \
-	--volume /path/to/cstrikesource:/serverdata/serverfiles \
-	ich777/steamcmd:latest
+	--volume /path/to/americantrucksimulator:/serverdata/serverfiles \
+	ich777/steamcmd:ats
 ```
 
 This Docker was mainly edited for better use with Unraid, if you don't use Unraid you should definitely try it!
