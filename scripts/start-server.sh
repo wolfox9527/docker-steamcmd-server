@@ -166,6 +166,6 @@ else
     find $SERVER_DIR -name "masterLog.*" -exec rm -f {} \;
     find $SERVER_DIR -name "cavesLog.*" -exec rm -f {} \;
     echo "---Start Server---"
-    cd ${SERVER_DIR}/bin${X64_MODE#_*}
+    cd ${SERVER_DIR}/bin${X64_PATH}
     ${SERVER_DIR}/bin${X64_PATH}/dontstarve_dedicated_server_nullrenderer${X64_MODE} -shard Master
 fi
