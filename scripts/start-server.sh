@@ -104,4 +104,4 @@ echo "---Server ready---"
 
 echo "---Start Server---"
 cd ${SERVER_DIR}
-${SERVER_DIR}/RustDedicated -batchmode -server.port ${GAME_PORT} -server.queryport ${QUERY_PORT} -rcon.port {RCON_PORT} -app.port ${APP_PORT} -server.hostname "${SERVER_NAME}" -server.description "${SERVER_DISCRIPTION}" ${GAME_PARAMS}
+${SERVER_DIR}/RustDedicated -batchmode -server.port ${GAME_PORT} -server.queryport ${QUERY_PORT} -rcon.port ${RCON_PORT} -app.port ${APP_PORT} -server.hostname "${SERVER_NAME}" -server.description "${SERVER_DISCRIPTION}" ${GAME_PARAMS}
