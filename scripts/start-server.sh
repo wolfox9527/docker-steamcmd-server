@@ -76,7 +76,7 @@ cd ${SERVER_DIR}
 if [ -f ${SERVER_DIR}/GameID.txt ]; then
   rm -f ${SERVER_DIR}/GameID.txt
 fi
-${SERVER_DIR}/CoreKeeperServer -batchmode -logfile -nographics ${SERVER_DIR}/CoreKeeperServerLog.txt -world ${WORLD_INDEX} -worldname "${WORLD_NAME}" -datapath "${SERVER_DIR}/Save" ${GAME_PARAMS} 2 >/dev/null &
+${SERVER_DIR}/CoreKeeperServer -batchmode -logfile ${SERVER_DIR}/CoreKeeperServerLog.txt -world ${WORLD_INDEX} -worldname "${WORLD_NAME}" -datapath "${SERVER_DIR}/Save" ${GAME_PARAMS} 2 >/dev/null &
 sleep 2
 screen -S watchdog -d -m /opt/scripts/start-watchdog.sh
 while [ ! -f ${SERVER_DIR}/GameID.txt ]; do
