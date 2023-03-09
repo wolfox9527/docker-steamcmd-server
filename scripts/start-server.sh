@@ -58,4 +58,4 @@ sleep infinity
 
 echo "---Start Server---"
 cd ${SERVER_DIR}/HarshDoorstop/Binaries/Linux
-./ShooterGameServer ${MAP}?listen?SessionName=${SERVER_NAME}?ServerPassword=${SRV_PWD}?ServerAdminPassword=${SRV_ADMIN_PWD}${GAME_PARAMS} ${GAME_PARAMS_EXTRA}
+./HarshDoorstopServer-Linux-Shipping ${GAME_PARAMS} ${GAME_PARAMS_EXTRA}
