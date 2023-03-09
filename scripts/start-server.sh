@@ -54,8 +54,6 @@ echo "---Prepare Server---"
 chmod -R ${DATA_PERM} ${DATA_DIR}
 echo "---Server ready---"
 
-sleep infinity
-
 echo "---Start Server---"
 cd ${SERVER_DIR}/HarshDoorstop/Binaries/Linux
 ./HarshDoorstopServer-Linux-Shipping ${GAME_PARAMS} ${GAME_PARAMS_EXTRA}
