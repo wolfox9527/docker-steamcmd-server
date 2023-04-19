@@ -14,6 +14,7 @@ This Docker will download and install SteamCMD. It will also install Valheim and
 | SRV_PWD | Server Password - **ATTENTION:** the minimum length is 6 characters! | Docker |
 | PUBLIC | List Server as Public (set to '0' to disable or set to '1' to enable). | 1 |
 | ENABLE_VALHEIMPLUS | If you want to enable ValheimPlus set this variable to 'true' (without quotes). For more help please refer to this site: [Click](https://github.com/nxPublic/ValheimPlus) | false |
+| VALHEIMPLUS_ORG_REPO | Enables you to use a different repository for ValheimPlus than nxPublic/ValheimPlus (currently set to Grantapher/ValheimPlus) | Grantapher/ValheimPlus |
 | ENABLE_BEPINEX | If you want to enable BepInEx for Valheim set this variable to 'true' (without quotes). For more help please refer to this site: [Click](https://valheim.thunderstore.io/package/denikson/BepInExPack_Valheim/) | false |
 | BACKUP_FILES | Set this value to 'true' to enable the automated backup function from the container, you find the Backups in '.../valheim/Backups/'. Set to 'false' to disable the backup function. | true |
 | BACKUP_INTERVAL | The backup interval in minutes (set to 62 minutes because the game automatically saves the database every 30 minutes) **ATTENTION:** The first backup will be triggered after the set interval in this variable after the start/restart of the container). | 62 |
