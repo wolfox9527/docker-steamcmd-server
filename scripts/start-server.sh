@@ -84,6 +84,14 @@ fi
 
 if [ "${ENABLE_VALHEIMPLUS}" == "true" ]; then
     echo "---ValheimPlus enabled!---"
+    echo
+    echo "-------------------------------------------"
+    echo "Using following repository for ValheimPlus:"
+    echo
+    echo "Orga./User: ${VALHEIMPLUS_ORG_REPO%%/*}"
+    echo "Repository: ${VALHEIMPLUS_ORG_REPO##*/}"
+    echo "-------------------------------------------"
+    echo
     CUR_V="$(find ${SERVER_DIR} -maxdepth 1 -name "ValheimPlus-*" | cut -d '-' -f2-)"
     LAT_V="$(wget -qO- https://api.github.com/repos/${VALHEIMPLUS_ORG_REPO}/releases/latest | grep tag_name | cut -d '"' -f4 | cut -d 'v' -f2)"
     if [ -z "${LAT_V}" ] && [ -z "${CUR_V}" ]; then
