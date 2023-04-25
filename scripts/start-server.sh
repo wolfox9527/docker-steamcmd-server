@@ -79,7 +79,6 @@ BackupSaveGamesInterval=7200
 ActiveSaveFileDescriptiveName=SAVE_1
 ServerAdvertisedName=
 HeartbeatInterval=0" > ${SERVER_DIR}/Astro/Saved/Config/WindowsServer/AstroServerSettings.ini
-  fi
   else
     echo "---'AstroServerSettings.ini' found---"
   fi
@@ -89,7 +88,6 @@ Port=8777
 
 [SystemSettings]
 net.AllowEncryption=False" > ${SERVER_DIR}/Astro/Saved/Config/WindowsServer/Engine.ini
-  fi
   else
     echo "---'Engine.ini' found---"
   fi
