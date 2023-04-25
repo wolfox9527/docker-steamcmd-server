@@ -22,6 +22,7 @@ You'll find the file on your local Windows machine at: `%localappdata%\Astro\Sav
 | STEAMCMD_DIR | Folder for SteamCMD | /serverdata/steamcmd |
 | SERVER_DIR | Folder for gamefile | /serverdata/serverfiles |
 | GAME_PARAMS | Values to start the server if needed. | empty |
+| UPDATE_PUBLIC_IP | If set to 'true' the container will check on each container start if the Public IP is still valid. | false |
 | UID | User Identifier | 99 |
 | GID | Group Identifier | 100 |
 | VALIDATE | Validates the game data | false |
@@ -34,6 +35,7 @@ You'll find the file on your local Windows machine at: `%localappdata%\Astro\Sav
 docker run --name Astroneer -d \
 	-p 8777:8777/udp \
 	--env 'GAME_ID=728470' \
+	--env 'UPDATE_PUBLIC_IP=false' \
 	--env 'UID=99' \
 	--env 'GID=100' \
 	--volume /path/to/steamcmd:/serverdata/steamcmd \
