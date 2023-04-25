@@ -100,13 +100,27 @@ if [ -z "${PUBLIC_IP}" ]; then
   echo "---No PublicIP found in AstroServerSettings.ini, trying to obtain it...---"
   PUBLIC_IP="$(wget -qO - icanhazip.com)"
   if [ -z "${PUBLIC_IP}" ]; then
-    echo "---Couldn't get PublicIP, please set it manually in your AstroServerSettings.ini!---"
+    echo "---Can't get PublicIP, please set it manually in your AstroServerSettings.ini!---"
   else
     echo "---Sucessfully obtained PublicIP: ${PUBLIC_IP}, adding to AstroServerSettings.ini"
     sed -i "s/PublicIP=.*/PublicIP=${PUBLIC_IP}/g" ${SERVER_DIR}/Astro/Saved/Config/WindowsServer/AstroServerSettings.ini
   fi
 else
-  echo "---PublicIP in AstroServerSettings.ini found: ${PUBLIC_IP}"
+  if [ "${UPDATE_PUBLIC_IP}" == "true" ]; then
+    NEW_PUBLIC_IP="$(wget -qO - icanhazip.com)"
+    if [ -z "${NEW_PUBLIC_IP}" ]; then
+      echo "---Can't get PublicIP, please set it manually in your AstroServerSettings.ini!---"
+    else
+      if [ "${PUBLIC_IP}" != "${NEW_PUBLIC_IP}" ]; then
+        echo "---Changing PublicIP in AstroServerSettings.ini to: ${NEW_PUBLIC_IP}!---"
+        sed -i "s/PublicIP=.*/PublicIP=${NEW_PUBLIC_IP}/g" ${SERVER_DIR}/Astro/Saved/Config/WindowsServer/AstroServerSettings.ini
+      else
+        echo "---Nothing to do, PublicIP: ${PUBLIC_IP} still up-to-date!---"
+      fi
+    fi
+  else
+    echo "---PublicIP in AstroServerSettings.ini found: ${PUBLIC_IP}"
+  fi
 fi
 
 export WINEARCH=win64
