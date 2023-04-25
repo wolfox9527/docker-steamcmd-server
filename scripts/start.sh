@@ -26,8 +26,8 @@ chown -R ${UID}:${GID} ${DATA_DIR}
 
 echo "---Starting...---"
 term_handler() {
-	kill -SIGINT $(pidof wineserver)
-	tail --pid=$(pidof wineserver) -f 2>/dev/null
+	kill -SIGINT $(pidof AstroServer.exe)
+	tail --pid=$(pidof AstroServer.exe) -f 2>/dev/null
 	exit 143;
 }
 
