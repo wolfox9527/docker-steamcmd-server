@@ -112,6 +112,7 @@ fi
 
 export WINEARCH=win64
 export WINEPREFIX=/serverdata/serverfiles/WINE64
+export WINEDEBUG=-all
 echo "---Checking if WINE workdirectory is present---"
 if [ ! -d ${SERVER_DIR}/WINE64 ]; then
   echo "---WINE workdirectory not found, creating please wait...---"
