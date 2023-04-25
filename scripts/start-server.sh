@@ -57,8 +57,10 @@ fi
 echo "---Prepare Server---"
 echo "---Looking for config files---"
 if [ ! -d ${SERVER_DIR}/Astro/Saved/Config/WindowsServer ]; then
-  if [ ! -f ${SERVER_DIR}/Astro/Saved/Config/WindowsServer/AstroServerSettings.ini ]; then
-    echo "[/Script/Astro.AstroServerSettings]
+  mkdir -p ${SERVER_DIR}/Astro/Saved/Config/WindowsServer
+fi
+if [ ! -f ${SERVER_DIR}/Astro/Saved/Config/WindowsServer/AstroServerSettings.ini ]; then
+  echo "[/Script/Astro.AstroServerSettings]
 bLoadAutoSave=True
 MaxServerFramerate=30.000000
 MaxServerIdleFramerate=3.000000
@@ -79,18 +81,17 @@ BackupSaveGamesInterval=7200
 ActiveSaveFileDescriptiveName=SAVE_1
 ServerAdvertisedName=
 HeartbeatInterval=0" > ${SERVER_DIR}/Astro/Saved/Config/WindowsServer/AstroServerSettings.ini
-  else
-    echo "---'AstroServerSettings.ini' found---"
-  fi
-  if [ ! -f ${SERVER_DIR}/Astro/Saved/Config/WindowsServer/Engine.ini ]; then
-    echo "[URL]
+else
+  echo "---'AstroServerSettings.ini' found---"
+fi
+if [ ! -f ${SERVER_DIR}/Astro/Saved/Config/WindowsServer/Engine.ini ]; then
+  echo "[URL]
 Port=8777
 
 [SystemSettings]
 net.AllowEncryption=False" > ${SERVER_DIR}/Astro/Saved/Config/WindowsServer/Engine.ini
-  else
-    echo "---'Engine.ini' found---"
-  fi
+else
+  echo "---'Engine.ini' found---"
 fi
 
 echo "---Checking if public IP is in place---"
