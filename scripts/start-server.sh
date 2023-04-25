@@ -94,7 +94,7 @@ else
   echo "---'Engine.ini' found---"
 fi
 
-echo "---Checking if public IP is in place---"
+echo "---Checking if PublicIP is in place---"
 PUBLIC_IP="$(cat ${SERVER_DIR}/Astro/Saved/Config/WindowsServer/AstroServerSettings.ini | grep "PublicIP=" | cut -d '=' -f2)"
 if [ -z "${PUBLIC_IP}" ]; then
   echo "---No PublicIP found in AstroServerSettings.ini, trying to obtain it...---"
