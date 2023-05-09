@@ -26,8 +26,8 @@ chown -R ${UID}:${GID} ${DATA_DIR}
 
 echo "---Starting...---"
 term_handler() {
-	kill -SIGINT $(pidof FrozenFlameServer)
-	wait $(pidof FrozenFlameServer) -f 2>/dev/null
+	kill -SIGINT $(pidof FrozenFlameServer-Linux-Shipping)
+	wait $(pidof FrozenFlameServer-Linux-Shipping) -f 2>/dev/null
 	sleep 0.5
 	exit 143;
 }
