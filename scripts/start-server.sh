@@ -56,4 +56,4 @@ echo "---Server ready---"
 
 echo "---Start Server---"
 cd ${SERVER_DIR}/FrozenFlame/Binaries/Linux
-./FrozenFlameServer FrozenFlame -log -LOCALLOGTIMES ${GAME_PARAMS}
+./FrozenFlameServer-Linux-Shipping FrozenFlame -log -LOCALLOGTIMES ${GAME_PARAMS}
