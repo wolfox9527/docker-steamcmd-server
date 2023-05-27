@@ -1,5 +1,4 @@
 #!/bin/bash
-sleep 10
 killpid="$(pidof VRisingServer.exe)"
 while true
 do
