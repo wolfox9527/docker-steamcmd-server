@@ -75,4 +75,11 @@ echo "---Server ready---"
 
 echo "---Start Server---"
 cd ${SERVER_DIR}/Engine/Binaries/Linux
-./UE4Server-Linux-Shipping FactoryGame $GAME_PARAMS
+if [ -f ${SERVER_DIR}/Engine/Binaries/Linux/UE4Server-Linux-Shipping ]; then
+  ./UE4Server-Linux-Shipping FactoryGame $GAME_PARAMS
+elif [ -f ${SERVER_DIR}/Engine/Binaries/Linux/UnrealServer-Linux-Shipping ]; then
+  ./UnrealServer-Linux-Shipping FactoryGame $GAME_PARAMS
+else
+  echo "--ERROR: Couldn't find a game executable, something went probably wrong with the download!---"
+  sleep infinity
+fi
