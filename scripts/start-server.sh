@@ -57,26 +57,6 @@ fi
 echo "---Prepare Server---"
 export WINEARCH=win64
 export WINEPREFIX=/serverdata/serverfiles/WINE64
-echo "---Checking for 'saves' directory---"
-if [ ! -d ${SERVER_DIR}/saves ]; then
-	echo "---'saves' not found creating---"
-    mkdir ${SERVER_DIR}/saves
-fi
-echo "---Directory 'saves' found!---"
-echo "---Checking for 'config.cfg'---"
-if [ ! -f ${SERVER_DIR}/config/config.cfg ]; then
-	echo "---'config.cfg' not found downloading---"
-    if [ ! -d ${SERVER_DIR}/config ]; then
-    	mkdir ${SERVER_DIR}/config
-    fi
-    cd ${SERVER_DIR}/config
-    if wget -q -nc --show-progress --progress=bar:force:noscroll https://raw.githubusercontent.com/ich777/docker-steamcmd-server/theforest/config/config.cfg ; then
-		echo "---Successfully downloaded 'config.cfg'---"
-	else
-		echo "---Something went wrong, can't download 'config.cfg', putting server in sleep mode---"
-		sleep infinity
-	fi
-fi
 echo "---Checking if WINE workdirectory is present---"
 if [ ! -d ${SERVER_DIR}/WINE64 ]; then
 	echo "---WINE workdirectory not found, creating please wait...---"
@@ -93,6 +73,22 @@ if [ ! -d ${SERVER_DIR}/WINE64/drive_c/windows ]; then
 else
 	echo "---WINE properly set up---"
 fi
+
+echo "---Checking for 'dedicatedserver.cfg'---"
+if [ ! -f ${SERVER_DIR}/WINE64/drive_c/users/steam/AppData/LocalLow/Endnight/SonsOfTheForestDS/dedicatedserver.cfg ]; then
+	echo "---'dedicatedserver.cfg' not found downloading---"
+    if [ ! -d ${SERVER_DIR}/WINE64/drive_c/users/steam/AppData/LocalLow/Endnight/SonsOfTheForestDS ]; then
+    	mkdir ${SERVER_DIR}/WINE64/drive_c/users/steam/AppData/LocalLow/Endnight/SonsOfTheForestDS
+    fi
+    cd ${SERVER_DIR}/WINE64/drive_c/users/steam/AppData/LocalLow/Endnight/SonsOfTheForestDS
+    if wget -q -nc --show-progress --progress=bar:force:noscroll https://raw.githubusercontent.com/ich777/docker-steamcmd-server/sonsoftheforest/config/dedicatedserver.cfg ; then
+		echo "---Successfully downloaded 'dedicatedserver.cfg'---"
+	else
+		echo "---Something went wrong, can't download 'dedicatedserver.cfg', putting server in sleep mode---"
+		sleep infinity
+	fi
+fi
+
 echo "---Checking for old display lock files---"
 find /tmp -name ".X99*" -exec rm -f {} \; > /dev/null 2>&1
 chmod -R ${DATA_PERM} ${DATA_DIR}
