@@ -75,12 +75,12 @@ else
 fi
 
 echo "---Checking for 'dedicatedserver.cfg'---"
-if [ ! -f ${SERVER_DIR}/WINE64/drive_c/users/steam/AppData/LocalLow/Endnight/SonsOfTheForestDS/dedicatedserver.cfg ]; then
+if [ ! -f ${SERVER_DIR}/userdata/dedicatedserver.cfg ]; then
   echo "---'dedicatedserver.cfg' not found downloading---"
-  if [ ! -d ${SERVER_DIR}/WINE64/drive_c/users/steam/AppData/LocalLow/Endnight/SonsOfTheForestDS ]; then
-    mkdir -p ${SERVER_DIR}/WINE64/drive_c/users/steam/AppData/LocalLow/Endnight/SonsOfTheForestDS
+  if [ ! -d ${SERVER_DIR}/userdata ]; then
+    mkdir -p ${SERVER_DIR}/userdata
   fi
-  cd ${SERVER_DIR}/WINE64/drive_c/users/steam/AppData/LocalLow/Endnight/SonsOfTheForestDS
+  cd ${SERVER_DIR}/userdata
   if wget -q -nc --show-progress --progress=bar:force:noscroll https://raw.githubusercontent.com/ich777/docker-steamcmd-server/sonsoftheforest/config/dedicatedserver.cfg ; then
     echo "---Successfully downloaded 'dedicatedserver.cfg'---"
   else
@@ -88,8 +88,8 @@ if [ ! -f ${SERVER_DIR}/WINE64/drive_c/users/steam/AppData/LocalLow/Endnight/Son
     sleep infinity
   fi
 fi
-if [ ! -f ${SERVER_DIR}/WINE64/drive_c/users/steam/AppData/LocalLow/Endnight/SonsOfTheForestDS/ownerswhitelist.txt ]; then
-    touch ${SERVER_DIR}/WINE64/drive_c/users/steam/AppData/LocalLow/Endnight/SonsOfTheForestDS/ownerswhitelist.txt
+if [ ! -f ${SERVER_DIR}/userdata/ownerswhitelist.txt ]; then
+    touch ${SERVER_DIR}/userdata/ownerswhitelist.txt
 fi
 
 echo "---Checking for old display lock files---"
@@ -99,4 +99,4 @@ echo "---Server ready---"
 
 echo "---Start Server---"
 cd ${SERVER_DIR}
-xvfb-run --auto-servernum --server-args='-screen 0 640x480x24:32' wine64 ${SERVER_DIR}/SonsOfTheForestDS.exe ${GAME_PARAMS}
+xvfb-run --auto-servernum --server-args='-screen 0 640x480x24:32' wine64 ${SERVER_DIR}/SonsOfTheForestDS.exe -userdatapath ${SERVER_DIR}/userdata ${GAME_PARAMS}
