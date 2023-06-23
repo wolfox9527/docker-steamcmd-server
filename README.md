@@ -1,12 +1,18 @@
 # SteamCMD in Docker optimized for Unraid
 This Docker will download and install SteamCMD. It will also install Sons Of The Forest and run it.
 
-**SERVERNAME:** 'The Forest Docker' **SERVERPASSWORD:** 'Docker' **ADMINPASSWORD:** 'adminDocker' (you can change this in your SERVERFOLDER/config/config.cfg)
+**SERVERNAME:** 'Sons Of The Forest Docker Server'
+**SERVERPASSWORD:** 'Docker'
+(you can change this in your SERVERFOLDER/userdata/dedicatedserver.cfg)
 
-**WARNING:** You have to create a Steam Token to play Online.
-Create your token here: https://steamcommunity.com/dev/managegameservers (please note that you must generate the token for the APPID: '242760' and every gameserver needs it's own token!!!). Put your Token into your GAME_PARAMS like this 'serverSteamAccount YOURTOKEN' (without quotes).
+**ATTENTION:** First Startup can take very long since it downloads the gameserver files!
 
-**Update Notice:** Simply restart the container if a newer version of the game is available.
+**WARNING:** You have to open the ports in your firewall as listed in this template, if not the server will not properly start.
+If you want LAN play only you have to edit the dedicatedserver.cfg file and set the "LanOnly" flag to: "true" (without double quotes).
+
+Update Notice: Simply restart the container if a newer version of the game is available.
+
+You can also run multiple servers with only one SteamCMD directory!
 
 ## Env params
 | Name | Value | Example |
@@ -14,7 +20,7 @@ Create your token here: https://steamcommunity.com/dev/managegameservers (please
 | STEAMCMD_DIR | Folder for SteamCMD | /serverdata/steamcmd |
 | SERVER_DIR | Folder for gamefile | /serverdata/serverfiles |
 | GAME_ID | The GAME_ID that the container downloads at startup. If you want to install a static or beta version of the game change the value to: '2465200 -beta YOURBRANCH' (without quotes, replace YOURBRANCH with the branch or version you want to install). | 2465200 |
-| GAME_PARAMS | Values to start the server | empty |
+| GAME_PARAMS | Values to start the server, leave empty for none | empty |
 | UID | User Identifier | 99 |
 | GID | Group Identifier | 100 |
 | GAME_PORT | Port the server will be running on | 27015 |
