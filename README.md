@@ -1,5 +1,5 @@
 # SteamCMD in Docker optimized for Unraid
-This Docker will download and install SteamCMD. It will also install The Forest and run it.
+This Docker will download and install SteamCMD. It will also install Sons Of The Forest and run it.
 
 **SERVERNAME:** 'The Forest Docker' **SERVERPASSWORD:** 'Docker' **ADMINPASSWORD:** 'adminDocker' (you can change this in your SERVERFOLDER/config/config.cfg)
 
@@ -13,7 +13,7 @@ Create your token here: https://steamcommunity.com/dev/managegameservers (please
 | --- | --- | --- |
 | STEAMCMD_DIR | Folder for SteamCMD | /serverdata/steamcmd |
 | SERVER_DIR | Folder for gamefile | /serverdata/serverfiles |
-| GAME_ID | The GAME_ID that the container downloads at startup. If you want to install a static or beta version of the game change the value to: '556450 -beta YOURBRANCH' (without quotes, replace YOURBRANCH with the branch or version you want to install). | 556450 |
+| GAME_ID | The GAME_ID that the container downloads at startup. If you want to install a static or beta version of the game change the value to: '2465200 -beta YOURBRANCH' (without quotes, replace YOURBRANCH with the branch or version you want to install). | 2465200 |
 | GAME_NAME | SRCDS gamename | cstrike |
 | GAME_PARAMS | Values to start the server | empty |
 | UID | User Identifier | 99 |
@@ -25,13 +25,13 @@ Create your token here: https://steamcommunity.com/dev/managegameservers (please
 
 ## Run example
 ```
-docker run --name TheForest -d \
-	-p 8766:8766/udp -p 27015:27015/udp -p 27016:27016/udp \
+docker run --name SonsOfTheForest -d \
+	-p 8766:8766/udp -p 27016:27016/udp -p 9700:9700/udp \
 	--env 'UID=99' \
 	--env 'GID=100' \
 	--volume /path/to/steamcmd:/serverdata/steamcmd \
-	--volume /path/to/theforest:/serverdata/serverfiles \
-	ich777/steamcmd:theforest
+	--volume /path/to/sonsoftheforest:/serverdata/serverfiles \
+	ich777/steamcmd:sonsoftheforest
 ```
 
 This Docker was mainly edited for better use with Unraid, if you don't use Unraid you should definitely try it!
