@@ -59,34 +59,34 @@ export WINEARCH=win64
 export WINEPREFIX=/serverdata/serverfiles/WINE64
 echo "---Checking if WINE workdirectory is present---"
 if [ ! -d ${SERVER_DIR}/WINE64 ]; then
-	echo "---WINE workdirectory not found, creating please wait...---"
+    echo "---WINE workdirectory not found, creating please wait...---"
     mkdir ${SERVER_DIR}/WINE64
 else
-	echo "---WINE workdirectory found---"
+    echo "---WINE workdirectory found---"
 fi
 echo "---Checking if WINE is properly installed---"
 if [ ! -d ${SERVER_DIR}/WINE64/drive_c/windows ]; then
-	echo "---Setting up WINE---"
+    echo "---Setting up WINE---"
     cd ${SERVER_DIR}
     winecfg > /dev/null 2>&1
     sleep 15
 else
-	echo "---WINE properly set up---"
+    echo "---WINE properly set up---"
 fi
 
 echo "---Checking for 'dedicatedserver.cfg'---"
 if [ ! -f ${SERVER_DIR}/WINE64/drive_c/users/steam/AppData/LocalLow/Endnight/SonsOfTheForestDS/dedicatedserver.cfg ]; then
-	echo "---'dedicatedserver.cfg' not found downloading---"
-    if [ ! -d ${SERVER_DIR}/WINE64/drive_c/users/steam/AppData/LocalLow/Endnight/SonsOfTheForestDS ]; then
-    	mkdir ${SERVER_DIR}/WINE64/drive_c/users/steam/AppData/LocalLow/Endnight/SonsOfTheForestDS
-    fi
-    cd ${SERVER_DIR}/WINE64/drive_c/users/steam/AppData/LocalLow/Endnight/SonsOfTheForestDS
-    if wget -q -nc --show-progress --progress=bar:force:noscroll https://raw.githubusercontent.com/ich777/docker-steamcmd-server/sonsoftheforest/config/dedicatedserver.cfg ; then
-		echo "---Successfully downloaded 'dedicatedserver.cfg'---"
-	else
-		echo "---Something went wrong, can't download 'dedicatedserver.cfg', putting server in sleep mode---"
-		sleep infinity
-	fi
+  echo "---'dedicatedserver.cfg' not found downloading---"
+  if [ ! -d ${SERVER_DIR}/WINE64/drive_c/users/steam/AppData/LocalLow/Endnight/SonsOfTheForestDS ]; then
+    mkdir ${SERVER_DIR}/WINE64/drive_c/users/steam/AppData/LocalLow/Endnight/SonsOfTheForestDS
+  fi
+  cd ${SERVER_DIR}/WINE64/drive_c/users/steam/AppData/LocalLow/Endnight/SonsOfTheForestDS
+  if wget -q -nc --show-progress --progress=bar:force:noscroll https://raw.githubusercontent.com/ich777/docker-steamcmd-server/sonsoftheforest/config/dedicatedserver.cfg ; then
+    echo "---Successfully downloaded 'dedicatedserver.cfg'---"
+  else
+    echo "---Something went wrong, can't download 'dedicatedserver.cfg', putting server in sleep mode---"
+    sleep infinity
+  fi
 fi
 
 echo "---Checking for old display lock files---"
@@ -96,4 +96,4 @@ echo "---Server ready---"
 sleep infinity
 echo "---Start Server---"
 cd ${SERVER_DIR}
-xvfb-run --auto-servernum --server-args='-screen 0 640x480x24:32' wine64 ${SERVER_DIR}/TheForestDedicatedServer.exe -batchmode -dedicated -savefolderpath "${SERVER_DIR}/saves/" -configfilepath "${SERVER_DIR}/config/config.cfg" ${GAME_PARAMS}
+xvfb-run --auto-servernum --server-args='-screen 0 640x480x24:32' wine64 ${SERVER_DIR}/SonsOfTheForestDS.exe ${GAME_PARAMS}
