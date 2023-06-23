@@ -14,7 +14,6 @@ Create your token here: https://steamcommunity.com/dev/managegameservers (please
 | STEAMCMD_DIR | Folder for SteamCMD | /serverdata/steamcmd |
 | SERVER_DIR | Folder for gamefile | /serverdata/serverfiles |
 | GAME_ID | The GAME_ID that the container downloads at startup. If you want to install a static or beta version of the game change the value to: '2465200 -beta YOURBRANCH' (without quotes, replace YOURBRANCH with the branch or version you want to install). | 2465200 |
-| GAME_NAME | SRCDS gamename | cstrike |
 | GAME_PARAMS | Values to start the server | empty |
 | UID | User Identifier | 99 |
 | GID | Group Identifier | 100 |
