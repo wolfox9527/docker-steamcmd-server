@@ -57,7 +57,7 @@ echo "---Checking if everything is in place---"
 if [ ! -f ${DATA_DIR}/.steam/sdk64/steamclient.so ]; then
     echo "---Moving files in place---"
 	if [ ! -d ${DATA_DIR}/.steam/sdk64 ]; then
-    	mkdir ${DATA_DIR}/.steam/sdk64
+    	mkdir -p ${DATA_DIR}/.steam/sdk64
     fi
 	cp ${SERVER_DIR}/linux64/steamclient.so ${DATA_DIR}/.steam/sdk64/steamclient.so
     sleep 2
