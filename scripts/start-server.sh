@@ -78,7 +78,7 @@ echo "---Checking if dotnet45 is installed---"
 if [ ! -f ${SERVER_DIR}/dotnet45 ]; then
   echo "---dotnet45 not installed, please wait installing...---"
   find /tmp -name ".X99*" -exec rm -f {} \; > /dev/null 2>&1
-  /opt/scripts/start-Xvfb.sh &
+  /opt/scripts/start-Xvfb.sh 2>/dev/null &
   echo "---...this can take some time...---"
   sleep 5
   /usr/bin/winetricks -q dotnet45 2>/dev/null
