@@ -5,6 +5,8 @@ LABEL org.opencontainers.image.source="https://github.com/ich777/docker-steamcmd
 
 RUN apt-get update && \
 	apt-get -y install lib32gcc-s1 winbind xvfb screen && \
+	wget -q -O /usr/bin/winetricks https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks && \
+	chmod +x /usr/bin/winetricks && chown 755 /usr/bin/winetricks && \
 	rm -rf /var/lib/apt/lists/*
 
 ENV DATA_DIR="/serverdata"
