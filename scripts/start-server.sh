@@ -74,28 +74,12 @@ else
     echo "---WINE properly set up---"
 fi
 
-echo "---Checking for 'dedicatedserver.cfg'---"
-if [ ! -f ${SERVER_DIR}/userdata/dedicatedserver.cfg ]; then
-  echo "---'dedicatedserver.cfg' not found downloading---"
-  if [ ! -d ${SERVER_DIR}/userdata ]; then
-    mkdir -p ${SERVER_DIR}/userdata
-  fi
-  cd ${SERVER_DIR}/userdata
-  if wget -q -nc --show-progress --progress=bar:force:noscroll https://raw.githubusercontent.com/ich777/docker-steamcmd-server/sonsoftheforest/config/dedicatedserver.cfg ; then
-    echo "---Successfully downloaded 'dedicatedserver.cfg'---"
-  else
-    echo "---Something went wrong, can't download 'dedicatedserver.cfg', putting server in sleep mode---"
-    sleep infinity
-  fi
-fi
-if [ ! -f ${SERVER_DIR}/userdata/ownerswhitelist.txt ]; then
-    touch ${SERVER_DIR}/userdata/ownerswhitelist.txt
-fi
-
 echo "---Checking for old display lock files---"
 find /tmp -name ".X99*" -exec rm -f {} \; > /dev/null 2>&1
 chmod -R ${DATA_PERM} ${DATA_DIR}
 echo "---Server ready---"
+
+sleep infinity
 
 echo "---Start Server---"
 cd ${SERVER_DIR}
