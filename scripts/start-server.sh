@@ -119,6 +119,6 @@ else
   cd ${SERVER_DIR}/Binaries/Win64
   screen -S UDK -d -m wine64 ${SERVER_DIR}/Binaries/Win64/UDK.exe server coldmap1?steamsockets -log ${GAME_PARAMS}
   sleep 2
-  /opt/scripts/start-watchdog.sh
+  /opt/scripts/start-watchdog.sh &
   tail -f ${SERVER_DIR}/UDKGame/Logs/Launch.log
 fi
