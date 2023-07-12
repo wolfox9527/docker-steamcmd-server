@@ -1,4 +1,5 @@
 #!/bin/bash
+export DISPLAY=:99
 if [ ! -f ${STEAMCMD_DIR}/steamcmd.sh ]; then
     echo "SteamCMD not found!"
     wget -q -O ${STEAMCMD_DIR}/steamcmd_linux.tar.gz http://media.steampowered.com/client/steamcmd_linux.tar.gz 
@@ -73,14 +74,43 @@ if [ ! -d ${SERVER_DIR}/WINE64/drive_c/windows ]; then
 else
     echo "---WINE properly set up---"
 fi
+echo "---Checking if dotnet45 is installed---"
+if [ ! -f ${SERVER_DIR}/dotnet45 ]; then
+  echo "---dotnet45 not installed, please wait installing...---"
+  find /tmp -name ".X99*" -exec rm -f {} \; > /dev/null 2>&1
+  /opt/scripts/start-Xvfb.sh &
+  echo "---...this can take some time...---"
+  sleep 5
+  /usr/bin/winetricks -q dotnet45 2>/dev/null
+  kill $(pidof Xvfb)
+  echo "---Installation from dotnet45 finished!---"
+  touch ${SERVER_DIR}/dotnet45
+else
+  echo "---dotnet45 found! Continuing...---"
+fi
+
+echo "---Checking for configuration file---"
+if [ ! -f ${SERVER_DIR}/UDKGame/Config/UDKDedServerSettings.ini ]; then
+  if [ ! -d ${SERVER_DIR}/UDKGame/Config ]; then
+    mkdir -p ${SERVER_DIR}/UDKGame/Config
+  fi
+  cd ${SERVER_DIR}/UDKGame/Config
+  if wget -q -nc --show-progress --progress=bar:force:noscroll -O ${SERVER_DIR}/UDKGame/Config/UDKDedServerSettings.ini https://raw.githubusercontent.com/ich777/docker-steamcmd-server/subsistence/config/UDKDedServerSettings.ini ; then
+    echo "---Successfully downloaded configuration file---"
+  else
+    echo "---Something went wrong, can't download configuration file, please stop the server and edit the file manually!---"
+  fi
+fi
 
 echo "---Checking for old display lock files---"
 find /tmp -name ".X99*" -exec rm -f {} \; > /dev/null 2>&1
 chmod -R ${DATA_PERM} ${DATA_DIR}
 echo "---Server ready---"
 
-sleep infinity
+echo "---Starting Xvfb server---"
+screen -S Xvfb -L -Logfile ${SERVER_DIR}/XvfbLog.0 -d -m /opt/scripts/start-Xvfb.sh
+sleep 5
 
 echo "---Start Server---"
-cd ${SERVER_DIR}
-xvfb-run --auto-servernum --server-args='-screen 0 640x480x24:32' wine64 ${SERVER_DIR}/SonsOfTheForestDS.exe -userdatapath ${SERVER_DIR}/userdata ${GAME_PARAMS}
+cd ${SERVER_DIR}/Binaries/Win64
+wine64 ${SERVER_DIR}/Binaries/Win64/UDK.exe server coldmap1?steamsockets -log ${GAME_PARAMS}
