@@ -82,24 +82,19 @@ if [ ! -f ${SERVER_DIR}/dotnet45 ]; then
   echo "---...this can take some time...---"
   sleep 5
   /usr/bin/winetricks -q dotnet45 2>/dev/null
+  wine64 ${SERVER_DIR}/Binaries/Win64/UDK.exe server coldmap1?steamsockets >/dev/null 2&>1 &
+  sleep 10
+  kill $(pidof UDK.exe)
   kill $(pidof Xvfb)
-  echo "---Installation from dotnet45 finished!---"
+  sed -i "/^Password=/c\Password=Docker" ${SERVER_DIR}/UDKGame/Config/UDKDedServerSettings.ini
+  sed -i "/^AdminPassword=/c\AdminPassword=adminDocker" ${SERVER_DIR}/UDKGame/Config/UDKDedServerSettings.ini
+  sed -i "/^ServerName=/c\ServerName=Subsistence Docker" ${SERVER_DIR}/UDKGame/Config/UDKDedServerSettings.ini
+  sed -i "/^ServerDescription=/c\ServerDescription=Subsistence running in Docker" ${SERVER_DIR}/UDKGame/Config/UDKDedServerSettings.ini
+  sed -i "/^HostedByName=/c\HostedByName=Unraid" ${SERVER_DIR}/UDKGame/Config/UDKDedServerSettings.ini
   touch ${SERVER_DIR}/dotnet45
+  echo "---Installation from dotnet45 finished!---"
 else
   echo "---dotnet45 found! Continuing...---"
-fi
-
-echo "---Checking for configuration file---"
-if [ ! -f ${SERVER_DIR}/UDKGame/Config/UDKDedServerSettings.ini ]; then
-  if [ ! -d ${SERVER_DIR}/UDKGame/Config ]; then
-    mkdir -p ${SERVER_DIR}/UDKGame/Config
-  fi
-  cd ${SERVER_DIR}/UDKGame/Config
-  if wget -q -nc --show-progress --progress=bar:force:noscroll -O ${SERVER_DIR}/UDKGame/Config/UDKDedServerSettings.ini https://raw.githubusercontent.com/ich777/docker-steamcmd-server/subsistence/config/UDKDedServerSettings.ini ; then
-    echo "---Successfully downloaded configuration file---"
-  else
-    echo "---Something went wrong, can't download configuration file, please stop the server and edit the file manually!---"
-  fi
 fi
 
 echo "---Checking for old display lock files---"
