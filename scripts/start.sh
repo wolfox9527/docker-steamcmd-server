@@ -26,8 +26,8 @@ chown -R ${UID}:${GID} ${DATA_DIR}
 
 echo "---Starting...---"
 term_handler() {
-	kill -SIGINT $(pidof SonsOfTheForestDS.exe)
-	tail --pid=$(pidof SonsOfTheForestDS.exe) -f 2>/dev/null
+	kill -SIGINT $(pidof UDK.exe)
+	tail --pid=$(pidof UDK.exe) -f 2>/dev/null
 	exit 143;
 }
 
