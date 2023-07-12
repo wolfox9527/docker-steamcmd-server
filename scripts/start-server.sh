@@ -112,5 +112,13 @@ screen -S Xvfb -L -Logfile ${SERVER_DIR}/XvfbLog.0 -d -m /opt/scripts/start-Xvfb
 sleep 5
 
 echo "---Start Server---"
-cd ${SERVER_DIR}/Binaries/Win64
-wine64 ${SERVER_DIR}/Binaries/Win64/UDK.exe server coldmap1?steamsockets -log ${GAME_PARAMS}
+if [ ! -f ${SERVER_DIR}/Binaries/Win64/UDK.exe ]; then
+  echo "---Something went wrong, can't find the executable, putting container into sleep mode!---"
+  sleep infinity
+else
+  cd ${SERVER_DIR}/Binaries/Win64
+  screen -S UDK -d -m wine64 ${SERVER_DIR}/Binaries/Win64/UDK.exe server coldmap1?steamsockets -log ${GAME_PARAMS}
+  sleep 2
+  /opt/scripts/start-watchdog.sh
+  tail -f ${SERVER_DIR}/UDKGame/Logs/Launch.log
+fi
