@@ -148,6 +148,10 @@ if [ "${BACKUP_FILES}" == "true" ]; then
 fi
 
 echo "---Start Server---"
+
+GAME_PARAMS=${GAME_PARAMS/-nographics/}
+GAME_PARAMS=${GAME_PARAMS/-batchmode/}
+
 cd ${SERVER_DIR}
 if [ "${ENABLE_BEPINEX}" == "true" ]; then
     echo "---with BepInEx---"
