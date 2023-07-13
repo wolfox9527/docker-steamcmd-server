@@ -167,14 +167,14 @@ if [ "${ENABLE_BEPINEX}" == "true" ]; then
     export LD_LIBRARY_PATH=${SERVER_DIR}/linux64:"$LD_LIBRARY_PATH"
     export SteamAppId=251570
     if [ "${LOG_TIMESTAMP}" != "true" ]; then
-        ${SERVER_DIR}/7DaysToDieServer.x86_64 -configfile=${SERVERCONFIG} ${GAME_PARAMS}
+        ${SERVER_DIR}/7DaysToDieServer.x86_64 -configfile=${SERVERCONFIG} -nographics -batchmode ${GAME_PARAMS}
     else
-        ${SERVER_DIR}/7DaysToDieServer.x86_64 -configfile=${SERVERCONFIG} -logfile 7DaysToDie_Data/output_log_$(date +"%F_%H.%M.%S").txt ${GAME_PARAMS}
+        ${SERVER_DIR}/7DaysToDieServer.x86_64 -configfile=${SERVERCONFIG} -logfile 7DaysToDie_Data/output_log_$(date +"%F_%H.%M.%S").txt -nographics -batchmode ${GAME_PARAMS}
     fi
 else
     if [ "${LOG_TIMESTAMP}" != "true" ]; then
-        ${SERVER_DIR}/7DaysToDieServer.x86_64 -configfile=${SERVERCONFIG} ${GAME_PARAMS}
+        ${SERVER_DIR}/7DaysToDieServer.x86_64 -configfile=${SERVERCONFIG} -nographics -batchmode ${GAME_PARAMS}
     else
-        ${SERVER_DIR}/7DaysToDieServer.x86_64 -configfile=${SERVERCONFIG} -logfile 7DaysToDie_Data/output_log_$(date +"%F_%H.%M.%S").txt ${GAME_PARAMS}
+        ${SERVER_DIR}/7DaysToDieServer.x86_64 -configfile=${SERVERCONFIG} -logfile 7DaysToDie_Data/output_log_$(date +"%F_%H.%M.%S").txt -nographics -batchmode ${GAME_PARAMS}
     fi
 fi
