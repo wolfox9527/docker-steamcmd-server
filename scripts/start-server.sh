@@ -79,8 +79,7 @@ VerbosePlayerProperties=False
 AutoSaveGameInterval=900
 BackupSaveGamesInterval=7200
 ActiveSaveFileDescriptiveName=SAVE_1
-ServerAdvertisedName=
-HeartbeatInterval=0" > ${SERVER_DIR}/Astro/Saved/Config/WindowsServer/AstroServerSettings.ini
+ServerAdvertisedName=" > ${SERVER_DIR}/Astro/Saved/Config/WindowsServer/AstroServerSettings.ini
 else
   echo "---'AstroServerSettings.ini' found---"
 fi
@@ -92,6 +91,7 @@ Port=8777
 net.AllowEncryption=False" > ${SERVER_DIR}/Astro/Saved/Config/WindowsServer/Engine.ini
 else
   echo "---'Engine.ini' found---"
+  sed -i '/^HeartbeatInterval=0/d' ${SERVER_DIR}/Astro/Saved/Config/WindowsServer/AstroServerSettings.ini
 fi
 
 echo "---Checking if PublicIP is in place---"
