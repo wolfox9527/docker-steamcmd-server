@@ -76,9 +76,9 @@ else
 	echo "---WINE properly set up---"
 fi
 
-echo "---Checking if Runtimes are installed---"
+echo "---Checking if vcredist2019 is installed---"
 if [ ! -f ${SERVER_DIR}/vcredist2019 ]; then
-  echo "---Runtimes not installed, please wait installing...---"
+  echo "---vcredist2019 not installed, please wait installing...---"
   find /tmp -name ".X99*" -exec rm -f {} \; > /dev/null 2>&1
   /opt/scripts/start-Xvfb.sh 2>/dev/null &
   echo "---...this can take some time...---"
@@ -90,9 +90,9 @@ if [ ! -f ${SERVER_DIR}/vcredist2019 ]; then
   wineserver -k >/dev/null 2>&1
   kill $(pidof Xvfb) 2>/dev/null
   touch ${SERVER_DIR}/vcredist2019
-  echo "---Installation from Runtimes finished!---"
+  echo "---Installation from vcredist2019 finished!---"
 else
-  echo "---Runtimes found! Continuing...---"
+  echo "---vcredist2019 found! Continuing...---"
 fi
 
 echo "---Looking 'ServerSettings.ini' file is in place---"
