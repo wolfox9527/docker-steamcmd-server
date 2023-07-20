@@ -83,7 +83,7 @@ if [ ! -f ${SERVER_DIR}/vcredist2019 ]; then
   /opt/scripts/start-Xvfb.sh 2>/dev/null &
   echo "---...this can take some time...---"
   sleep 5
-  wine64 winecfg -v win2003 >/dev/null 2&>1
+  /usr/bin/winetricks -q dotnet45 2>/dev/null
   /usr/bin/winetricks -q vcrun2019 2>/dev/null
   wine64 ${SERVER_DIR}/IcarusServer.exe -log ${GAME_PARAMS} >/dev/null 2&>1 &
   sleep 10
