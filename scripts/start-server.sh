@@ -74,6 +74,10 @@ if [ ! -d ${SERVER_DIR}/WINE64/drive_c/windows ]; then
 else
 	echo "---WINE properly set up---"
 fi
+
+sleep infinity
+
+
 echo "---Looking 'ServerSettings.ini' file is in place---"
 if [ ! -f ${SERVER_DIR}/Icarus/Saved/Config/WindowsServer/ServerSettings.ini ]; then
   echo "---'ServerSettings.ini' not found, copying template...---"
@@ -87,8 +91,6 @@ fi
 echo "---Checking for old display lock files---"
 find /tmp -name ".X99*" -exec rm -f {} \; > /dev/null 2>&1
 chmod -R ${DATA_PERM} ${DATA_DIR}
-
-sleep infinity
 
 echo "---Starting Xvfb server---"
 export DISPLAY=:99
