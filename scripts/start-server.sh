@@ -76,9 +76,9 @@ else
 	echo "---WINE properly set up---"
 fi
 
-echo "---Checking if vcredist2019 is installed---"
-if [ ! -f ${SERVER_DIR}/vcredist2019 ]; then
-  echo "---vcredist2019 not installed, please wait installing...---"
+echo "---Checking if runtimes are installed---"
+if [ ! -f ${SERVER_DIR}/runtimes ]; then
+  echo "---Runtimes not installed, please wait installing...---"
   find /tmp -name ".X99*" -exec rm -f {} \; > /dev/null 2>&1
   /opt/scripts/start-Xvfb.sh 2>/dev/null &
   echo "---...this can take some time...---"
@@ -89,10 +89,10 @@ if [ ! -f ${SERVER_DIR}/vcredist2019 ]; then
   sleep 10
   wineserver -k >/dev/null 2>&1
   kill $(pidof Xvfb) 2>/dev/null
-  touch ${SERVER_DIR}/vcredist2019
-  echo "---Installation from vcredist2019 finished!---"
+  touch ${SERVER_DIR}/runtimes
+  echo "---Installation from runtimes finished!---"
 else
-  echo "---vcredist2019 found! Continuing...---"
+  echo "---Runtimes found! Continuing...---"
 fi
 
 echo "---Looking 'ServerSettings.ini' file is in place---"
@@ -125,5 +125,5 @@ else
   screen -S Icarus -d -m wine64 ${SERVER_DIR}/IcarusServer.exe -log ${GAME_PARAMS}
   sleep 2
   /opt/scripts/start-watchdog.sh &
-  tail -f ${SERVER_DIR}/Icarus/Saved/Logs/Icarus.log
+  tail -n 9999 -f ${SERVER_DIR}/Icarus/Saved/Logs/Icarus.log
 fi
