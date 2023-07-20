@@ -1,4 +1,5 @@
 #!/bin/bash
+export DISPLAY=:99
 if [ ! -f ${STEAMCMD_DIR}/steamcmd.sh ]; then
     echo "SteamCMD not found!"
     wget -q -O ${STEAMCMD_DIR}/steamcmd_linux.tar.gz http://media.steampowered.com/client/steamcmd_linux.tar.gz 
@@ -75,8 +76,24 @@ else
 	echo "---WINE properly set up---"
 fi
 
-sleep infinity
-
+echo "---Checking if Runtimes are installed---"
+if [ ! -f ${SERVER_DIR}/vcredist2019 ]; then
+  echo "---Runtimes not installed, please wait installing...---"
+  find /tmp -name ".X99*" -exec rm -f {} \; > /dev/null 2>&1
+  /opt/scripts/start-Xvfb.sh 2>/dev/null &
+  echo "---...this can take some time...---"
+  sleep 5
+  wine64 winecfg -v win2003 >/dev/null 2&>1
+  /usr/bin/winetricks -q vcrun2019 2>/dev/null
+  wine64 ${SERVER_DIR}/IcarusServer.exe -log ${GAME_PARAMS} >/dev/null 2&>1 &
+  sleep 10
+  wineserver -k >/dev/null 2>&1
+  kill $(pidof Xvfb) 2>/dev/null
+  touch ${SERVER_DIR}/vcredist2019
+  echo "---Installation from Runtimes finished!---"
+else
+  echo "---Runtimes found! Continuing...---"
+fi
 
 echo "---Looking 'ServerSettings.ini' file is in place---"
 if [ ! -f ${SERVER_DIR}/Icarus/Saved/Config/WindowsServer/ServerSettings.ini ]; then
@@ -93,20 +110,20 @@ find /tmp -name ".X99*" -exec rm -f {} \; > /dev/null 2>&1
 chmod -R ${DATA_PERM} ${DATA_DIR}
 
 echo "---Starting Xvfb server---"
-export DISPLAY=:99
-Xvfb :99 -screen scrn 640x480x16 2>/dev/null &
+screen -S Xvfb -d -m /opt/scripts/start-Xvfb.sh
+sleep 5
 
-echo "---Checking if VC Runtime is installed---"
-if [ ! -d ${SERVER_DIR}/WINE64/drive_c/windows/Installer ]; then
-  echo "---VC Runtime not installed, this can take some time, please wait, installing...---"
-  timeout 120 /usr/bin/winetricks -q vcrun2019 >/dev/null 2>&1
-  wineserver -k
-else
-  echo "---VC Runtime found---"
-fi
 chmod -R ${DATA_PERM} ${DATA_DIR}
 echo "---Server ready---"
 
 echo "---Start Server---"
 cd ${SERVER_DIR}
-wine64 ${SERVER_DIR}/IcarusServer.exe -log ${GAME_PARAMS}
+if [ ! -f ${SERVER_DIR}/IcarusServer.exe ]; then
+  echo "---Something went wrong, can't find the executable, putting container into sleep mode!---"
+  sleep infinity
+else
+  screen -S Icarus -d -m wine64 ${SERVER_DIR}/IcarusServer.exe -log ${GAME_PARAMS}
+  sleep 2
+  /opt/scripts/start-watchdog.sh &
+  tail -f ${SERVER_DIR}/Icarus/Saved/Logs/Icarus.log
+fi
