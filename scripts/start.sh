@@ -26,7 +26,7 @@ chown -R ${UID}:${GID} ${DATA_DIR}
 
 echo "---Starting...---"
 term_handler() {
-	kill -SIGINT $(pidof AstroServer.exe)
+	kill -SIGKILL $(pidof AstroServer.exe)
 	tail --pid=$(pidof AstroServer.exe) -f 2>/dev/null
 	exit 143;
 }
