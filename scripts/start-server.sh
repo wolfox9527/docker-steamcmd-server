@@ -91,5 +91,10 @@ chmod -R ${DATA_PERM} ${DATA_DIR}
 echo "---Server ready---"
 
 echo "---Start Server---"
-cd ${SERVER_DIR}
-wine64 server64.exe ${GAME_PARAMS}
+if [ ! -f ${SERVER_DIR}/server64.exe ]; then
+  echo "---Something went wrong, can't find the executable, putting container into sleep mode!---"
+  sleep infinity
+else
+  cd ${SERVER_DIR}
+  wine64 server64.exe ${GAME_PARAMS}
+fi
