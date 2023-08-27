@@ -1,9 +1,14 @@
 # SteamCMD in Docker optimized for Unraid
-This Docker will download and install SteamCMD. It will also install Conan Exiles and run it.
+This Docker will download and install SteamCMD. It will also install Stormworks and run it.
 
-**Servername:** 'Docker ConanExiles' Password: 'Docker' rconPassword: 'adminDocker'
+Initial server configuration:  
+**Servername:** Stormworks Docker **Password:** Docker   
 
-**Update Notice:** Simply restart the container if a newer version of the game is available.
+**Configuration/Save Location:** You'll find your server configuration and saved games in: ../WINE64/drive_c/users/steam/AppData/Roaming/Stormworks/
+
+**ATTENTION:** First startup can take very long since it downloads the gameserver files and it also installs the runtimes which can take quite some time! 
+
+Update Notice: Simply restart the container if a newer version of the game is available.
 
 ## Env params
 | Name | Value | Example |
@@ -11,7 +16,7 @@ This Docker will download and install SteamCMD. It will also install Conan Exile
 | STEAMCMD_DIR | Folder for SteamCMD | /serverdata/steamcmd |
 | SERVER_DIR | Folder for gamefile | /serverdata/serverfiles |
 | GAME_PARAMS | Values to start the server if needed. | empty |
-| WS_CONTENT | Enter you Workshopcontent here, you can also enter multiple WS Content ID's sperated by SPACE. | empty |
+| GAME_ID | The GAME_ID that the container downloads at startup. If you want to install a static or beta version of the game change the value to: '1247090 -beta YOURBRANCH' (without quotes, replace YOURBRANCH with the branch or version you want to install). | 1247090 |
 | UID | User Identifier | 99 |
 | GID | Group Identifier | 100 |
 | VALIDATE | Validates the game data | false |
@@ -21,14 +26,14 @@ This Docker will download and install SteamCMD. It will also install Conan Exile
 
 ## Run example
 ```
-docker run --name ConanExiles -d \
-	-p 7777:7777 -p 7777-7778:7777-7778/udp -p 27015:27015/udp \
-	--env 'GAME_ID=443030' \
+docker run --name Stormworks -d \
+	-p 25564-25565/udp \
+	--env 'GAME_ID=1247090' \
 	--env 'UID=99' \
 	--env 'GID=100' \
 	--volume /path/to/steamcmd:/serverdata/steamcmd \
-	--volume /path/to/conanexiles:/serverdata/serverfiles \
-	ich777/steamcmd:conanexiles
+	--volume /path/to/stormworks:/serverdata/serverfiles \
+	ich777/steamcmd:stormworks
 ```
 
 
