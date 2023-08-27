@@ -90,8 +90,6 @@ find /tmp -name ".X99*" -exec rm -f {} \; > /dev/null 2>&1
 chmod -R ${DATA_PERM} ${DATA_DIR}
 echo "---Server ready---"
 
-sleep infinity
-
 echo "---Start Server---"
 cd ${SERVER_DIR}
 wine64 server64.exe ${GAME_PARAMS}
