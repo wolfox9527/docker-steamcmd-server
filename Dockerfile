@@ -5,7 +5,7 @@ LABEL org.opencontainers.image.source="https://github.com/ich777/docker-steamcmd
 
 RUN dpkg --add-architecture i386 && \
 	apt-get update && \
-	apt-get -y install lib32gcc-s1 screen xvfb winbind && \
+	apt-get -y install lib32gcc-s1 screen xvfb winbind mariadb && \
 	rm -rf /var/lib/apt/lists/*
 
 ENV DATA_DIR="/serverdata"
@@ -32,7 +32,6 @@ RUN mkdir $DATA_DIR && \
 
 ADD /scripts/ /opt/scripts/
 RUN chmod -R 770 /opt/scripts/
-COPY /config/server_config.xml /opt/server_config.xml
 
 #Server Start
 ENTRYPOINT ["/opt/scripts/start.sh"]
