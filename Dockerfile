@@ -29,7 +29,7 @@ RUN mkdir $DATA_DIR && \
 	mkdir $SERVER_DIR && \
 	useradd -d $DATA_DIR -s /bin/bash $USER && \
 	chown -R $USER $DATA_DIR && \
-	ulimit -n 2048 \
+	ulimit -n 2048 && \
 	/etc/init.d/mariadb start && \
 	mysql -u root -e "CREATE USER IF NOT EXISTS 'steam'@'%' IDENTIFIED BY 'lifyo';FLUSH PRIVILEGES;" && \
 	mysql -u root -e "CREATE DATABASE IF NOT EXISTS lifyo;" && \
