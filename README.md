@@ -1,10 +1,8 @@
 # SteamCMD in Docker optimized for Unraid
-This Docker will download and install SteamCMD. It will also install Stormworks and run it.
+This Docker will download and install SteamCMD. It will also install Life is Feudal: Your Own and run it.
 
 Initial server configuration:  
-**Servername:** Stormworks Docker **Password:** Docker   
-
-**Configuration/Save Location:** You'll find your server configuration and saved games in: ../WINE64/drive_c/users/steam/AppData/Roaming/Stormworks/
+**Servername:** LiF Docker **Password:** Docker **Admin Password:** adminDocker  
 
 **ATTENTION:** First startup can take very long since it downloads the gameserver files and it also installs the runtimes which can take quite some time! 
 
@@ -16,7 +14,7 @@ Update Notice: Simply restart the container if a newer version of the game is av
 | STEAMCMD_DIR | Folder for SteamCMD | /serverdata/steamcmd |
 | SERVER_DIR | Folder for gamefile | /serverdata/serverfiles |
 | GAME_PARAMS | Values to start the server if needed. | empty |
-| GAME_ID | The GAME_ID that the container downloads at startup. If you want to install a static or beta version of the game change the value to: '1247090 -beta YOURBRANCH' (without quotes, replace YOURBRANCH with the branch or version you want to install). | 1247090 |
+| GAME_ID | The GAME_ID that the container downloads at startup. If you want to install a static or beta version of the game change the value to: '320850 -beta YOURBRANCH' (without quotes, replace YOURBRANCH with the branch or version you want to install). | 320850 |
 | UID | User Identifier | 99 |
 | GID | Group Identifier | 100 |
 | VALIDATE | Validates the game data | false |
@@ -26,14 +24,14 @@ Update Notice: Simply restart the container if a newer version of the game is av
 
 ## Run example
 ```
-docker run --name Stormworks -d \
-	-p 25564-25565/udp \
-	--env 'GAME_ID=1247090' \
+docker run --name LifeIsFeudal-YourOwn -d \
+	-p 28000-28003 -p 28000-28003/udp \
+	--env 'GAME_ID=320850' \
 	--env 'UID=99' \
 	--env 'GID=100' \
 	--volume /path/to/steamcmd:/serverdata/steamcmd \
-	--volume /path/to/stormworks:/serverdata/serverfiles \
-	ich777/steamcmd:stormworks
+	--volume /path/to/lifeisfeudal-yo:/serverdata/serverfiles \
+	ich777/steamcmd:lifyo
 ```
 
 
