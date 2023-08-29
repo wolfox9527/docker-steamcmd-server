@@ -107,8 +107,6 @@ find /tmp -name ".X99*" -exec rm -f {} \; > /dev/null 2>&1
 chmod -R ${DATA_PERM} ${DATA_DIR}
 echo "---Server ready---"
 
-sleep infinity
-
 echo "---Start Server---"
 if [ ! -f ${SERVER_DIR}/ddctd_cm_yo_server.exe ]; then
   echo "---Something went wrong, can't find the executable, putting container into sleep mode!---"
