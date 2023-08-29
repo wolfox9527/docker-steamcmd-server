@@ -22,9 +22,11 @@ fi
 echo "---Taking ownership of data...---"
 chown -R root:${GID} /opt/scripts
 chmod -R 750 /opt/scripts
-chown ${UID}:${GID} /opt/server_config.xml
-chmod 750 /opt/server_config.xml
+chown -R ${UID}:${GID} /var/lib/mysql
+chown -R ${UID}:${GID} /var/run/mysqld
 chown -R ${UID}:${GID} ${DATA_DIR}
+chmod -R 770 /var/lib/mysql
+chmod -R 770 /var/run/mysqld
 
 echo "---Starting...---"
 term_handler() {
