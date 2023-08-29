@@ -22,13 +22,19 @@ ENV USERNAME=""
 ENV PASSWRD=""
 ENV USER="steam"
 ENV DATA_PERM=770
+ENV MARIA_DB_ROOT_PWD="LiFYO"
 
 RUN mkdir $DATA_DIR && \
 	mkdir $STEAMCMD_DIR && \
 	mkdir $SERVER_DIR && \
 	useradd -d $DATA_DIR -s /bin/bash $USER && \
 	chown -R $USER $DATA_DIR && \
-	ulimit -n 2048
+	ulimit -n 2048 \
+	/etc/init.d/mariadb start && \
+	mysql -u root -e "CREATE USER IF NOT EXISTS 'steam'@'%' IDENTIFIED BY 'lifyo';FLUSH PRIVILEGES;" && \
+	mysql -u root -e "CREATE DATABASE IF NOT EXISTS lifyo;" && \
+	mysql -u root -e "GRANT ALL ON lifyo.* TO 'steam'@'%' IDENTIFIED BY 'lifyo';" && \
+	mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '$MARIA_DB_ROOT_PWD';FLUSH PRIVILEGES;"
 
 ADD /scripts/ /opt/scripts/
 RUN chmod -R 770 /opt/scripts/
