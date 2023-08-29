@@ -30,8 +30,8 @@ chmod -R 770 /var/run/mysqld
 
 echo "---Starting...---"
 term_handler() {
-	kill -SIGINT $(pidof server64.exe)
-	tail --pid=$(pidof server64.exe) -f 2>/dev/null
+	kill -SIGINT $(pidof ddctd_cm_yo_server.exe)
+	tail --pid=$(pidof ddctd_cm_yo_server.exe) -f 2>/dev/null
 	exit 143;
 }
 
