@@ -34,7 +34,10 @@ RUN mkdir $DATA_DIR && \
 	mysql -u root -e "CREATE USER IF NOT EXISTS 'steam'@'%' IDENTIFIED BY 'lifyo';FLUSH PRIVILEGES;" && \
 	mysql -u root -e "CREATE DATABASE IF NOT EXISTS lif_1;" && \
 	mysql -u root -e "GRANT ALL ON lif_1.* TO 'steam'@'%' IDENTIFIED BY 'lifyo';" && \
-	mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '$MARIA_DB_ROOT_PWD';FLUSH PRIVILEGES;"
+	mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '$MARIA_DB_ROOT_PWD';FLUSH PRIVILEGES;" && \
+	echo "
+[mysqld]
+datadir=/serverdata/serverfiles/.database/" >> /etc/alternatives/my.cnf
 
 ADD /scripts/ /opt/scripts/
 RUN chmod -R 770 /opt/scripts/
