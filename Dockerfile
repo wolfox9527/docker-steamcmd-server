@@ -33,7 +33,7 @@ RUN mkdir $DATA_DIR && \
 	/etc/init.d/mariadb start && \
 	mysql -u root -e "CREATE USER IF NOT EXISTS 'steam'@'%' IDENTIFIED BY 'lifyo';FLUSH PRIVILEGES;" && \
 	mysql -u root -e "GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, INDEX, ALTER ON *.* TO 'steam'@'%';" && \
-	mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '$MARIA_DB_ROOT_PWD';FLUSH PRIVILEGES;" && \
+	mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'LiFYO';FLUSH PRIVILEGES;" && \
 	echo "\n[mysqld]\ndatadir=/serverdata/serverfiles/.database/" >> /etc/alternatives/my.cnf
 
 ADD /scripts/ /opt/scripts/
