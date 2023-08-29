@@ -75,6 +75,16 @@ else
 	echo "---WINE properly set up---"
 fi
 
+echo "---Checking config---"
+if grep -q "<name>My own LiF server</name>" ${SERVER_DIR}/config/world_1.xml ; then
+  echo "---Adding initial config parameters to config file---"
+  sed -i 's/\<My own LiF server\>/LiF Docker/g' ${SERVER_DIR}/config/world_1.xml
+  sed -i s/"<password><\/password>"/"<password>Docker<\/password>"/g ${SERVER_DIR}/config/world_1.xml
+  sed -i s/"<adminPassword><\/adminPassword>"/"<adminPassword>adminDocker<\/adminPassword>"/g ${SERVER_DIR}/config/world_1.xml
+else
+  echo "---Config check done---"
+fi
+
 echo "---Checking if database is in place---"
 if [ ! -d ${SERVER_DIR}/.database ]; then
   echo "---Database not found, setting up databbase...---"
