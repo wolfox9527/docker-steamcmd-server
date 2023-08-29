@@ -22,7 +22,6 @@ ENV USERNAME=""
 ENV PASSWRD=""
 ENV USER="steam"
 ENV DATA_PERM=770
-ENV MARIA_DB_ROOT_PWD="LiFYO"
 
 RUN mkdir $DATA_DIR && \
 	mkdir $STEAMCMD_DIR && \
@@ -32,7 +31,7 @@ RUN mkdir $DATA_DIR && \
 	ulimit -n 2048 && \
 	/etc/init.d/mariadb start && \
 	mysql -u root -e "CREATE USER IF NOT EXISTS 'steam'@'%' IDENTIFIED BY 'lifyo';FLUSH PRIVILEGES;" && \
-	mysql -u root -e "GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, INDEX, ALTER ON *.* TO 'steam'@'%';" && \
+	mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO 'steam'@'%' IDENTIFIED BY 'lifyo';" && \
 	mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'LiFYO';FLUSH PRIVILEGES;" && \
 	echo "\n[mysqld]\ndatadir=/serverdata/serverfiles/.database/" >> /etc/alternatives/my.cnf
 
