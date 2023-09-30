@@ -13,8 +13,8 @@ _It is recommended that you create dedicated Steam account for your dedicated se
 | STEAMCMD_DIR | Folder for SteamCMD | /serverdata/steamcmd |
 | SERVER_DIR | Folder for gamefile | /serverdata/serverfiles |
 | GAME_ID | The GAME_ID that the container downloads at startup. If you want to install a static or beta version of the game change the value to: '730 -beta YOURBRANCH' (without quotes, replace YOURBRANCH with the branch or version you want to install). | 730 |
-| USERNAME | Leave blank for anonymous login | <STEAMUSER> |
-| PASSWRD | Leave blank for anonymous login | <STEAMPASSWORD> |
+| USERNAME | Leave blank for anonymous login | \<STEAMUSER> |
+| PASSWRD | Leave blank for anonymous login | \<STEAMPASSWORD> |
 | GAME_PARAMS | Values to start the server | -dedicated -dev +map de_inferno +game_type 0 +game_mode 1 -usercon |
 | UID | User Identifier | 99 |
 | GID | Group Identifier | 100 |
