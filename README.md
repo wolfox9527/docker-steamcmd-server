@@ -5,7 +5,12 @@ This Docker will download and install SteamCMD. It will also install Counter-Str
 _It is recommended that you create dedicated Steam account for your dedicated servers with the games in it and SteamGuard completely disabled!_  
 **DON'T DISABLE STEAM GUARD ON YOUR PRIMARY ACCOUNT!!!**
 
-**Please see the different Tags/Branches which games are available.**
+**ATTENTION:** First Startup can take very long since it downloads the gameserver files!
+
+**PUBLIC PLAY:** If you want that your server is public listed you must add '+sv_setsteamaccount YOURTOKEN' to the GAME_PARAMS (without the quotes and replace YOURTOKEN with your token).  
+Create your token here: https://steamcommunity.com/dev/managegameservers (every gameserver needs it's own token!!!)  
+
+You can also run multiple servers with only one SteamCMD directory!
 
 ## Example Env
 | Name | Value | Example |
