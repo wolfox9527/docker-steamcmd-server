@@ -20,7 +20,7 @@ fi
 echo "---Update Server---"
 if [ "${USERNAME}" == "" ]; then
     if [ "${VALIDATE}" == "true" ]; then
-    	echo "---Validating installation---"
+       echo "---Validating installation---"
         ${STEAMCMD_DIR}/steamcmd.sh \
         +force_install_dir ${SERVER_DIR} \
         +login anonymous \
@@ -35,7 +35,7 @@ if [ "${USERNAME}" == "" ]; then
     fi
 else
     if [ "${VALIDATE}" == "true" ]; then
-    	echo "---Validating installation---"
+      echo "---Validating installation---"
         ${STEAMCMD_DIR}/steamcmd.sh \
         +force_install_dir ${SERVER_DIR} \
         +login ${USERNAME} ${PASSWRD} \
@@ -101,7 +101,7 @@ if [ "${ENABLE_VALHEIMPLUS}" == "true" ]; then
     fi
 
     if [ -f ${SERVER_DIR}/ValheimPlus.zip ]; then
-	    rm -rf ${SERVER_DIR}/ValheimPlus.zip
+      rm -rf ${SERVER_DIR}/ValheimPlus.zip
     fi
 
     echo "---ValheimPlus Version Check---"
@@ -115,12 +115,12 @@ if [ "${ENABLE_VALHEIMPLUS}" == "true" ]; then
             sleep infinity
         fi
         unzip -o ${SERVER_DIR}/ValheimPlus.zip
-	    touch ${SERVER_DIR}/ValheimPlus-$LAT_V
+        touch ${SERVER_DIR}/ValheimPlus-$LAT_V
         rm ${SERVER_DIR}/ValheimPlus.zip
     elif [ "${CUR_V}" != "${LAT_V}" ]; then
         echo "---Version missmatch, ValheimPlus v$CUR_V installed, downloading and installing v$LAT_V...---"
         cd ${SERVER_DIR}
-    	rm -rf ${SERVER_DIR}/ValheimPlus-$CUR_V
+        rm -rf ${SERVER_DIR}/ValheimPlus-$CUR_V
         mkdir /tmp/Backup
         cp -R ${SERVER_DIR}/BepInEx/config /tmp/Backup/
         if wget -q -nc --show-progress --progress=bar:force:noscroll -O ${SERVER_DIR}/ValheimPlus.zip "https://github.com/${VALHEIMPLUS_ORG_REPO}/releases/download/${LAT_V}/UnixServer.zip" ; then
@@ -130,7 +130,7 @@ if [ "${ENABLE_VALHEIMPLUS}" == "true" ]; then
             sleep infinity
         fi
         unzip -o ${SERVER_DIR}/ValheimPlus.zip
-	    touch ${SERVER_DIR}/ValheimPlus-$LAT_V
+        touch ${SERVER_DIR}/ValheimPlus-$LAT_V
         cp -R /tmp/Backup/config ${SERVER_DIR}/BepInEx/
         rm -rf ${SERVER_DIR}/ValheimPlus.zip /tmp/Backup
     elif [ "${CUR_V}" == "${LAT_V}" ]; then
@@ -141,11 +141,7 @@ fi
 if [ "${ENABLE_BEPINEX}" == "true" ]; then
     echo "---BepInEx for Valheim enabled!---"
     CUR_V="$(find ${SERVER_DIR} -maxdepth 1 -name "BepInEx-*" | cut -d '-' -f2)"
-    LAT_V="$(wget -qO- https://valheim.thunderstore.io/package/denikson/BepInExPack_Valheim/ | grep -A1 "Changelog" | tail -1 | cut -d '>' -f2 | cut -d '<' -f1)"
-    #Fix for wrong version naming in changelog
-    if [ "${LAT_V}" == "5.4.22" ]; then
-      LAT_V="5.4.2200"
-    fi
+    LAT_V="$(wget -qO- https://valheim.thunderstore.io/api/experimental/package/denikson/BepInExPack_Valheim/ | jq -r '.latest.version_number')"
     if [ -z "${LAT_V}" ] && [ -z "${CUR_V}" ]; then
         echo "---Can't get latest version of BepInEx for Valheim!---"
         echo "---Please try to run the Container without BepInEx for Valheim, putting Container into sleep mode!---"
@@ -153,7 +149,7 @@ if [ "${ENABLE_BEPINEX}" == "true" ]; then
     fi
 
     if [ -f ${SERVER_DIR}/BepInEx.zip ]; then
-	    rm -rf ${SERVER_DIR}/BepInEx.zip
+      rm -rf ${SERVER_DIR}/BepInEx.zip
     fi
 
     echo "---BepInEx for Valheim Version Check---"
@@ -173,12 +169,12 @@ if [ "${ENABLE_BEPINEX}" == "true" ]; then
         unzip -o ${SERVER_DIR}/BepInEx.zip -d /tmp/BepInEx
         cp -rf /tmp/BepInEx/BepInEx*/* ${SERVER_DIR}/
         cp /tmp/BepInEx/README* ${SERVER_DIR}/README_BepInEx_for_Valheim
-	    touch ${SERVER_DIR}/BepInEx-$LAT_V
+        touch ${SERVER_DIR}/BepInEx-$LAT_V
         rm -rf ${SERVER_DIR}/BepInEx.zip /tmp/BepInEx
     elif [ "$CUR_V" != "$LAT_V" ]; then
         echo "---Version missmatch, BepInEx v$CUR_V installed, downloading and installing v$LAT_V...---"
         cd ${SERVER_DIR}
-    	rm -rf ${SERVER_DIR}/BepInEx-$CUR_V
+        rm -rf ${SERVER_DIR}/BepInEx-$CUR_V
         mkdir /tmp/Backup
         cp -R ${SERVER_DIR}/BepInEx/config /tmp/Backup/
         if wget -q -nc --show-progress --progress=bar:force:noscroll -O ${SERVER_DIR}/BepInEx.zip --user-agent=Mozilla --content-disposition -E -c "https://valheim.thunderstore.io/package/download/denikson/BepInExPack_Valheim/$LAT_V/" ; then
@@ -190,7 +186,7 @@ if [ "${ENABLE_BEPINEX}" == "true" ]; then
         unzip -o ${SERVER_DIR}/BepInEx.zip -d /tmp/BepInEx
         cp -rf /tmp/BepInEx/BepInEx*/* ${SERVER_DIR}/
         cp /tmp/BepInEx/README* ${SERVER_DIR}/README_BepInEx_for_Valheim
-	    touch ${SERVER_DIR}/BepInEx-$LAT_V
+        touch ${SERVER_DIR}/BepInEx-$LAT_V
         cp -R /tmp/Backup/config ${SERVER_DIR}/BepInEx/
         rm -rf ${SERVER_DIR}/BepInEx.zip /tmp/BepInEx /tmp/Backup
     elif [ "${CUR_V}" == "${LAT_V}" ]; then
