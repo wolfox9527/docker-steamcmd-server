@@ -7,6 +7,9 @@ RUN apt-get update && \
 	apt-get -y install --no-install-recommends lib32gcc-s1 curl gdb libc++1 && \
 	rm -rf /var/lib/apt/lists/*
 
+# Fix for Pavlov not liking linked libc++.so
+RUN cp /usr/lib/llvm-14/lib/libc++.so.1.0 /usr/lib/x86_64-linux-gnu/libc++.so
+
 ENV DATA_DIR="/serverdata"
 ENV STEAMCMD_DIR="${DATA_DIR}/steamcmd"
 ENV SERVER_DIR="${DATA_DIR}/serverfiles"
