@@ -50,6 +50,7 @@ else
     fi
 fi
 
+echo "---Sleep zZzZz, this container is under construction and not ready for production...---"
 sleep infinity
 
 echo "---Prepare Server---"
