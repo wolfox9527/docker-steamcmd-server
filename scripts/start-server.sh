@@ -54,6 +54,18 @@ else
     fi
 fi
 
+if [ "${PUBLIC_IP}" == "auto" ]; then
+  echo "---Trying to obtain public IP address automatically---"
+  PUBLIC_IP="$(wget -qO - icanhazip.com)"
+  if [ -z "${PUBLIC_IP}" ]; then
+    echo "---Can't get public IP, please specify your public IP manually in the variable PUBLIC_IP---"
+    echo "---Putting container into sleep mode!---"
+    sleep infinity
+  else
+    echo "---Success, got Public IP: ${PUBLIC_IP}---"
+  fi
+fi
+
 echo "---Prepare Server---"
 chmod -R ${DATA_PERM} ${DATA_DIR}
 echo "---Server ready---"
@@ -63,5 +75,5 @@ if [ ! -f ${SERVER_DIR}/ProjectWar/Binaries/Linux/TheFrontServer ]; then
   echo "---Something went wrong, can't find the executable, putting container into sleep mode!---"
   sleep infinity
 else
-  ${SERVER_DIR}/ProjectWar/Binaries/Linux/TheFrontServer ProjectWar_Start?DedicatedServer?${GAME_PARAMS} -server -game ${GAME_PARAMS_EXTRA} -log -OUTIPAddress=0.0.0.0
+  ${SERVER_DIR}/ProjectWar/Binaries/Linux/TheFrontServer ProjectWar_Start?DedicatedServer?${GAME_PARAMS} -server -game ${GAME_PARAMS_EXTRA} -log -OUTIPAddress=${PUBLIC_IP}
 fi
