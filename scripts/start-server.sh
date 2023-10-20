@@ -22,12 +22,14 @@ if [ "${USERNAME}" == "" ]; then
     if [ "${VALIDATE}" == "true" ]; then
     	echo "---Validating installation---"
         ${STEAMCMD_DIR}/steamcmd.sh \
+        +@sSteamCmdForcePlatformType windows \
         +force_install_dir ${SERVER_DIR} \
         +login anonymous \
         +app_update ${GAME_ID} validate \
         +quit
     else
         ${STEAMCMD_DIR}/steamcmd.sh \
+        +@sSteamCmdForcePlatformType windows \
         +force_install_dir ${SERVER_DIR} \
         +login anonymous \
         +app_update ${GAME_ID} \
@@ -37,12 +39,14 @@ else
     if [ "${VALIDATE}" == "true" ]; then
     	echo "---Validating installation---"
         ${STEAMCMD_DIR}/steamcmd.sh \
+        +@sSteamCmdForcePlatformType windows \
         +force_install_dir ${SERVER_DIR} \
         +login ${USERNAME} ${PASSWRD} \
         +app_update ${GAME_ID} validate \
         +quit
     else
         ${STEAMCMD_DIR}/steamcmd.sh \
+        +@sSteamCmdForcePlatformType windows \
         +force_install_dir ${SERVER_DIR} \
         +login ${USERNAME} ${PASSWRD} \
         +app_update ${GAME_ID} \
@@ -50,22 +54,14 @@ else
     fi
 fi
 
-echo "---Sleep zZzZz, this container is under construction and not ready for production...---"
-sleep infinity
-
 echo "---Prepare Server---"
-if [ ! -f ${DATA_DIR}/.steam/sdk32/steamclient.so ]; then
-	if [ ! -d ${DATA_DIR}/.steam ]; then
-    	mkdir ${DATA_DIR}/.steam
-    fi
-	if [ ! -d ${DATA_DIR}/.steam/sdk32 ]; then
-    	mkdir ${DATA_DIR}/.steam/sdk32
-    fi
-    cp -R ${STEAMCMD_DIR}/linux32/* ${DATA_DIR}/.steam/sdk32/
-fi
 chmod -R ${DATA_PERM} ${DATA_DIR}
 echo "---Server ready---"
 
 echo "---Start Server---"
-cd ${SERVER_DIR}
-${SERVER_DIR}/srcds_run -game ${GAME_NAME} ${GAME_PARAMS} -console +port ${GAME_PORT}
+if [ ! -f ${SERVER_DIR}/ProjectWar/Binaries/Linux/TheFrontServer ]; then
+  echo "---Something went wrong, can't find the executable, putting container into sleep mode!---"
+  sleep infinity
+else
+  ${SERVER_DIR}/ProjectWar/Binaries/Linux/TheFrontServer ProjectWar_Start?DedicatedServer?${GAME_PARAMS} -server -game ${GAME_PARAMS_EXTRA} -log -OUTIPAddress=0.0.0.0
+fi
