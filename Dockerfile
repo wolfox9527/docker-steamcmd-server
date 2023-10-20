@@ -11,7 +11,7 @@ ENV DATA_DIR="/serverdata"
 ENV STEAMCMD_DIR="${DATA_DIR}/steamcmd"
 ENV SERVER_DIR="${DATA_DIR}/serverfiles"
 ENV GAME_PARAMS="MaxPlayers=8?"
-ENV GAME_EXTA_PARAMS='-ServerName="The Front Docker" -port=15636 -BeaconPort=15637 -QueryPort=15638 -UseACE=true'
+ENV GAME_PARAMS_EXTRA='-ServerName="The Front Docker" -port=15636 -BeaconPort=15637 -QueryPort=15638 -UseACE=true'
 ENV VALIDATE=""
 ENV UMASK=000
 ENV UID=99
