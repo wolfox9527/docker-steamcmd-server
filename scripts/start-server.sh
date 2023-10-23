@@ -56,7 +56,7 @@ fi
 
 if [ "${PUBLIC_IP}" == "auto" ]; then
   echo "---Trying to obtain public IP address automatically---"
-  PUBLIC_IP="$(wget -qO - icanhazip.com)"
+  PUBLIC_IP="$(wget -qO - ipv4.icanhazip.com)"
   if [ -z "${PUBLIC_IP}" ]; then
     echo "---Can't get public IP, please specify your public IP manually in the variable PUBLIC_IP---"
     echo "---Putting container into sleep mode!---"
