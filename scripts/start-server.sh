@@ -64,6 +64,8 @@ if [ "${PUBLIC_IP}" == "auto" ]; then
   else
     echo "---Success, got Public IP: ${PUBLIC_IP}---"
   fi
+else
+  echo "---Manually set Public IP: ${PUBLIC_IP}---"
 fi
 
 echo "---Prepare Server---"
