@@ -3,7 +3,7 @@ FROM ich777/debian-baseimage
 LABEL org.opencontainers.image.authors="admin@minenet.at"
 LABEL org.opencontainers.image.source="https://github.com/ich777/docker-steamcmd-server"
 
-RUN wget https://packages.microsoft.com/config/debian/11/packages-microsoft-prod.deb -O /tmp/packages-microsoft-prod.deb && \
+RUN wget https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb -O /tmp/packages-microsoft-prod.deb && \
 	cd /tmp && dpkg -i packages-microsoft-prod.deb && \
 	apt-get update && \
 	apt-get -y install --no-install-recommends lib32gcc-s1 screen ca-certificates apt-transport-https dotnet-runtime-3.1 && \
