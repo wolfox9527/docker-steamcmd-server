@@ -30,6 +30,7 @@ RUN mkdir $DATA_DIR && \
 	ulimit -n 2048
 
 ADD /scripts/ /opt/scripts/
+ADD /config/ServerConfig_.ini /opt/ServerConfig_.ini
 RUN chmod -R 770 /opt/scripts/
 
 #Server Start
