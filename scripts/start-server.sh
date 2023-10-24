@@ -69,6 +69,15 @@ else
 fi
 
 echo "---Prepare Server---"
+echo "---Checking if config is in place---"
+if [ ! -f ${SERVER_DIR}/TheFrontManager/ServerConfig_.ini ]; then
+  echo "---No config file found, copying default config!---"
+  mkdir -p ${SERVER_DIR}/TheFrontManager
+  cp /opt/ServerConfig_.ini ${SERVER_DIR}/TheFrontManager/ServerConfig_.ini
+else
+  echo "---Config file found!"
+fi
+
 chmod -R ${DATA_PERM} ${DATA_DIR}
 echo "---Server ready---"
 
