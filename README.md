@@ -5,6 +5,8 @@ Initial server configuration:
 **Servername:** The Front Docker
 **Password:** Docker  
 
+Your configuration file is located at: .../TheFrontManager/ServerConfig_.ini
+
 **ATTENTION:** First startup can take very long since it downloads the gameserver files and it also installs the runtimes which can take quite some time! 
 
 Update Notice: Simply restart the container if a newer version of the game is available.
@@ -16,7 +18,7 @@ Update Notice: Simply restart the container if a newer version of the game is av
 | SERVER_DIR | Folder for gamefile | /serverdata/serverfiles |
 | GAME_ID | The GAME_ID that the container downloads at startup. If you want to install a static or beta version of the game change the value to: '2334200 -beta YOURBRANCH' (without quotes, replace YOURBRANCH with the branch or version you want to install). | 2334200 |
 | GAME_PARAMS | Change if needed (has to end with a '?') | MaxPlayers=20? |
-| GAME_PARAMS_EXTRA | Change if needed (specify your extra game parameters here like: Servername, Password, Ports,...) | -ServerName="The Front Docker" -ServerPassword="Docker" -port=15636 -BeaconPort=15637 -QueryPort=15638 -UseACE=true |
+| GAME_PARAMS_EXTRA | Change if needed (specify your extra game parameters here like: Servername, Password, Ports,...) | -port=15636 -BeaconPort=15637 -QueryPort=15638 -UseACE=true |
 | PUBLIC_IP | Set your public IP here (if set to 'auto' the container will try to obtain the public IP automatically) | auto |
 | UID | User Identifier | 99 |
 | GID | Group Identifier | 100 |
@@ -30,7 +32,7 @@ docker run --name TheFront -d \
 	-p 15636-15638:15636-15638/udp \
 	--env 'GAME_ID=232330' \
 	--env 'GAME_PARAMS=MaxPlayers=20?' \
-	--env 'GAME_PARAMS_EXTRA=-ServerName="The Front Docker" -ServerPassword="Docker" -port=15636 -BeaconPort=15637 -QueryPort=15638 -UseACE=true' \
+	--env 'GAME_PARAMS_EXTRA=-port=15636 -BeaconPort=15637 -QueryPort=15638 -UseACE=true' \
 	--env 'PUBLIC_IP=auto' \
 	--env 'UID=99' \
 	--env 'GID=100' \
