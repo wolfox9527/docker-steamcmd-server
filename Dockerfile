@@ -1,11 +1,11 @@
-FROM ich777/debian-baseimage
+FROM ich777/debian-baseimage:bullseye_amd64
 
 LABEL org.opencontainers.image.authors="admin@minenet.at"
 LABEL org.opencontainers.image.source="https://github.com/ich777/docker-steamcmd-server"
 
 RUN apt-get update && \
 	apt-get -y install --no-install-recommends lib32gcc-s1 lib32stdc++6 && \
-	wget -q -O /tmp/packages-microsoft-prod.deb https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb && \
+	wget -q -O /tmp/packages-microsoft-prod.deb https://packages.microsoft.com/config/debian/11/packages-microsoft-prod.deb && \
 	dpkg -i /tmp/packages-microsoft-prod.deb && \
 	rm -rf /tmp/packages-microsoft-prod.de && \
 	apt-get update && apt-get -y install aspnetcore-runtime-3.1 && \
