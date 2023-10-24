@@ -20,8 +20,8 @@ else
 fi
 
 echo "---Taking ownership of data...---"
-chown -R root:${GID} /opt/scripts
-chmod -R 750 /opt/scripts
+chown -R root:${GID} /opt/scripts /opt/ServerConfig_.ini
+chmod -R 750 /opt/scripts /opt/ServerConfig_.ini
 chown -R ${UID}:${GID} ${DATA_DIR}
 
 echo "---Starting...---"
