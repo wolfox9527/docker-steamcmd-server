@@ -1,4 +1,8 @@
 #!/bin/bash
+echo "---This container is under construction!---"
+echo "...Sleep zZzZzZzZzZzZZzzZzZZZzZZzZzZzZzz..."
+sleep infinity
+
 if [ ! -f ${STEAMCMD_DIR}/steamcmd.sh ]; then
     echo "SteamCMD not found!"
     wget -q -O ${STEAMCMD_DIR}/steamcmd_linux.tar.gz http://media.steampowered.com/client/steamcmd_linux.tar.gz 
