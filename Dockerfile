@@ -18,6 +18,7 @@ ENV GAME_ID="template"
 ENV GAME_NAME="template"
 ENV GAME_PARAMS="template"
 ENV GAME_PORT=27015
+ENV GOTTY_PARAMS="-w --title-format ARK Survival Ascended"
 ENV VALIDATE=""
 ENV UMASK=000
 ENV UID=99
