@@ -117,8 +117,14 @@ if [ "${ENABLE_VALHEIMPLUS}" == "true" ]; then
         unzip -o ${SERVER_DIR}/ValheimPlus.zip
         touch ${SERVER_DIR}/ValheimPlus-$LAT_V
         rm ${SERVER_DIR}/ValheimPlus.zip
+        if [ -d ${SERVER_DIR}/_unstripped_corlib ]; then
+            mv ${SERVER_DIR}/_unstripped_corlib ${SERVER_DIR}/unstripped_corlib
+        fi
     elif [ "${CUR_V}" != "${LAT_V}" ]; then
         echo "---Version missmatch, ValheimPlus v$CUR_V installed, downloading and installing v$LAT_V...---"
+        if [ -d ${SERVER_DIR}/_unstripped_corlib ]; then
+            rm -rf ${SERVER_DIR}/_unstripped_corlib
+        fi
         cd ${SERVER_DIR}
         rm -rf ${SERVER_DIR}/ValheimPlus-$CUR_V
         mkdir /tmp/Backup
@@ -191,6 +197,9 @@ if [ "${ENABLE_BEPINEX}" == "true" ]; then
         rm -rf ${SERVER_DIR}/BepInEx.zip /tmp/BepInEx /tmp/Backup
     elif [ "${CUR_V}" == "${LAT_V}" ]; then
         echo "---BepInEx v$CUR_V up-to-date---"
+    fi
+    if [ -d ${SERVER_DIR}/unstripped_corlib ]; then
+      mv ${SERVER_DIR}/unstripped_corlib ${SERVER_DIR}/_unstripped_corlib
     fi
 fi
 
