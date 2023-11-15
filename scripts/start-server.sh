@@ -106,4 +106,5 @@ echo "---Start Server---"
 cd ${SERVER_DIR}/ShooterGame/Binaries/Win64
 wine64 ArkAscendedServer.exe ${MAP}?listen?SessionName=${SERVER_NAME}?ServerPassword=${SRV_PWD}?ServerAdminPassword=${SRV_ADMIN_PWD}${GAME_PARAMS} ${GAME_PARAMS_EXTRA}
 sleep 1
+/opt/scripts/start-watchdog.sh &
 tail -f ${SERVER_DIR}/ShooterGame/Saved/Logs/ShooterGame.log
