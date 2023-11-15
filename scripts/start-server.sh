@@ -103,8 +103,13 @@ chmod -R ${DATA_PERM} ${DATA_DIR}
 echo "---Server ready---"
 
 echo "---Start Server---"
-cd ${SERVER_DIR}/ShooterGame/Binaries/Win64
-wine64 ArkAscendedServer.exe ${MAP}?listen?SessionName=${SERVER_NAME}?ServerPassword=${SRV_PWD}?ServerAdminPassword=${SRV_ADMIN_PWD}${GAME_PARAMS} ${GAME_PARAMS_EXTRA} &
-sleep 2
-/opt/scripts/start-watchdog.sh &
-tail -n 9999 -f ${SERVER_DIR}/ShooterGame/Saved/Logs/ShooterGame.log
+if [ ! -f ${SERVER_DIR}/ShooterGame/Binaries/Win64/ArkAscendedServer.exe ]; then
+  echo "---Something went wrong, can't find the executable, putting container into sleep mode!---"
+  sleep infinity
+else
+  cd ${SERVER_DIR}/ShooterGame/Binaries/Win64
+  wine64 ArkAscendedServer.exe ${MAP}?listen?SessionName=${SERVER_NAME}?ServerPassword=${SRV_PWD}?ServerAdminPassword=${SRV_ADMIN_PWD}${GAME_PARAMS} ${GAME_PARAMS_EXTRA} &
+  sleep 2
+  /opt/scripts/start-watchdog.sh &
+  tail -n 9999 -f ${SERVER_DIR}/ShooterGame/Saved/Logs/ShooterGame.log
+fi
