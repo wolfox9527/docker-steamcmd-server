@@ -10,18 +10,19 @@ RUN apt-get update && \
 ENV DATA_DIR="/serverdata"
 ENV STEAMCMD_DIR="${DATA_DIR}/steamcmd"
 ENV SERVER_DIR="${DATA_DIR}/serverfiles"
-ENV GAME_ID="template"
-ENV GAME_NAME="template"
-ENV GAME_PARAMS="template"
-ENV GAME_PORT=27015
-ENV GOTTY_PARAMS="-w --title-format ARKSurvivalAscended"
+ENV GAME_ID="2430930"
+ENV MAP="TheIsland_WP"
+ENV SERVER_NAME="ASA Docker"
+ENV SRV_PWD="Docker"
+ENV SRV_ADMIN_PWD="adminDocker"
+ENV GAME_PARAMS="Port=7777?MaxPlayers=20"
+ENV GAME_PARAMS_EXTRA="-server -log -NoBattlEye"
 ENV VALIDATE=""
 ENV UMASK=000
 ENV UID=99
 ENV GID=100
 ENV USERNAME=""
 ENV PASSWRD=""
-ENV LOGIN_TIMEOUT=60
 ENV USER="steam"
 ENV DATA_PERM=770
 
