@@ -26,7 +26,7 @@ chown -R ${UID}:${GID} ${DATA_DIR}
 
 echo "---Starting...---"
 term_handler() {
-	kill -SIGINT $(pidof ArkAscendedServer.exe)
+	kill -SIGTERM $(pidof ArkAscendedServer.exe)
 	tail --pid=$(pidof ArkAscendedServer.exe) -f 2>/dev/null
 	exit 143;
 }
