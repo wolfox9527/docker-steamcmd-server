@@ -20,7 +20,7 @@ fi
 echo "---Update Server---"
 if [ "${USERNAME}" == "" ]; then
     if [ "${VALIDATE}" == "true" ]; then
-    	echo "---Validating installation---"
+        echo "---Validating installation---"
         ${STEAMCMD_DIR}/steamcmd.sh \
         +force_install_dir ${SERVER_DIR} \
         +login anonymous \
@@ -37,7 +37,7 @@ if [ "${USERNAME}" == "" ]; then
     fi
 else
     if [ "${VALIDATE}" == "true" ]; then
-    	echo "---Validating installation---"
+        echo "---Validating installation---"
         ${STEAMCMD_DIR}/steamcmd.sh \
         +force_install_dir ${SERVER_DIR} \
         +login ${USERNAME} ${PASSWRD} \
