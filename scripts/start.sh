@@ -26,8 +26,13 @@ chown -R ${UID}:${GID} ${DATA_DIR}
 
 echo "---Starting...---"
 term_handler() {
-	kill -SIGINT $(pidof UE4Server-Linux-Shipping)
-	tail --pid=$(pidof UE4Server-Linux-Shipping) -f 2>/dev/null
+	if [ -f ${SERVER_DIR}/Engine/Binaries/Linux/UE4Server-Linux-Shipping ]; then
+		KILLPID=$(pidof UE4Server-Linux-Shipping)
+	elif [ -f ${SERVER_DIR}/Engine/Binaries/Linux/UnrealServer-Linux-Shipping ]; then
+		KILLPID=$(pidof UnrealServer-Linux-Shipping)
+	fi
+	kill -SIGINT $KILLPID
+	tail --pid=$KILLPID -f 2>/dev/null
 	exit 143;
 }
 
