@@ -77,7 +77,7 @@ echo "---Everything is installed correctly---"
 fi
 
 echo "---Prepare Server---"
-mkdir ${DATA_DIR}/.steam/sdk32
+mkdir -p ${DATA_DIR}/.steam/sdk32
 cp ${SERVER_DIR}/steamclient.so ${DATA_DIR}/.steam/sdk32/steamclient.so
 chmod -R ${DATA_PERM} ${DATA_DIR}
 if [ ! -d ${SERVER_DIR}/cstrike ]; then
