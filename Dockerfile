@@ -15,8 +15,8 @@ ENV MAP="TheIsland_WP"
 ENV SERVER_NAME="ASA Docker"
 ENV SRV_PWD="Docker"
 ENV SRV_ADMIN_PWD="adminDocker"
-ENV GAME_PARAMS="?Port=7777?MaxPlayers=20"
-ENV GAME_PARAMS_EXTRA="-server -log -NoBattlEye"
+ENV GAME_PARAMS="?Port=7777"
+ENV GAME_PARAMS_EXTRA="-WinLiveMaxPlayers=20 -server -log -NoBattlEye"
 ENV VALIDATE=""
 ENV UMASK=000
 ENV UID=99
