@@ -19,7 +19,7 @@ This Docker will download and install SteamCMD. It will also install Project Zom
 ## Run example
 ```
 docker run --name ProjectZomboid -d \
-	-p 16262-16326:16262-16326 -p 16261:16261/udp -p 27015:27015 \
+	-p 16261-16262:16261-16262/udp -p 27015:27015 \
 	--env 'GAME_ID=380870' \
 	--env 'ADMIN_PWD=adminDocker' \
 	--env 'UID=99' \
