@@ -109,7 +109,19 @@ if [ ! -f ${SERVER_DIR}/ShooterGame/Binaries/Win64/ArkAscendedServer.exe ]; then
 else
   cd ${SERVER_DIR}/ShooterGame/Binaries/Win64
   wine64 ArkAscendedServer.exe ${MAP}?listen?SessionName="${SERVER_NAME}"?ServerPassword="${SRV_PWD}"${GAME_PARAMS}?ServerAdminPassword="${SRV_ADMIN_PWD}" ${GAME_PARAMS_EXTRA} &
+  echo "Waiting for logs..."
+  ATTEMPT=0
   sleep 2
+  while [ ! -f "${SERVER_DIR}/ShooterGame/Saved/Logs/ShooterGame.log" ]; do
+    ((ATTEMPT++))
+    if [ $ATTEMPT -eq 10 ]; then
+      echo "No log files found after 20 seconds, putting container into sleep mode!"
+      sleep infinity
+    else
+      sleep 2
+      echo "Waiting for logs..."
+    fi
+  done
   /opt/scripts/start-watchdog.sh &
   tail -n 9999 -f ${SERVER_DIR}/ShooterGame/Saved/Logs/ShooterGame.log
 fi
