@@ -17,8 +17,8 @@ Update Notice: Simply restart the container if a newer version of the game is av
 | STEAMCMD_DIR | Folder for SteamCMD | /serverdata/steamcmd |
 | SERVER_DIR | Folder for gamefile | /serverdata/serverfiles |
 | GAME_ID | The GAME_ID that the container downloads at startup. If you want to install a static or beta version of the game change the value to: '2334200 -beta YOURBRANCH' (without quotes, replace YOURBRANCH with the branch or version you want to install). | 2334200 |
-| GAME_PARAMS | Change if needed (has to end with a '?') | MaxPlayers=20? |
-| GAME_PARAMS_EXTRA | Change if needed (specify your extra game parameters here like: Servername, Password, Ports,...) | -port=15636 -BeaconPort=15637 -QueryPort=15638 -UseACE=true |
+| GAME_PARAMS | Change if needed (put '?' in between the options if using multiple) | MaxPlayers=60 |
+| GAME_PARAMS_EXTRA | Change if needed (specify your extra game parameters here like: Servername, Password, Ports,...) | -QueueThreshold=60 -port=15636 -BeaconPort=15637 -QueryPort=15638 -UseACE=true |
 | PUBLIC_IP | Set your public IP here (if set to 'auto' the container will try to obtain the public IP automatically) | auto |
 | UID | User Identifier | 99 |
 | GID | Group Identifier | 100 |
@@ -31,8 +31,8 @@ Update Notice: Simply restart the container if a newer version of the game is av
 docker run --name TheFront -d \
 	-p 15636-15638:15636-15638/udp \
 	--env 'GAME_ID=232330' \
-	--env 'GAME_PARAMS=MaxPlayers=20?' \
-	--env 'GAME_PARAMS_EXTRA=-port=15636 -BeaconPort=15637 -QueryPort=15638 -UseACE=true' \
+	--env 'GAME_PARAMS=MaxPlayers=60' \
+	--env 'GAME_PARAMS_EXTRA=-QueueThreshold=60 -port=15636 -BeaconPort=15637 -QueryPort=15638 -UseACE=true' \
 	--env 'PUBLIC_IP=auto' \
 	--env 'UID=99' \
 	--env 'GID=100' \
