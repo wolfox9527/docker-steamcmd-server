@@ -10,8 +10,8 @@ RUN apt-get update && \
 ENV DATA_DIR="/serverdata"
 ENV STEAMCMD_DIR="${DATA_DIR}/steamcmd"
 ENV SERVER_DIR="${DATA_DIR}/serverfiles"
-ENV GAME_PARAMS="MaxPlayers=8?"
-ENV GAME_PARAMS_EXTRA='-ServerName="The Front Docker" -port=15636 -BeaconPort=15637 -QueryPort=15638 -UseACE=true'
+ENV GAME_PARAMS="MaxPlayers=60"
+ENV GAME_PARAMS_EXTRA='-QueueThreshold=60 -ServerName="The Front Docker" -port=15636 -BeaconPort=15637 -QueryPort=15638 -UseACE=true'
 ENV PUBLIC_IP="auto"
 ENV VALIDATE=""
 ENV UMASK=000
