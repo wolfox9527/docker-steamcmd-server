@@ -13,6 +13,7 @@ This Docker will download and install SteamCMD. It will also install RUST and ru
 | SERVER_NAME | Name of the Server goes here | RustDockerServer |
 | SERVER_DISCRIPTION | Server Description goes here | Simple Unraid Rust Docker Server |
 | OXIDE_MOD | Set to 'true' (without quotes) to enable Oxide Mod, otherwise leave empty (the container will check on every start/restart if there is a newer version available). | false |
+| CARBON_MOD | Set to 'true' (without quotes) to enable Carbon Mod, otherwise leave empty (the container will check on every start/restart if there is a newer version available). | false |
 | GAME_PORT | Game port on which the server is running (has to match the port mapping in your container). | 28015 |
 | UID | User Identifier | 99 |
 | GID | Group Identifier | 100 |
