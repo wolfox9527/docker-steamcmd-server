@@ -65,4 +65,11 @@ echo "---Server ready---"
 
 echo "---Start Server---"
 cd ${SERVER_DIR}/Mist/Binaries/Linux
-./MistServer -log -force_steamclient_link -messaging -backendapiurloverride="${BACKENDAPIURLOVERRIDE}" -identifier="${IDENTIFIER}" -CustomerKey=${CUSTOMER_KEY} -ProviderKey=${PROVIDER_KEY} -slots=${SLOTS} -overrideconnectionaddress ${GAME_PARAMS}
+if [ -f ${SERVER_DIR}/Mist/Binaries/Linux/MistServer ]; then
+  ./MistServer -log -force_steamclient_link -messaging -backendapiurloverride="${BACKENDAPIURLOVERRIDE}" -identifier="${IDENTIFIER}" -CustomerKey=${CUSTOMER_KEY} -ProviderKey=${PROVIDER_KEY} -slots=${SLOTS} -overrideconnectionaddress ${GAME_PARAMS}
+elif [ -f ${SERVER_DIR}/Mist/Binaries/Linux/MistServer-Linux-Shipping ]; then
+  ./MistServer-Linux-Shipping -log -force_steamclient_link -messaging -backendapiurloverride="${BACKENDAPIURLOVERRIDE}" -identifier="${IDENTIFIER}" -CustomerKey=${CUSTOMER_KEY} -ProviderKey=${PROVIDER_KEY} -slots=${SLOTS} -overrideconnectionaddress ${GAME_PARAMS}
+else
+  echo "---Something went wrong, can't find the executable, putting container into sleep mode!---"
+  sleep infinity
+fi
