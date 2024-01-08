@@ -1,6 +1,8 @@
 # SteamCMD in Docker optimized for Unraid
 This Docker will download and install SteamCMD. It will also install Stationeers and run it.
 
+**Configuration:** To configure your server edit the file 'settings.xml' which lives in the main directory from the container (please don't forget to stop the container before editing the file).
+
 **Update Notice:** Simply restart the container if a newer version of the game is available.
 
 ## Env params
@@ -9,7 +11,7 @@ This Docker will download and install SteamCMD. It will also install Stationeers
 | STEAMCMD_DIR | Folder for SteamCMD | /serverdata/steamcmd |
 | SERVER_DIR | Folder for gamefile | /serverdata/serverfiles |
 | GAME_ID | The GAME_ID that the container downloads at startup. If you want to install a static or beta version of the game change the value to: '600760 -beta YOURBRANCH' (without quotes, replace YOURBRANCH with the branch or version you want to install). | 600760 |
-| GAME_PARAMS | Values to start the server | -autosaveinterval=300 |
+| GAME_PARAMS | Values to start the server | -difficulty easy -loadlatest Mars Mars |
 | UID | User Identifier | 99 |
 | GID | Group Identifier | 100 |
 | VALIDATE | Validates the game data | blank |
@@ -21,7 +23,7 @@ This Docker will download and install SteamCMD. It will also install Stationeers
 docker run --name Stationeers -d \
 	-p 27015:27015/udp -p 27500:27500/udp \
 	--env 'GAME_ID=600760' \
-	--env 'GAME_PARAMS=-autosaveinterval=300' \
+	--env 'GAME_PARAMS=-difficulty easy -loadlatest Mars Mars' \
 	--env 'UID=99' \
 	--env 'GID=100' \
 	--volume /path/to/steamcmd:/serverdata/steamcmd \
