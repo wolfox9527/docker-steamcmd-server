@@ -51,17 +51,17 @@ else
 fi
 
 echo "---Prepare Server---"
-echo "---Checking if 'default.ini' is present---"
-if [ ! -f ${SERVER_DIR}/default.ini ]; then
+echo "---Checking if 'settings.xml' is present---"
+if [ ! -f ${SERVER_DIR}/settings.xml ]; then
 	cd ${SERVER_DIR}
-	if wget -q -nc --show-progress --progress=bar:force:noscroll https://raw.githubusercontent.com/ich777/docker-steamcmd-server/stationeers/config/default.ini ; then
-		echo "---Sucessfully downloaded configuration file 'default.ini'---"
+	if wget -q -O ${SERVER_DIR}/settings.xm --show-progress --progress=bar:force:noscroll https://raw.githubusercontent.com/ich777/docker-steamcmd-server/stationeers/config/settings.xml ; then
+		echo "---Sucessfully downloaded configuration file 'settings.xml'---"
 	else
-		echo "---Something went wrong, can't download 'default.ini', putting server in sleep mode---"
+		echo "---Something went wrong, can't download 'settings.xml', putting server in sleep mode---"
 		sleep infinity
 	fi
 else
-	echo "---Configuration file 'default.ini' found---"
+	echo "---Configuration file 'settings.xml' found---"
 fi
 chmod -R ${DATA_PERM} ${DATA_DIR}
 find $SERVER_DIR -name "masterLog.*" -exec rm -f {} \;
@@ -69,7 +69,9 @@ echo "---Server ready---"
 
 echo "---Start Server---"
 cd ${SERVER_DIR}
-screen -S Stationeers -L -Logfile $SERVER_DIR/masterLog.0 -d -m ${SERVER_DIR}/rocketstation_DedicatedServer.x86_64 -autostart -batchmode -nographics ${GAME_PARAMS}
-sleep 2
-/opt/scripts/start-watchdog.sh &
-tail -f ${SERVER_DIR}/masterLog.0
+if [ ! -f ${SERVER_DIR}/rocketstation_DedicatedServer.x86_64 ]; then
+  echo "---Something went wrong, can't find the executable, putting container into sleep mode!---"
+  sleep infinity
+else
+  ${SERVER_DIR}/rocketstation_DedicatedServer.x86_64 ${GAME_PARAMS} -settingspath ${SERVER_DIR}/settings.xml
+fi
