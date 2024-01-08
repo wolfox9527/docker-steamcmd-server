@@ -54,7 +54,7 @@ echo "---Prepare Server---"
 echo "---Checking if 'settings.xml' is present---"
 if [ ! -f ${SERVER_DIR}/settings.xml ]; then
 	cd ${SERVER_DIR}
-	if wget -q -O ${SERVER_DIR}/settings.xm --show-progress --progress=bar:force:noscroll https://raw.githubusercontent.com/ich777/docker-steamcmd-server/stationeers/config/settings.xml ; then
+	if wget -q -O ${SERVER_DIR}/settings.xml --show-progress --progress=bar:force:noscroll https://raw.githubusercontent.com/ich777/docker-steamcmd-server/stationeers/config/settings.xml ; then
 		echo "---Sucessfully downloaded configuration file 'settings.xml'---"
 	else
 		echo "---Something went wrong, can't download 'settings.xml', putting server in sleep mode---"
