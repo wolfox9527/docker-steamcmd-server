@@ -50,33 +50,63 @@ else
   fi
 fi
 
-echo "Under construction, sleep zZzZzZzZz..."
-sleep infinity
+echo "---Checking if configuration is in place---"
+if [ ! -f ${SERVER_DIR}/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini ]; then
+  if [ ! -d ${SERVER_DIR}/Pal/Saved/Config/LinuxServer ]; then
+    mkdir -p ${SERVER_DIR}/Pal/Saved/Config/LinuxServer
+  fi
+  echo "---Configuration not found, downloading...---"
+  wget -qO ${SERVER_DIR}/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini https://github.com/ich777/docker-steamcmd-server/raw/palworld/config/PalWorldSettings.ini
+else
+  echo "---Configuration found, continuing...---"
+fi
+
+echo "---Checking if PublicIP is in place---"
+PUBLIC_IP="$(grep -o 'PublicIP="[^"]*"' ${SERVER_DIR}/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini | cut -d '"' -f2)"
+if [ -z "${PUBLIC_IP}" ]; then
+  echo "---No PublicIP found in PalWorldSettings.ini, trying to obtain it...---"
+  PUBLIC_IP="$(wget -qO - ipv4.icanhazip.com)"
+  if [ -z "${PUBLIC_IP}" ]; then
+    echo "---Can't get PublicIP, please set it manually in your PalWorldSettings.ini!---"
+  else
+    echo "---Sucessfully obtained PublicIP: ${PUBLIC_IP}, adding to PalWorldSettings.ini"
+    sed -i "s/PublicIP=\"[^\"]*\"/PublicIP=\"${PUBLIC_IP}\"/g" ${SERVER_DIR}/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini
+  fi
+else
+  if [ "${UPDATE_PUBLIC_IP}" == "true" ]; then
+    NEW_PUBLIC_IP="$(wget -qO - ipv4.icanhazip.com)"
+    if [ -z "${NEW_PUBLIC_IP}" ]; then
+      echo "---Can't get PublicIP, please set it manually in your PalWorldSettings.ini!---"
+    else
+      if [ "${PUBLIC_IP}" != "${NEW_PUBLIC_IP}" ]; then
+        echo "---Changing PublicIP in PalWorldSettings.ini to: ${NEW_PUBLIC_IP}!---"
+        sed -i "s/PublicIP=\"[^\"]*\"/PublicIP=\"${NEW_PUBLIC_IP}\"/g" ${SERVER_DIR}/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini
+      else
+        echo "---Nothing to do, PublicIP: ${PUBLIC_IP} still up-to-date!---"
+      fi
+    fi
+  else
+    echo "---PublicIP in PalWorldSettings.ini found: ${PUBLIC_IP}"
+  fi
+fi
 
 echo "---Prepare Server---"
+if [ ! -d ${DATA_DIR}/.steam/sdk64 ]; then
+    mkdir -p ${DATA_DIR}/.steam/sdk64
+    cp -R ${SERVER_DIR}/linux64/* ${DATA_DIR}/.steam/sdk64/
+    echo "---Server ready---"
+else
+    echo "---Server ready---"
+fi
+
 chmod -R ${DATA_PERM} ${DATA_DIR}
 echo "---Server ready---"
 
 echo "---Start Server---"
-if [ ! -f ${SERVER_DIR}/ShooterGame/Binaries/Win64/ArkAscendedServer.exe ]; then
+if [ ! -f ${SERVER_DIR}/Pal/Binaries/Linux/PalServer-Linux-Test ]; then
   echo "---Something went wrong, can't find the executable, putting container into sleep mode!---"
   sleep infinity
 else
-  cd ${SERVER_DIR}/ShooterGame/Binaries/Win64
-  wine64 ArkAscendedServer.exe ${MAP}?listen?SessionName="${SERVER_NAME}"?ServerPassword="${SRV_PWD}"${GAME_PARAMS}?ServerAdminPassword="${SRV_ADMIN_PWD}" ${GAME_PARAMS_EXTRA} &
-  echo "Waiting for logs..."
-  ATTEMPT=0
-  sleep 2
-  while [ ! -f "${SERVER_DIR}/ShooterGame/Saved/Logs/ShooterGame.log" ]; do
-    ((ATTEMPT++))
-    if [ $ATTEMPT -eq 10 ]; then
-      echo "No log files found after 20 seconds, putting container into sleep mode!"
-      sleep infinity
-    else
-      sleep 2
-      echo "Waiting for logs..."
-    fi
-  done
-  /opt/scripts/start-watchdog.sh &
-  tail -n 9999 -f ${SERVER_DIR}/ShooterGame/Saved/Logs/ShooterGame.log
+  cd ${SERVER_DIR}
+  ${SERVER_DIR}/Pal/Binaries/Linux/PalServer-Linux-Test Pal ${GAME_PARAMS} ${GAME_PARAMS_EXTRA}
 fi
