@@ -94,9 +94,6 @@ echo "---Prepare Server---"
 if [ ! -d ${DATA_DIR}/.steam/sdk64 ]; then
     mkdir -p ${DATA_DIR}/.steam/sdk64
     cp -R ${SERVER_DIR}/linux64/* ${DATA_DIR}/.steam/sdk64/
-    echo "---Server ready---"
-else
-    echo "---Server ready---"
 fi
 
 chmod -R ${DATA_PERM} ${DATA_DIR}
