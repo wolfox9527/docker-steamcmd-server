@@ -1,22 +1,18 @@
-FROM ich777/winehq-baseimage
+FROM ich777/debian-baseimage
 
 LABEL org.opencontainers.image.authors="admin@minenet.at"
 LABEL org.opencontainers.image.source="https://github.com/ich777/docker-steamcmd-server"
 
 RUN apt-get update && \
-	apt-get -y install --no-install-recommends lib32gcc-s1 lib32stdc++6 lib32z1 screen xvfb winbind && \
+	apt-get -y install --no-install-recommends lib32gcc-s1 lib32stdc++6 && \
 	rm -rf /var/lib/apt/lists/*
 
 ENV DATA_DIR="/serverdata"
 ENV STEAMCMD_DIR="${DATA_DIR}/steamcmd"
 ENV SERVER_DIR="${DATA_DIR}/serverfiles"
-ENV GAME_ID="2430930"
-ENV MAP="TheIsland_WP"
-ENV SERVER_NAME="ASA Docker"
-ENV SRV_PWD="Docker"
-ENV SRV_ADMIN_PWD="adminDocker"
-ENV GAME_PARAMS="?Port=7777"
-ENV GAME_PARAMS_EXTRA="-WinLiveMaxPlayers=20 -server -log -NoBattlEye"
+ENV GAME_ID="2394010"
+ENV GAME_PARAMS=""
+ENV GAME_PARAMS_EXTRA=""
 ENV VALIDATE=""
 ENV UMASK=000
 ENV UID=99
