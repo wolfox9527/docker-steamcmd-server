@@ -21,7 +21,7 @@ You can also run multiple servers with only one SteamCMD directory!
 | GAME_ID | The GAME_ID that the container downloads at startup. If you want to install a static or beta version of the game change the value to: '2394010 -beta YOURBRANCH' (without quotes, replace YOURBRANCH with the branch or version you want to install). | 2394010 |
 | SRV_ADMIN_PWD | Your server admin password goes here | adminDocker |
 | GAME_PARAMS | Enter your game parameters (for a community server put in the value 'EpicApp=PalServer' without quotes) | EpicApp=PalServer |
-| GAME_PARAMS_EXTRA | Enter your Extra Game Parameters seperated with a space and - (eg: -No-useperfthreads -NoAsyncLoadingThread) | -No-useperfthreads -NoAsyncLoadingThread -UseMultithreadForDS |
+| GAME_PARAMS_EXTRA | Enter your Extra Game Parameters seperated with a space and - (eg: -No-useperfthreads -NoAsyncLoadingThread) | -useperfthreads -NoAsyncLoadingThread -UseMultithreadForDS |
 | UPDATE_PUBLIC_IP | If set to 'true' the container will check on each container start if the Public IP is still valid (the container will try to grab your public IP on the first server start since the public IP is necessary to run a community server). | false |
 | UID | User Identifier | 99 |
 | GID | Group Identifier | 100 |
