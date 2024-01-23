@@ -12,7 +12,7 @@ ENV STEAMCMD_DIR="${DATA_DIR}/steamcmd"
 ENV SERVER_DIR="${DATA_DIR}/serverfiles"
 ENV GAME_ID="2394010"
 ENV GAME_PARAMS="EpicApp=PalServer"
-ENV GAME_PARAMS_EXTRA="-No-useperfthreads -NoAsyncLoadingThread -UseMultithreadForDS"
+ENV GAME_PARAMS_EXTRA="-useperfthreads -NoAsyncLoadingThread -UseMultithreadForDS"
 ENV UPDATE_PUBLIC_IP="false"
 ENV VALIDATE=""
 ENV UMASK=000
