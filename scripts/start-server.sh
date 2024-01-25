@@ -91,22 +91,24 @@ else
 fi
 
 echo "---Prepare Server---"
+if [ ! -f ${SERVER_DIR}/Engine/Binaries/Linux/steamclient.so ]; then
+  ln -s ${SERVER_DIR}/linux64/steamclient.so ${SERVER_DIR}/Engine/Binaries/Linux/steamclient.so
+fi
 if [ ! -d ${DATA_DIR}/.steam/sdk64 ]; then
-    mkdir -p ${DATA_DIR}/.steam/sdk64
-    cp -R ${SERVER_DIR}/linux64/* ${DATA_DIR}/.steam/sdk64/
+  mkdir -p ${DATA_DIR}/.steam/sdk64
+  cp -R ${SERVER_DIR}/linux64/* ${DATA_DIR}/.steam/sdk64/
 fi
 
 chmod -R ${DATA_PERM} ${DATA_DIR}
 echo "---Server ready---"
 
 if [ "${BACKUP}" == "true" ]; then
-    echo "---Starting Backup daemon---"
-    if [ ! -d ${SERVER_DIR}/Backups ]; then
-        mkdir -p ${SERVER_DIR}/Backups
-    fi
-    /opt/scripts/start-backup.sh &
+  echo "---Starting Backup daemon---"
+  if [ ! -d ${SERVER_DIR}/Backups ]; then
+    mkdir -p ${SERVER_DIR}/Backups
+  fi
+  /opt/scripts/start-backup.sh &
 fi
-
 
 echo "---Start Server---"
 if [ ! -f ${SERVER_DIR}/Pal/Binaries/Linux/PalServer-Linux-Test ]; then
@@ -114,5 +116,5 @@ if [ ! -f ${SERVER_DIR}/Pal/Binaries/Linux/PalServer-Linux-Test ]; then
   sleep infinity
 else
   cd ${SERVER_DIR}
-  ${SERVER_DIR}/Pal/Binaries/Linux/PalServer-Linux-Test Pal ${GAME_PARAMS} ${GAME_PARAMS_EXTRA}
+  ${SERVER_DIR}/Pal/Binaries/Linux/PalServer-Linux-Test Pal -nocore ${GAME_PARAMS} ${GAME_PARAMS_EXTRA}
 fi
