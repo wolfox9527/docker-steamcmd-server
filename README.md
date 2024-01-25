@@ -23,6 +23,9 @@ You can also run multiple servers with only one SteamCMD directory!
 | GAME_PARAMS | Enter your game parameters (for a community server put in the value 'EpicApp=PalServer' without quotes) | EpicApp=PalServer |
 | GAME_PARAMS_EXTRA | Enter your Extra Game Parameters seperated with a space and - (eg: -No-useperfthreads -NoAsyncLoadingThread) | -useperfthreads -NoAsyncLoadingThread -UseMultithreadForDS |
 | UPDATE_PUBLIC_IP | If set to 'true' the container will check on each container start if the Public IP is still valid (the container will try to grab your public IP on the first server start since the public IP is necessary to run a community server). | false |
+| BACKUP | Set this value to 'true' to enable the automated backup function from the container, you find the Backups in '.../palworld/Backups/'. Set to 'false' to disable the backup function. | true |
+| BACKUP_INTERVAL | The backup interval in minutes (ATTENTION: The first backup will be triggered after the set interval in this variable after the start/restart of the container) | 120 |
+| BACKUP_TO_KEEP | Number of backups to keep (by default set to 12 to keep the last backups of the last 24 hours) | 12 |
 | UID | User Identifier | 99 |
 | GID | Group Identifier | 100 |
 | VALIDATE | Validates the game data | blank |
@@ -37,6 +40,9 @@ docker run --name Palworld -d \
 	--env 'UPDATE_PUBLIC_IP=false' \
 	--env 'GAME_PARAMS=EpicApp=PalServer' \
 	--env 'GAME_PARAMS_EXTRA=-No-useperfthreads -NoAsyncLoadingThread -UseMultithreadForDS' \
+	--env 'BACKUP=true' \
+	--env 'BACKUP_INTERVAL=120' \
+	--env 'BACKUP_TO_KEEP=12' \
 	--env 'UID=99' \
 	--env 'GID=100' \
 	--volume /path/to/steamcmd:/serverdata/steamcmd \
