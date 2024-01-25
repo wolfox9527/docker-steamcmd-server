@@ -99,6 +99,15 @@ fi
 chmod -R ${DATA_PERM} ${DATA_DIR}
 echo "---Server ready---"
 
+if [ "${BACKUP}" == "true" ]; then
+    echo "---Starting Backup daemon---"
+    if [ ! -d ${SERVER_DIR}/Backups ]; then
+        mkdir -p ${SERVER_DIR}/Backups
+    fi
+    /opt/scripts/start-backup.sh &
+fi
+
+
 echo "---Start Server---"
 if [ ! -f ${SERVER_DIR}/Pal/Binaries/Linux/PalServer-Linux-Test ]; then
   echo "---Something went wrong, can't find the executable, putting container into sleep mode!---"
