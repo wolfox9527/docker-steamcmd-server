@@ -163,6 +163,14 @@ echo "| %localappdata%\Astro\Saved\Config\WindowsNoEditor"
 echo "+-------------------------------------------------------------------------------"
 echo
 
+if [ "${BACKUP}" == "true" ]; then
+  echo "---Starting Backup daemon---"
+  if [ ! -d ${SERVER_DIR}/Backups ]; then
+    mkdir -p ${SERVER_DIR}/Backups
+  fi
+  /opt/scripts/start-backup.sh &
+fi
+
 echo "---Start Server---"
 cd ${SERVER_DIR}
 xvfb-run --auto-servernum --server-args='-screen 0 640x480x24:32' wine64 AstroServer.exe ${GAME_PARAMS}
