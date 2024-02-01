@@ -25,7 +25,7 @@ You'll find the file on your local Windows machine at: `%localappdata%\Astro\Sav
 | UPDATE_PUBLIC_IP | If set to 'true' the container will check on each container start if the Public IP is still valid. | false |
 | BACKUP | Set this value to 'true' to enable the automated backup function from the container, you find the Backups in '.../astroneer/Backups/'. Set to 'false' to disable the backup function. | true |
 | BACKUP_INTERVAL | The backup interval in minutes (ATTENTION: The first backup will be triggered after the set interval in this variable after the start/restart of the container) | 360 |
-| BACKUP_TO_KEEP | Number of backups to keep (by default set to 8 to keep the last backups of the last 48 hours) | 8 |
+| BACKUPS_TO_KEEP | Number of backups to keep (by default set to 8 to keep the last backups of the last 48 hours) | 8 |
 | UID | User Identifier | 99 |
 | GID | Group Identifier | 100 |
 | VALIDATE | Validates the game data | false |
@@ -41,7 +41,7 @@ docker run --name Astroneer -d \
 	--env 'UPDATE_PUBLIC_IP=false' \
 	--env 'BACKUP=true' \
 	--env 'BACKUP_INTERVAL=360' \
-	--env 'BACKUP_TO_KEEP=8' \
+	--env 'BACKUPS_TO_KEEP=8' \
 	--env 'UID=99' \
 	--env 'GID=100' \
 	--volume /path/to/steamcmd:/serverdata/steamcmd \
