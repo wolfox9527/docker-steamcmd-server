@@ -61,5 +61,10 @@ chmod -R ${DATA_PERM} ${DATA_DIR}
 echo "---Server ready---"
 
 echo "---Start Server---"
-cd ${SERVER_DIR}
-${SERVER_DIR}/Vein/Binaries/Linux/VeinServer ${GAME_PARAMS}
+if [ ! -f ${SERVER_DIR}/Vein/Binaries/Linux/VeinServer-Linux-Test ]; then
+  echo "---Something went wrong, can't find the executable, putting container into sleep mode!---"
+  sleep infinity
+else
+  cd ${SERVER_DIR}
+  ${SERVER_DIR}/Vein/Binaries/Linux/VeinServer-Linux-Test Vein ${GAME_PARAMS}
+fi
