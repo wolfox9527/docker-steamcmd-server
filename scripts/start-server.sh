@@ -147,7 +147,7 @@ fi
 if [ "${ENABLE_BEPINEX}" == "true" ]; then
     echo "---BepInEx for Valheim enabled!---"
     CUR_V="$(find ${SERVER_DIR} -maxdepth 1 -name "BepInEx-*" | cut -d '-' -f2)"
-    LAT_V="$(wget -qO- https://valheim.thunderstore.io/api/experimental/package/denikson/BepInExPack_Valheim/ | jq -r '.latest.version_number')"
+    LAT_V="$(wget -qO- https://thunderstore.io/api/experimental/package/denikson/BepInExPack_Valheim/ | jq -r '.latest.version_number')"
     if [ -z "${LAT_V}" ] && [ -z "${CUR_V}" ]; then
         echo "---Can't get latest version of BepInEx for Valheim!---"
         echo "---Please try to run the Container without BepInEx for Valheim, putting Container into sleep mode!---"
@@ -165,7 +165,7 @@ if [ "${ENABLE_BEPINEX}" == "true" ]; then
     if [ -z "${CUR_V}" ]; then
         echo "---BepInEx for Valheim not found, downloading and installing v$LAT_V...---"
         cd ${SERVER_DIR}
-        if wget -q -nc --show-progress --progress=bar:force:noscroll -O ${SERVER_DIR}/BepInEx.zip --user-agent=Mozilla --content-disposition -E -c "https://valheim.thunderstore.io/package/download/denikson/BepInExPack_Valheim/$LAT_V/" ; then
+        if wget -q -nc --show-progress --progress=bar:force:noscroll -O ${SERVER_DIR}/BepInEx.zip --user-agent=Mozilla --content-disposition -E -c "https://thunderstore.io/package/download/denikson/BepInExPack_Valheim/$LAT_V/" ; then
             echo "---Successfully downloaded BepInEx for Valheim v$LAT_V---"
         else
             echo "---Something went wrong, can't download BepInEx for Valheim v$LAT_V, putting container into sleep mode!---"
@@ -183,7 +183,7 @@ if [ "${ENABLE_BEPINEX}" == "true" ]; then
         rm -rf ${SERVER_DIR}/BepInEx-$CUR_V
         mkdir /tmp/Backup
         cp -R ${SERVER_DIR}/BepInEx/config /tmp/Backup/
-        if wget -q -nc --show-progress --progress=bar:force:noscroll -O ${SERVER_DIR}/BepInEx.zip --user-agent=Mozilla --content-disposition -E -c "https://valheim.thunderstore.io/package/download/denikson/BepInExPack_Valheim/$LAT_V/" ; then
+        if wget -q -nc --show-progress --progress=bar:force:noscroll -O ${SERVER_DIR}/BepInEx.zip --user-agent=Mozilla --content-disposition -E -c "https://thunderstore.io/package/download/denikson/BepInExPack_Valheim/$LAT_V/" ; then
             echo "---Successfully downloaded BepInEx for Valheim v$LAT_V---"
         else
             echo "---Something went wrong, can't download BepInEx for Valheim v$LAT_V, putting container into sleep mode!---"
