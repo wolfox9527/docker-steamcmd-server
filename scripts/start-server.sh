@@ -52,11 +52,11 @@ fi
 
 echo "---Prepare Server---"
 if [ ! -d ${DATA_DIR}/.steam/sdk32 ]; then
-    mkdir ${DATA_DIR}/.steam/sdk32
+    mkdir -p ${DATA_DIR}/.steam/sdk32
     cp -R ${SERVER_DIR}/bin/* ${DATA_DIR}/.steam/sdk32/
 fi
 if [ ! -f ${SERVER_DIR}/dod/cfg/server.cfg ]; then
-    echo "---No s'erver.cfg' found, downloading...---"
+    echo "---No 'server.cfg' found, downloading...---"
     cd ${SERVER_DIR}/dod/cfg
     if wget -q -nc --show-progress --progress=bar:force:noscroll https://raw.githubusercontent.com/ich777/docker-steamcmd-server/dods/config/server.cfg ; then
     	echo "---Sucessfully downloaded 'server.cfg'---"
