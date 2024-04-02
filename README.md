@@ -4,7 +4,7 @@ This Docker will download and install SteamCMD. It will also install The Forest 
 **SERVERNAME:** 'The Forest Docker' **SERVERPASSWORD:** 'Docker' **ADMINPASSWORD:** 'adminDocker' (you can change this in your SERVERFOLDER/config/config.cfg)
 
 **WARNING:** You have to create a Steam Token to play Online.
-Create your token here: https://steamcommunity.com/dev/managegameservers (please note that you must generate the token for the APPID: '242760' and every gameserver needs it's own token!!!). Put your Token into your GAME_PARAMS like this 'serverSteamAccount YOURTOKEN' (without quotes).
+Create your token here: https://steamcommunity.com/dev/managegameservers (please note that you must generate the token for the APPID: '242760' and every gameserver needs it's own token!!!). After creating your token you have to go to the file .../theforest/config/config.txt and append your token to the line that starts with: serverSteamAccount (eg: serverSteamAccount YOURTOKEN).  
 
 **Update Notice:** Simply restart the container if a newer version of the game is available.
 
@@ -14,7 +14,6 @@ Create your token here: https://steamcommunity.com/dev/managegameservers (please
 | STEAMCMD_DIR | Folder for SteamCMD | /serverdata/steamcmd |
 | SERVER_DIR | Folder for gamefile | /serverdata/serverfiles |
 | GAME_ID | The GAME_ID that the container downloads at startup. If you want to install a static or beta version of the game change the value to: '556450 -beta YOURBRANCH' (without quotes, replace YOURBRANCH with the branch or version you want to install). | 556450 |
-| GAME_NAME | SRCDS gamename | cstrike |
 | GAME_PARAMS | Values to start the server | empty |
 | UID | User Identifier | 99 |
 | GID | Group Identifier | 100 |
