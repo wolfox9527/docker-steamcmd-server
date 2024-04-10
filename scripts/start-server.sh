@@ -72,6 +72,7 @@ if [ "${OXIDE_MOD}" == "true" ]; then
 
   if [ -z "${CUR_V%.}" ]; then
     echo "---Oxide Mod not found, downloading!---"
+    rm -f ${SERVER_DIR}/OxideMod-*.zip
     cd ${SERVER_DIR}
     if wget -q -nc --show-progress --progress=bar:force:noscroll -O ${SERVER_DIR}/OxideMod-${LAT_V}.zip "https://github.com/OxideMod/Oxide.Rust/releases/download/${LAT_V}/Oxide.Rust-linux.zip" ; then
         echo "---Successfully downloaded Oxide Mode v${LAT_V}!---"
@@ -102,7 +103,7 @@ fi
 
 if [ "${CARBON_MOD}" == "true" ]; then
   echo "---Carbon Mod enabled!---"
-  CUR_V="$(find ${SERVER_DIR} -maxdepth 1 -name "Carbon.*.tar.gz" | cut -d '-' -f2)"
+  CUR_V="$(find ${SERVER_DIR} -maxdepth 1 -name "CarbonMod-*.tar.gz" | cut -d '-' -f2)"
   LAT_V="$(wget -qO- https://api.github.com/repos/CarbonCommunity/Carbon/releases/latest | grep tag_name | cut -d '"' -f4)"
 
   if [ -z ${LAT_V} ]; then
@@ -117,6 +118,7 @@ if [ "${CARBON_MOD}" == "true" ]; then
 
   if [ -z "${CUR_V%.}" ]; then
     echo "---Carbon Mod not found, downloading!---"
+    rm -f ${SERVER_DIR}/CarbonMod-*.tar.gz
     cd ${SERVER_DIR}
     if wget -q -nc --show-progress --progress=bar:force:noscroll -O ${SERVER_DIR}/CarbonMod-${LAT_V}.tar.gz "https://github.com/CarbonCommunity/Carbon/releases/download/${LAT_V}/Carbon.Linux.Release.tar.gz" ; then
         echo "---Successfully downloaded Carbon Mode ${LAT_V}!---"
@@ -126,10 +128,10 @@ if [ "${CARBON_MOD}" == "true" ]; then
     fi
     tar -xvf ${SERVER_DIR}/CarbonMod-${LAT_V}.tar.gz -C ${SERVER_DIR}
     #unzip -o ${SERVER_DIR}/CarbonMod-${LAT_V}.zip -d ${SERVER_DIR}
-  elif [ "${LAT_V}" != "${CUR_V%.*}" ]; then
+  elif [ "${LAT_V}" != "${CUR_V%.tar.gz}" ]; then
     cd ${SERVER_DIR}
     rm -rf ${SERVER_DIR}/CarbonMod-*.tar.gz
-    echo "---Newer version of Carbon Mod ${LAT_V} found, currently installed: v${CUR_V%.*}---"
+    echo "---Newer version of Carbon Mod ${LAT_V} found, currently installed: v${CUR_V%.tar.gz}---"
     if wget -q -nc --show-progress --progress=bar:force:noscroll -O ${SERVER_DIR}/CarbonMod-${LAT_V}.tar.gz "https://github.com/CarbonCommunity/Carbon/releases/download/${LAT_V}/Carbon.Linux.Release.tar.gz" ; then
         echo "---Successfully downloaded Carbon Mod ${LAT_V}!---"
     else
@@ -137,8 +139,8 @@ if [ "${CARBON_MOD}" == "true" ]; then
         sleep infinity
     fi
     tar -xvf ${SERVER_DIR}/CarbonMod-${LAT_V}.tar.gz ${SERVER_DIR}
-  elif [ "$LAT_V" == "${CUR_V%.*}" ]; then
-    echo "---Carbon Mod ${CUR_V%.*} is Up-To-Date!---"
+  elif [ "$LAT_V" == "${CUR_V%.tar.gz}" ]; then
+    echo "---Carbon Mod ${CUR_V%.tar.gz} is Up-To-Date!---"
   fi
 
   if [ "${FORCE_CARBON_INSTALLATION}" == "true" ]; then
