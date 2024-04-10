@@ -107,16 +107,16 @@ if [ "${CARBON_MOD}" == "true" ]; then
   LAT_V="$(wget -qO- https://api.github.com/repos/CarbonCommunity/Carbon/releases/latest | grep tag_name | cut -d '"' -f4)"
 
   if [ -z ${LAT_V} ]; then
-    if [ -z ${CUR_V%.*} ]; then
+    if [ -z ${CUR_V%.tar.gz} ]; then
       echo "---Can't get latest Carbon Mod version and found no installed version, putting server into sleep mode!---"
       sleep infinity
     else
-      echo "---Can_t get latest Carbon Mod version, falling back to installed v${CUR_V%.*}!---"
-      LAT_V="${CUR_V%.*}"
+      echo "---Can_t get latest Carbon Mod version, falling back to installed v${CUR_V%.tar.gz}!---"
+      LAT_V="${CUR_V%.tar.gz}"
     fi
   fi
 
-  if [ -z "${CUR_V%.}" ]; then
+  if [ -z "${CUR_V%.tar.gz}" ]; then
     echo "---Carbon Mod not found, downloading!---"
     rm -f ${SERVER_DIR}/CarbonMod-*.tar.gz
     cd ${SERVER_DIR}
