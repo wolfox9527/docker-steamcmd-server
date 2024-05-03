@@ -105,7 +105,7 @@ if [ "${ENABLE_BEPINEX}" == "true" ]; then
     if [ -z "${CUR_V}" ]; then
         echo "---BepInEx for Valheim not found, downloading and installing v$LAT_V...---"
         cd ${SERVER_DIR}
-        if wget -q -nc --show-progress --progress=bar:force:noscroll -O ${SERVER_DIR}/BepInEx.zip "https://github.com/BepInEx/BepInEx/releases/download/v${LAT_V}/BepInEx_unix_${LAT_V}.0.zip" ; then
+        if wget -q -nc --show-progress --progress=bar:force:noscroll -O ${SERVER_DIR}/BepInEx.zip "https://github.com/BepInEx/BepInEx/releases/download/v${LAT_V}/BepInEx_linux_x64_${LAT_V}.0.zip" ; then
             echo "---Successfully downloaded BepInEx v$LAT_V---"
         else
             echo "---Something went wrong, can't download BepInEx v$LAT_V, putting container into sleep mode!---"
@@ -120,7 +120,7 @@ if [ "${ENABLE_BEPINEX}" == "true" ]; then
     	rm -rf ${SERVER_DIR}/BepInEx-$CUR_V
         mkdir /tmp/Backup
         cp -R ${SERVER_DIR}/BepInEx/config /tmp/Backup/ 2>/dev/null
-        if wget -q -nc --show-progress --progress=bar:force:noscroll -O ${SERVER_DIR}/BepInEx.zip "https://github.com/BepInEx/BepInEx/releases/download/v${LAT_V}/BepInEx_unix_${LAT_V}.0.zip" ; then
+        if wget -q -nc --show-progress --progress=bar:force:noscroll -O ${SERVER_DIR}/BepInEx.zip "https://github.com/BepInEx/BepInEx/releases/download/v${LAT_V}/BepInEx_linux_x64_${LAT_V}.0.zip" ; then
             echo "---Successfully downloaded BepInEx v$LAT_V---"
         else
             echo "---Something went wrong, can't download BepInEx v$LAT_V, putting container into sleep mode!---"
