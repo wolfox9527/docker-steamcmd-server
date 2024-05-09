@@ -26,8 +26,8 @@ chown -R ${UID}:${GID} ${DATA_DIR}
 
 echo "---Starting...---"
 term_handler() {
-	kill -SIGTERM $(pidof ArkAscendedServer.exe)
-	tail --pid=$(pidof ArkAscendedServer.exe) -f 2>/dev/null
+	kill -SIGINT $(pidof AbioticFactorServer-Win64-Shipping.exe)
+	tail --pid=$(pidof AbioticFactorServer-Win64-Shipping.exe) -f 2>/dev/null
 	exit 143;
 }
 
