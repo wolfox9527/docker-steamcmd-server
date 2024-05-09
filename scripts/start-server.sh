@@ -54,31 +54,6 @@ else
   fi
 fi
 
-echo "---Checking the maximum map count per process...---"
-CUR_MAX_MAP_COUNT=$(cat /proc/sys/vm/max_map_count)
-if [[ $CUR_MAX_MAP_COUNT -ge 256000 ]]; then
-  echo "---Maximum map count per process OK...---"
-  echo "---Current map count per process: $CUR_MAX_MAP_COUNT---"
-else
-  echo
-  echo "+---ATTENTION---ATTENTION---ATTENTION---ATTENTION---ATTENTION---"
-  echo "| Maximum map count per process too low, currently: $CUR_MAX_MAP_COUNT"
-  echo "| Please set the value to at least '256000' on the host and"
-  echo "| restart the container afterwards."
-  echo "|"
-  echo "| You can change the value by executing this command on the host"
-  echo "| as root:"
-  echo
-  echo "echo 265000 > /proc/sys/vm/max_map_count"
-  echo
-  echo "| You can make that persistent by using a User Script that runs"
-  echo "| on startup or putting this line in your go file."
-  echo "+---ATTENTION---ATTENTION---ATTENTION---ATTENTION---ATTENTION---"
-  echo
-  echo "---Putting container into sleep mode!---"
-  sleep infinity
-fi
-
 export WINEARCH=win64
 export WINEPREFIX=/serverdata/serverfiles/WINE64
 export WINEDEBUG=-all
@@ -103,25 +78,10 @@ chmod -R ${DATA_PERM} ${DATA_DIR}
 echo "---Server ready---"
 
 echo "---Start Server---"
-if [ ! -f ${SERVER_DIR}/ShooterGame/Binaries/Win64/ArkAscendedServer.exe ]; then
+if [ ! -f ${SERVER_DIR}/AbioticFactor/Binaries/Win64/AbioticFactorServer-Win64-Shipping.exe ]; then
   echo "---Something went wrong, can't find the executable, putting container into sleep mode!---"
   sleep infinity
 else
-  cd ${SERVER_DIR}/ShooterGame/Binaries/Win64
-  wine64 ArkAscendedServer.exe ${MAP}?listen?SessionName="${SERVER_NAME}"?ServerPassword="${SRV_PWD}"${GAME_PARAMS}?ServerAdminPassword="${SRV_ADMIN_PWD}" ${GAME_PARAMS_EXTRA} &
-  echo "Waiting for logs..."
-  ATTEMPT=0
-  sleep 2
-  while [ ! -f "${SERVER_DIR}/ShooterGame/Saved/Logs/ShooterGame.log" ]; do
-    ((ATTEMPT++))
-    if [ $ATTEMPT -eq 10 ]; then
-      echo "No log files found after 20 seconds, putting container into sleep mode!"
-      sleep infinity
-    else
-      sleep 2
-      echo "Waiting for logs..."
-    fi
-  done
-  /opt/scripts/start-watchdog.sh &
-  tail -n 9999 -f ${SERVER_DIR}/ShooterGame/Saved/Logs/ShooterGame.log
+  cd ${SERVER_DIR}/AbioticFactor/Binaries/Win64
+  wine64 ${SERVER_DIR}/AbioticFactor/Binaries/Win64/AbioticFactorServer-Win64-Shipping.exe ${GAME_PARAMS} -oldconsole -useperfthreads -NoAsyncLoadingThread -PORT=${GAME_PORT} -QUERYPORT=${QUERY_PORT} -ServerPassword="${SERVER_PWD}" -SteamServerName="${SERVER_NAME}"
 fi
