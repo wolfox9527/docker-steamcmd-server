@@ -87,11 +87,18 @@ echo "---UserDataFolder location found---"
 if [ "${ENABLE_BEPINEX}" == "true" ]; then
     echo "---BepInEx enabled!---"
     CUR_V="$(find ${SERVER_DIR} -maxdepth 1 -name "BepInEx-*" | cut -d '-' -f2)"
-    LAT_V="$(wget -qO- https://api.github.com/repos/BepInEx/BepInEx/releases/latest | grep tag_name | cut -d '"' -f4 | cut -d 'v' -f2)"
-    if [ -z "${LAT_V}" ] && [ -z "${CUR_V}" ]; then
-        echo "---Can't get latest version of BepInEx!---"
+    LAT_DL_URL="$(wget -qO- https://api.github.com/repos/BepInEx/BepInEx/releases/latest | jq -r '.assets[] | .browser_download_url | match("^.*BepInEx_linux_x64_.*") | .string')"
+    LAT_V="$(echo "$LAT_DL_URL" | cut -d '/' -f8)"
+    if [ -z "${LAT_V}" ]; then
+      if [ -z "${CUR_V}" ]; then
+        echo "---Can't get latest version of BepInEx and found no local installed version!---"
         echo "---Please try to run the Container without BepInEx, putting Container into sleep mode!---"
         sleep infinity
+      else
+        echo "---Can't get latest version of BepInEx!---"
+        echo "---Falling back to current installed version: ${CUR_V}!---"
+        LAT_V=$CUR_V
+      fi
     fi
 
     if [ -f ${SERVER_DIR}/BepInEx.zip ]; then
@@ -105,7 +112,7 @@ if [ "${ENABLE_BEPINEX}" == "true" ]; then
     if [ -z "${CUR_V}" ]; then
         echo "---BepInEx for Valheim not found, downloading and installing v$LAT_V...---"
         cd ${SERVER_DIR}
-        if wget -q -nc --show-progress --progress=bar:force:noscroll -O ${SERVER_DIR}/BepInEx.zip "https://github.com/BepInEx/BepInEx/releases/download/v${LAT_V}/BepInEx_linux_x64_${LAT_V}.0.zip" ; then
+        if wget -q -nc --show-progress --progress=bar:force:noscroll -O ${SERVER_DIR}/BepInEx.zip "${LAT_DL_URL}" ; then
             echo "---Successfully downloaded BepInEx v$LAT_V---"
         else
             echo "---Something went wrong, can't download BepInEx v$LAT_V, putting container into sleep mode!---"
@@ -120,7 +127,7 @@ if [ "${ENABLE_BEPINEX}" == "true" ]; then
     	rm -rf ${SERVER_DIR}/BepInEx-$CUR_V
         mkdir /tmp/Backup
         cp -R ${SERVER_DIR}/BepInEx/config /tmp/Backup/ 2>/dev/null
-        if wget -q -nc --show-progress --progress=bar:force:noscroll -O ${SERVER_DIR}/BepInEx.zip "https://github.com/BepInEx/BepInEx/releases/download/v${LAT_V}/BepInEx_linux_x64_${LAT_V}.0.zip" ; then
+        if wget -q -nc --show-progress --progress=bar:force:noscroll -O ${SERVER_DIR}/BepInEx.zip "${LAT_DL_URL}" ; then
             echo "---Successfully downloaded BepInEx v$LAT_V---"
         else
             echo "---Something went wrong, can't download BepInEx v$LAT_V, putting container into sleep mode!---"
