@@ -26,8 +26,8 @@ chown -R ${UID}:${GID} ${DATA_DIR}
 
 echo "---Starting...---"
 term_handler() {
-	kill -SIGINT $(pidof MistServer-Linux-Shipping)
-	tail --pid=$(pidof MistServer-Linux-Shipping) -f 2>/dev/null
+	kill -SIGINT $(pidof TT2Server-Win64-Shipping.exe)
+	tail --pid=$(pidof TT2Server-Win64-Shipping.exe) -f 2>/dev/null
 	sleep 0.5
 	exit 143;
 }
