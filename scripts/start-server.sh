@@ -54,27 +54,34 @@ else
     fi
 fi
 
-sleep infinity
-
 echo "---Prepare Server---"
-if [ ! -f ${DATA_DIR}/.steam/sdk64/steamclient.so ]; then
-	if [ ! -d ${DATA_DIR}/.steam/sdk64 ]; then
-    	mkdir -p ${DATA_DIR}/.steam/sdk64
-    fi
-    cp -R ${STEAMCMD_DIR}/linux64/* ${DATA_DIR}/.steam/sdk64/
+export WINEARCH=win64
+export WINEPREFIX=/serverdata/serverfiles/WINE64
+export WINEDEBUG=-all
+echo "---Checking if WINE workdirectory is present---"
+if [ ! -d ${SERVER_DIR}/WINE64 ]; then
+  echo "---WINE workdirectory not found, creating please wait...---"
+  mkdir ${SERVER_DIR}/WINE64
+else
+  echo "---WINE workdirectory found---"
 fi
-if $(! grep "903950" ${SERVER_DIR}/Mist/Binaries/Linux/steam_appid.txt >/dev/null 2>&1) ; then
-  echo "903950" > ${SERVER_DIR}/Mist/Binaries/Linux/steam_appid.txt
+echo "---Checking if WINE is properly installed---"
+if [ ! -d ${SERVER_DIR}/WINE64/drive_c/windows ]; then
+  echo "---Setting up WINE---"
+  cd ${SERVER_DIR}
+  winecfg > /dev/null 2>&1
+  sleep 15
+else
+  echo "---WINE properly set up---"
 fi
+echo "---Prepare Server---"
 chmod -R ${DATA_PERM} ${DATA_DIR}
 echo "---Server ready---"
 
 echo "---Start Server---"
-cd ${SERVER_DIR}/Mist/Binaries/Linux
-if [ -f ${SERVER_DIR}/Mist/Binaries/Linux/MistServer ]; then
-  ./MistServer -log -force_steamclient_link -messaging -backendapiurloverride="${BACKENDAPIURLOVERRIDE}" -identifier="${IDENTIFIER}" -CustomerKey=${CUSTOMER_KEY} -ProviderKey=${PROVIDER_KEY} -slots=${SLOTS} -overrideconnectionaddress ${GAME_PARAMS}
-elif [ -f ${SERVER_DIR}/Mist/Binaries/Linux/MistServer-Linux-Shipping ]; then
-  ./MistServer-Linux-Shipping -log -force_steamclient_link -messaging -backendapiurloverride="${BACKENDAPIURLOVERRIDE}" -identifier="${IDENTIFIER}" -CustomerKey=${CUSTOMER_KEY} -ProviderKey=${PROVIDER_KEY} -slots=${SLOTS} -overrideconnectionaddress ${GAME_PARAMS}
+cd ${SERVER_DIR}/TT2/Binaries/Win64
+if [ -f ${SERVER_DIR}/TT2/Binaries/Win64/TT2Server-Win64-Shipping.exe ]; then
+  wine64 TT2Server-Win64-Shipping.exe -log ${GAME_PARAMS}
 else
   echo "---Something went wrong, can't find the executable, putting container into sleep mode!---"
   sleep infinity
