@@ -50,6 +50,8 @@ else
     fi
 fi
 
+sleep infinity
+
 echo "---Prepare Server---"
 if [ ! -f ${DATA_DIR}/.steam/sdk64/steamclient.so ]; then
 	if [ ! -d ${DATA_DIR}/.steam/sdk64 ]; then
