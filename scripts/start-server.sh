@@ -71,9 +71,6 @@ if [ "${ENABLE_BEPINEX}" == "true" ]; then
     if [ -f ${SERVER_DIR}/BepInEx.zip ]; then
 	    rm -rf ${SERVER_DIR}/BepInEx.zip
     fi
-    if [ -f ${SERVER_DIR}/doorstop_config.ini ]; then
-        sed -i "/enabled=false/c\enabled=true" ${SERVER_DIR}/doorstop_config.ini
-    fi
 
     echo "---BepInEx for V Rising Version Check---"
     echo
@@ -128,9 +125,17 @@ if [ "${ENABLE_BEPINEX}" == "true" ]; then
     elif [ "${CUR_V}" == "${LAT_V}" ]; then
         echo "---BepInEx v$CUR_V up-to-date---"
     fi
+
+    if [ -f ${SERVER_DIR}/doorstop_config.ini ]; then
+        sed -i "/enabled = false/c\enabled = true" ${SERVER_DIR}/doorstop_config.ini
+    fi
+    
+    # Workaround for disabling console to actually be able to start with BepInEx
+    sed -i '/^\[Logging.Console\]/,/^Enabled =/ s/^Enabled = true.*/Enabled = false/' ${SERVER_DIR}/BepInEx/config/BepInEx.cfg
+
 else
     if [ -f ${SERVER_DIR}/doorstop_config.ini ]; then
-        sed -i "/enabled=true/c\enabled=false" ${SERVER_DIR}/doorstop_config.ini
+        sed -i "/enabled = true/c\enabled = false" ${SERVER_DIR}/doorstop_config.ini
     fi
     echo "---BepInEx for V Rising disabled!---"
 fi
