@@ -31,8 +31,7 @@ RUN mkdir $DATA_DIR && \
 	mkdir $STEAMCMD_DIR && \
 	mkdir $SERVER_DIR && \
 	useradd -d $DATA_DIR -s /bin/bash $USER && \
-	chown -R $USER $DATA_DIR && \
-	ulimit -n 1000000
+	chown -R $USER $DATA_DIR
 
 ADD /scripts/ /opt/scripts/
 RUN chmod -R 770 /opt/scripts/
