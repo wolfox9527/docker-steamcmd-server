@@ -130,6 +130,7 @@ else
 fi
 export WINEARCH=win64
 export WINEPREFIX=/serverdata/serverfiles/WINE64
+export WINEDEBUG=-all
 echo "---Checking if WINE workdirectory is present---"
 if [ ! -d ${SERVER_DIR}/WINE64 ]; then
 	echo "---WINE workdirectory not found, creating please wait...---"
@@ -153,4 +154,7 @@ echo "---Server ready---"
 
 echo "---Start Server---"
 cd ${SERVER_DIR}
-xvfb-run --auto-servernum --server-args='-screen 0 640x480x24:32' wine64 ${SERVER_DIR}/ConanSandboxServer.exe -log ${GAME_PARAMS}
+xvfb-run --auto-servernum --server-args='-screen 0 640x480x24:32' wine64 ${SERVER_DIR}/ConanSandboxServer.exe -log ${GAME_PARAMS} >/dev/null 2>&1 &
+sleep 5
+/opt/scripts/start-watchdog.sh &
+tail -n +0 -f ${SERVER_DIR}/ConanSandbox/Saved/Logs/ConanSandbox.log
