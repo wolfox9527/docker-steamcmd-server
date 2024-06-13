@@ -17,7 +17,7 @@ You can also run multiple servers with only one SteamCMD directory!
 | SERVER_DIR | Folder for gamefile | /serverdata/serverfiles |
 | GAME_ID | The GAME_ID that the container downloads at startup. If you want to install a static or beta version of the game change the value to: '3017300 -beta YOURBRANCH' (without quotes, replace YOURBRANCH with the branch or version you want to install). | 3017300 |
 | MAP | Map name | Level01_Main |
-| GAME_PARAMS | Values to start the server | -SteamServerName='Soulmask Docker' -MaxPlayers=50 -PSW='Docker' -adminpsw='adminDocker' -pve -Port=8777 -QueryPort=27015 -EchoPort=18888 |
+| GAME_PARAMS | Values to start the server | -SteamServerName="Soulmask Docker" -MaxPlayers=50 -PSW="Docker" -adminpsw="adminDocker" -pve -Port=8777 -QueryPort=27015 -EchoPort=18888 |
 | UID | User Identifier | 99 |
 | GID | Group Identifier | 100 |
 | GAME_PORT | Port the server will be running on | 27015 |
@@ -31,7 +31,7 @@ docker run --name Soulmask -d \
 	-p 8777:8777/udp -p 27015:27015/udp \
 	--env 'GAME_ID=3017300' \
 	--env 'MAP=Level01_Main' \
-	--env 'GAME_PARAMS=-SteamServerName='Soulmask Docker' -MaxPlayers=50 -PSW='Docker' -adminpsw='adminDocker' -pve -Port=8777 -QueryPort=27015 -EchoPort=18888' \
+	--env 'GAME_PARAMS=-SteamServerName="Soulmask Docker" -MaxPlayers=50 -PSW="Docker" -adminpsw="adminDocker" -pve -Port=8777 -QueryPort=27015 -EchoPort=18888' \
 	--env 'UID=99' \
 	--env 'GID=100' \
 	--volume /path/to/steamcmd:/serverdata/steamcmd \
