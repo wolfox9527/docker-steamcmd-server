@@ -12,7 +12,7 @@ ENV STEAMCMD_DIR="${DATA_DIR}/steamcmd"
 ENV SERVER_DIR="${DATA_DIR}/serverfiles"
 ENV GAME_ID="3017300"
 ENV MAP="Level01_Main"
-ENV GAME_PARAMS="-SteamServerName='Soulmask Docker' -MaxPlayers=50 -PSW='Docker' -adminpsw='adminDocker' -pve -Port=8777 -QueryPort=27015 -EchoPort=18888"
+ENV GAME_PARAMS="-SteamServerName="Soulmask Docker" -MaxPlayers=50 -PSW="Docker" -adminpsw="adminDocker" -pve -Port=8777 -QueryPort=27015 -EchoPort=18888"
 ENV VALIDATE=""
 ENV UMASK=000
 ENV UID=99
