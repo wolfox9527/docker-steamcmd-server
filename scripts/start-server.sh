@@ -44,5 +44,5 @@ if [ ! -f ${SERVER_DIR}/WS/Binaries/Linux/WSServer-Linux-Shipping ]; then
   echo "---Something went wrong, can't find the executable, putting container into sleep mode!---"
   sleep infinity
 else
-  ${SERVER_DIR}/WS/Binaries/Linux/WSServer-Linux-Shipping WS ${MAP} -server "${GAME_PARAMS}" -log -UTF8Output -MULTIHOME=0.0.0.0 -forcepassthrough
+  ${SERVER_DIR}/WS/Binaries/Linux/WSServer-Linux-Shipping WS ${MAP} -server ${GAME_PARAMS} -log -UTF8Output -MULTIHOME=0.0.0.0 -forcepassthrough
 fi
