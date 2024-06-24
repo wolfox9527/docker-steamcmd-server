@@ -53,21 +53,23 @@ else
 fi
 
 echo "---Prepare Server---"
-if [ ! -d ${SERVER_DIR}/Saves ]; then
-    mkdir ${SERVER_DIR}/Saves
-fi
-if grep -rq '<property name="SaveGameFolder"' ${SERVER_DIR}/${SERVERCONFIG}; then
-    if grep -rq '<!-- <property name="SaveGameFolder"' ${SERVER_DIR}/${SERVERCONFIG}; then
-        echo "---Moving SaveGameFolder location---"
-        sed -i '/<!-- <property name="SaveGameFolder"/c\\t<property name="SaveGameFolder"\t\t\t\t\tvalue="/serverdata/serverfiles/Saves" />' ${SERVER_DIR}/${SERVERCONFIG}
-    elif grep -rq 'value="/serverdata/serverfiles/Saves"' ${SERVER_DIR}/${SERVERCONFIG}; then
-        echo "---SaveGameFolder location correct---"
-    fi
-else
-    echo "---Creating SaveGameFolder config ---"
-    sed -i '4i\    <property name="SaveGameFolder" value="/serverdata/serverfiles/Saves" />\' ${SERVER_DIR}/${SERVERCONFIG}
-fi
-echo "---Savegame location found---"
+#${SERVER_DIR}/User/Saves
+#if [ ! -d ${SERVER_DIR}/Saves ]; then
+#    mkdir ${SERVER_DIR}/Saves
+#fi
+#if grep -rq '<property name="SaveGameFolder"' ${SERVER_DIR}/${SERVERCONFIG}; then
+#    if grep -rq '<!-- <property name="SaveGameFolder"' ${SERVER_DIR}/${SERVERCONFIG}; then
+#        echo "---Moving SaveGameFolder location---"
+#        sed -i '/<!-- <property name="SaveGameFolder"/c\\t<property name="SaveGameFolder"\t\t\t\t\tvalue="/serverdata/serverfiles/Saves" />' ${SERVER_DIR}/${SERVERCONFIG}
+#    elif grep -rq 'value="/serverdata/serverfiles/Saves"' ${SERVER_DIR}/${SERVERCONFIG}; then
+#        echo "---SaveGameFolder location correct---"
+#    fi
+#else
+#    echo "---Creating SaveGameFolder config ---"
+#    sed -i '4i\    <property name="SaveGameFolder" value="/serverdata/serverfiles/Saves" />\' ${SERVER_DIR}/${SERVERCONFIG}
+#fi
+#echo "---Savegame location found---"
+
 if [ ! -d ${SERVER_DIR}/User ]; then
     mkdir ${SERVER_DIR}/User
 fi
