@@ -79,6 +79,7 @@ fi
 echo "---Checking if runtimes are installed---"
 if [ ! -f ${SERVER_DIR}/runtimes ]; then
   echo "---Runtimes not installed, please wait installing...---"
+  mkdir -p ${DATA_DIR}/.cache/winetricks
   find /tmp -name ".X99*" -exec rm -f {} \; > /dev/null 2>&1
   /opt/scripts/start-Xvfb.sh 2>/dev/null &
   echo "---...this can take some time...---"
