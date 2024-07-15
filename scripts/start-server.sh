@@ -94,7 +94,7 @@ if [ ! -f ${SERVER_DIR}/WINE64/runtimes ]; then
   sleep 10
   wineserver -k >/dev/null 2>&1
   kill $(pidof Xvfb) 2>/dev/null
-  touch ${SERVER_DIR}/runtimes
+  touch ${SERVER_DIR}/WINE64/runtimes
   echo "---Installation from runtimes finished!---"
 else
   echo "---Runtimes found! Continuing...---"
