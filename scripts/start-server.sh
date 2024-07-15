@@ -92,7 +92,14 @@ echo "---Server ready---"
 
 echo "---Start Server---"
 cd ${SERVER_DIR}
-screen -S Barotrauma -L -Logfile ${SERVER_DIR}/masterLog.0 -d -m ${SERVER_DIR}/DedicatedServer ${GAME_PARAMS}
-sleep 2
+if [ -z "${GAME_START_SCRIPT}" ]; then
+  screen -S Barotrauma -L -Logfile ${SERVER_DIR}/masterLog.0 -d -m ${SERVER_DIR}/DedicatedServer ${GAME_PARAMS}
+  sleep 2
+else
+  chmod +x ${SERVER_DIR}/${GAME_START_SCRIPT} 2>/dev/null
+  screen -S Barotrauma -L -Logfile ${SERVER_DIR}/masterLog.0 -d -m ${SERVER_DIR}/${GAME_START_SCRIPT}
+  echo "---Please stand by, waiting for logs...---"
+  sleep 6
+fi
 screen -S watchdog -d -m /opt/scripts/start-watchdog.sh
 tail -f ${SERVER_DIR}/masterLog.0
