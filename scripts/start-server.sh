@@ -76,8 +76,12 @@ else
 	echo "---WINE properly set up---"
 fi
 
+if [ -f ${SERVER_DIR}/runtimes ]; then
+  mv ${SERVER_DIR}/runtimes ${SERVER_DIR}/WINE64/runtimes
+fi
+
 echo "---Checking if runtimes are installed---"
-if [ ! -f ${SERVER_DIR}/runtimes ]; then
+if [ ! -f ${SERVER_DIR}/WINE64/runtimes ]; then
   echo "---Runtimes not installed, please wait installing...---"
   mkdir -p ${DATA_DIR}/.cache/winetricks
   find /tmp -name ".X99*" -exec rm -f {} \; > /dev/null 2>&1
