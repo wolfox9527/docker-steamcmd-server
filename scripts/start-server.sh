@@ -77,7 +77,8 @@ else
 fi
 
 if [ -f ${SERVER_DIR}/runtimes ]; then
-  mv ${SERVER_DIR}/runtimes ${SERVER_DIR}/WINE64/runtimes
+  rm -f ${SERVER_DIR}/runtimes
+  touch ${SERVER_DIR}/WINE64/runtimes
 fi
 
 echo "---Checking if runtimes are installed---"
