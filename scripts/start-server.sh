@@ -155,6 +155,10 @@ echo "---Server ready---"
 echo "---Start Server---"
 cd ${SERVER_DIR}
 xvfb-run --auto-servernum --server-args='-screen 0 640x480x24:32' wine64 ${SERVER_DIR}/ConanSandboxServer.exe -log ${GAME_PARAMS} >/dev/null 2>&1 &
-sleep 10
+sleep 2
+if [ ! -f ${SERVER_DIR}/ConanSandbox/Saved/Logs/ConanSandbox.log ]; then
+  mkdir -p ${SERVER_DIR}/ConanSandbox/Saved/Logs 2>/dev/null
+  touch ${SERVER_DIR}/ConanSandbox/Saved/Logs/ConanSandbox.log 2>/dev/null
+fi
 /opt/scripts/start-watchdog.sh &
 tail -n +0 -f ${SERVER_DIR}/ConanSandbox/Saved/Logs/ConanSandbox.log
