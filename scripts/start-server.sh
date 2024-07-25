@@ -130,6 +130,9 @@ if [ ! -f ${SERVER_DIR}/IcarusServer.exe ]; then
 else
   screen -S Icarus -d -m wine64 ${SERVER_DIR}/IcarusServer.exe -log ${GAME_PARAMS}
   if [ ! -f ${SERVER_DIR}/Icarus/Saved/Logs/Icarus.log ]; then
+    if [ ! -d ${SERVER_DIR}/Icarus/Saved/Logs ]; then
+      mkdir -p ${SERVER_DIR}/Icarus/Saved/Logs
+    fi
     touch ${SERVER_DIR}/Icarus/Saved/Logs/Icarus.log
   fi
   sleep 2
