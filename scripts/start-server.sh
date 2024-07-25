@@ -89,8 +89,8 @@ if [ ! -f ${SERVER_DIR}/WINE64/runtimes ]; then
   /opt/scripts/start-Xvfb.sh 2>/dev/null &
   echo "---...this can take some time...---"
   sleep 5
-  timeout 5m /usr/bin/winetricks -q dotnet45 2>/dev/null
-  timeout 2m /usr/bin/winetricks -q vcrun2019 2>/dev/null
+  timeout 10m /usr/bin/winetricks -q dotnet45 2>/dev/null
+  timeout 3m /usr/bin/winetricks -q vcrun2019 2>/dev/null
   wine64 ${SERVER_DIR}/IcarusServer.exe -log ${GAME_PARAMS} >/dev/null 2&>1 &
   sleep 10
   wineserver -k >/dev/null 2>&1
