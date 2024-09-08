@@ -28,6 +28,7 @@ if [[ ! -f /usr/bin/tailscale || ! -f /usr/bin/tailscaled ]]; then
   else
     echo "ERROR: Download from Tailscale version ${TAILSCALE_VERSION} failed!"
     rm -rf /tmp/tailscale
+    exit 1
   fi
 
   cd /tmp/tailscale
