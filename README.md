@@ -19,7 +19,7 @@ This Docker will download and install SteamCMD. It will also install Satisfactor
 ## Run example
 ```
 docker run --name Satisfactory -d \
-	-p 7777:7777/udp -p 15777:15777/udp -p 15000:15000/udp \
+	-p -p 7777:7777 7777:7777/udp \
 	--env 'GAME_ID=1690800' \
 	--env 'GAME_PARAMS=-log -unattended -multihome=0.0.0.0' \
 	--env 'UID=99' \
