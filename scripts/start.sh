@@ -12,11 +12,11 @@ cp -f /opt/custom/user.sh /opt/scripts/start-user.sh > /dev/null 2>&1 ||:
 cp -f /opt/scripts/user.sh /opt/scripts/start-user.sh > /dev/null 2>&1 ||:
 
 if [ -f /opt/scripts/start-user.sh ]; then
-    echo "---Found optional script, executing---"
-    chmod -f +x /opt/scripts/start-user.sh ||:
-    /opt/scripts/start-user.sh || echo "---Optional Script has thrown an Error---"
+  echo "---Found optional script, executing---"
+  chmod -f +x /opt/scripts/start-user.sh ||:
+  /opt/scripts/start-user.sh || echo "---Optional Script has thrown an Error---"
 else
-    echo "---No optional script found, continuing---"
+  echo "---No optional script found, continuing---"
 fi
 
 echo "---Taking ownership of data...---"
@@ -26,14 +26,16 @@ chown -R ${UID}:${GID} ${DATA_DIR}
 
 echo "---Starting...---"
 term_handler() {
-	if [ -f ${SERVER_DIR}/Engine/Binaries/Linux/UE4Server-Linux-Shipping ]; then
-		KILLPID=$(pidof UE4Server-Linux-Shipping)
-	elif [ -f ${SERVER_DIR}/Engine/Binaries/Linux/UnrealServer-Linux-Shipping ]; then
-		KILLPID=$(pidof UnrealServer-Linux-Shipping)
-	fi
-	kill -SIGINT $KILLPID
-	tail --pid=$KILLPID -f 2>/dev/null
-	exit 143;
+  if [ -f ${SERVER_DIR}/Engine/Binaries/Linux/UE4Server-Linux-Shipping ]; then
+    KILLPID=$(pidof UE4Server-Linux-Shipping)
+  elif [ -f ${SERVER_DIR}/Engine/Binaries/Linux/UnrealServer-Linux-Shipping ]; then
+    KILLPID=$(pidof UnrealServer-Linux-Shipping)
+  elif [ -f ${SERVER_DIR}/Engine/Binaries/Linux/FactoryServer-Linux-Shipping ]; then
+    KILLPID=$(pidof FactoryServer-Linux-Shipping)
+  fi
+kill -SIGINT $KILLPID
+tail --pid=$KILLPID -f 2>/dev/null
+exit 143;
 }
 
 trap 'kill ${!}; term_handler' SIGTERM
@@ -41,6 +43,6 @@ su ${USER} -c "/opt/scripts/start-server.sh" &
 killpid="$!"
 while true
 do
-	wait $killpid
-	exit 0;
+  wait $killpid
+  exit 0;
 done
