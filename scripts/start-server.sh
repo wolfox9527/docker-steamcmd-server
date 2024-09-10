@@ -79,6 +79,8 @@ if [ -f ${SERVER_DIR}/Engine/Binaries/Linux/UE4Server-Linux-Shipping ]; then
   ./UE4Server-Linux-Shipping FactoryGame $GAME_PARAMS
 elif [ -f ${SERVER_DIR}/Engine/Binaries/Linux/UnrealServer-Linux-Shipping ]; then
   ./UnrealServer-Linux-Shipping FactoryGame $GAME_PARAMS
+elif [ -f ${SERVER_DIR}/Engine/Binaries/Linux/FactoryServer-Linux-Shipping ]; then
+  ./FactoryServer-Linux-Shipping FactoryGame $GAME_PARAMS
 else
   echo "--ERROR: Couldn't find a game executable, something went probably wrong with the download!---"
   sleep infinity
