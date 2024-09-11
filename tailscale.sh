@@ -22,10 +22,19 @@
 
 echo
 if [[ ! -f /usr/bin/tailscale || ! -f /usr/bin/tailscaled ]]; then
+  if [ ! -z "${TAILSCALE_EXIT_NODE_IP}" ]; then
+    if [ ! -c /dev/net/tun ]; then
+      echo "ERROR: Device /dev/net/tun not found!"
+      echo "       Make sure to pass through /dev/net/tun to the container and add the"
+      echo "       parameter --cap-add=NET_ADMIN to the Extra Parameters!"
+      exit 1
+    fi
+    APT_IPTABLES="iptables "
+  fi
   echo "Installing dependencies..."
   echo "Please wait..."
   apt-get update >/dev/null 2>&1
-  apt-get -y install --no-install-recommends jq wget >/dev/null 2>&1
+  apt-get -y install --no-install-recommends jq wget ${APT_IPTABLES}>/dev/null 2>&1
   echo "Done"
 
   echo "Tailscale not found, downloading..."
@@ -65,6 +74,9 @@ else
   echo "Tailscale found, continuing..."
 fi
 
+unset TSD_PARAMS
+unset TS_PARAMS
+
 if [ -v SERVER_DIR ]; then
   TSD_STATE_DIR=${SERVER_DIR}/.tailscale_state
   if [ ! -d ${TS_STATE_DIR} ]; then
@@ -88,11 +100,20 @@ else
   echo "Settings Tailscale state dir to: ${TSD_STATE_DIR}"
 fi
 
+if [ ! -z "${TAILSCALE_EXIT_NODE_IP}" ]; then
+  echo "Using ${TAILSCALE_EXIT_NODE_IP} as Exit Node!"
+  TS_PARAMS=" --exit-node=${TAILSCALE_EXIT_NODE_IP}"
+else
+  if [ -z "${TAILSCALE_USERSPACE_NETWORKING}" ]; then
+    TSD_PARAMS+="-tun=userspace-networking "
+  fi
+fi
+
 if [ "${TAILSCALE_LOG}" != "false" ]; then
-  TAILSCALED_PARAMS=">>/var/log/tailscaled 2>&1 "
+  TSD_PARAMS+=">>/var/log/tailscaled 2>&1 "
   TSD_MSG=" with log file /var/log/tailscaled"
 else
-  TAILSCALED_PARAMS=">/dev/null 2>&1 "
+  TSD_PARAMS+=">/dev/null 2>&1 "
 fi
 
 if [ -z "${TAILSCALE_KEY}" ]; then
@@ -102,11 +123,24 @@ fi
 
 if [ ! -z "${TAILSCALE_HOSTNAME}" ]; then
   echo "Setting host name to ${TAILSCALE_HOSTNAME}"
-  TAILSCALE_PARAMS="--hostname=${TAILSCALE_HOSTNAME}"
+  TS_PARAMS+=" --hostname=${TAILSCALE_HOSTNAME}"
+fi
+
+if [ "${TAILSCALE_EXIT_NODE}" == "true" ]; then
+  echo "Configuring container as Exit Node!"
+  TS_PARAMS+=" --advertise-exit-node"
+fi
+
+if [ ! -z "${TAILSCALED_PARAMS}" ]; then
+  TSD_PARAMS="${TAILSCALED_PARAMS} ${TSD_PARAMS}"
+fi
+
+if [ ! -z "${TAILSCALE_PARAMS}" ]; then
+  TS_PARAMS="${TAILSCALE_PARAMS}${TS_PARAMS}"
 fi
 
 echo "Starting tailscaled${TSD_MSG}"
-eval tailscaled -tun=userspace-networking -statedir=${TSD_STATE_DIR} ${TAILSCALED_PARAMS}&
+eval tailscaled -statedir=${TSD_STATE_DIR} ${TSD_PARAMS}&
 
 echo "Starting tailscale"
-eval tailscale up --authkey=${TAILSCALE_KEY} ${TAILSCALE_PARAMS}
+eval tailscale up --authkey=${TAILSCALE_KEY} ${TS_PARAMS}
