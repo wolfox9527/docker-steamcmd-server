@@ -64,6 +64,17 @@ echo "---Prepare Server---"
 #	fi
 #fi
 
+#Fix for version 1.0
+if [ ! -d ${SERVER_DIR}/FactoryGame/Saved/Config/LinuxServer ]; then
+  mkdir -p ${SERVER_DIR}/FactoryGame/Saved/Config/LinuxServer
+fi
+if [ ! -f ${SERVER_DIR}/FactoryGame/Saved/Config/LinuxServer/Engine.ini ]; then
+  touch ${SERVER_DIR}/FactoryGame/Saved/Config/LinuxServer/Engine.ini
+fi
+if ! grep -Pzoq '\[HTTPServer\.Listeners\]\nDefaultBindAddress=any' ${SERVER_DIR}/FactoryGame/Saved/Config/LinuxServer/Engine.ini ; then
+ echo -e "\n[HTTPServer.Listeners]\nDefaultBindAddress=any" >> ${SERVER_DIR}/FactoryGame/Saved/Config/LinuxServer/Engine.ini
+fi
+
 if [ ! -d ${SERVER_DIR}/.steam/sdk64 ]; then
   mkdir -p ${SERVER_DIR}/.steam/sdk64
 fi
