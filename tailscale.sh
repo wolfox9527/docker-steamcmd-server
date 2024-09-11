@@ -106,6 +106,13 @@ if [ ! -z "${TAILSCALE_EXIT_NODE_IP}" ]; then
 else
   if [ -z "${TAILSCALE_USERSPACE_NETWORKING}" ]; then
     TSD_PARAMS+="-tun=userspace-networking "
+  else
+    if [ ! -c /dev/net/tun ]; then
+      echo "ERROR: Device /dev/net/tun not found!"
+      echo "       Make sure to pass through /dev/net/tun to the container and add the"
+      echo "       parameter --cap-add=NET_ADMIN to the Extra Parameters!"
+      exit 1
+    fi
   fi
 fi
 
