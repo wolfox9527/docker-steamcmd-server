@@ -104,7 +104,7 @@ if [ ! -z "${TAILSCALE_EXIT_NODE_IP}" ]; then
   echo "Using ${TAILSCALE_EXIT_NODE_IP} as Exit Node!"
   TS_PARAMS=" --exit-node=${TAILSCALE_EXIT_NODE_IP}"
 else
-  if [ -z "${TAILSCALE_USERSPACE_NETWORKING}" ]; then
+  if [ -z "${TAILSCALE_USERSPACE_NETWORKING}" ] || [ "${TAILSCALE_USERSPACE_NETWORKING}" == "true" ]; then
     TSD_PARAMS+="-tun=userspace-networking "
   else
     if [ ! -c /dev/net/tun ]; then
