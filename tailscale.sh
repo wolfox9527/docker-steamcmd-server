@@ -101,8 +101,12 @@ else
 fi
 
 if [ ! -z "${TAILSCALE_EXIT_NODE_IP}" ]; then
-  echo "Using ${TAILSCALE_EXIT_NODE_IP} as Exit Node!"
+  echo "Using ${TAILSCALE_EXIT_NODE_IP} as Exit Node! See https://tailscale.com/kb/1103/exit-nodes"
   TS_PARAMS=" --exit-node=${TAILSCALE_EXIT_NODE_IP}"
+  if [ ! -z "${TAILSCALE_ALLOW_LAN_ACCESS}" ]; then
+    echo "Enabling local LAN Access to the container!"
+    TS_PARAMS+=" --exit-node-allow-lan-access"
+  fi
 else
   if [ -z "${TAILSCALE_USERSPACE_NETWORKING}" ] || [ "${TAILSCALE_USERSPACE_NETWORKING}" == "true" ]; then
     TSD_PARAMS+="-tun=userspace-networking "
@@ -116,6 +120,11 @@ else
   fi
 fi
 
+if [ "${TAILSCALE_USE_SSH}" == "true" ]; then
+  echo "Enabling SSH. See https://tailscale.com/kb/1193/tailscale-ssh"
+  TS_PARAMS+=" --ssh"
+fi
+
 if [ "${TAILSCALE_LOG}" != "false" ]; then
   TSD_PARAMS+=">>/var/log/tailscaled 2>&1 "
   TSD_MSG=" with log file /var/log/tailscaled"
@@ -123,18 +132,18 @@ else
   TSD_PARAMS+=">/dev/null 2>&1 "
 fi
 
-if [ -z "${TAILSCALE_KEY}" ]; then
-  echo "ERROR: No Authorization key defined!"
+if [ -z "${TAILSCALE_AUTHKEY}" ]; then
+  echo "ERROR: No Authorization key defined! See https://tailscale.com/kb/1085/auth-keys#generate-an-auth-key"
   exit 1
 fi
 
 if [ ! -z "${TAILSCALE_HOSTNAME}" ]; then
   echo "Setting host name to ${TAILSCALE_HOSTNAME}"
-  TS_PARAMS+=" --hostname=${TAILSCALE_HOSTNAME}"
+  TS_PARAMS+=" --hostname=${TAILSCALE_HOSTNAME/ /}"
 fi
 
 if [ "${TAILSCALE_EXIT_NODE}" == "true" ]; then
-  echo "Configuring container as Exit Node!"
+  echo "Configuring container as Exit Node! See https://tailscale.com/kb/1103/exit-nodes"
   TS_PARAMS+=" --advertise-exit-node"
 fi
 
@@ -150,4 +159,26 @@ echo "Starting tailscaled${TSD_MSG}"
 eval tailscaled -statedir=${TSD_STATE_DIR} ${TSD_PARAMS}&
 
 echo "Starting tailscale"
-eval tailscale up --authkey=${TAILSCALE_KEY} ${TS_PARAMS}
+eval tailscale up --authkey=${TAILSCALE_AUTHKEY} ${TS_PARAMS}
+
+if [[ ! -z "${TAILSCALE_SERVE_PORT}" && "$(tailscale status --json | jq -r '.CurrentTailnet.MagicDNSEnabled')" == "false" ]] ; then
+  echo "ERROR: Enable HTTPS on your Tailscale account to use Tailscale Serve/Funnel."
+  echo "See: https://tailscale.com/kb/1153/enabling-https"
+  exit 1
+fi
+
+if [ ! -z ${TAILSCALE_SERVE_PORT} ]; then
+  if [ ! -z "${TAILSCALE_SERVE_PATH}" ]; then
+    TAILSCALE_SERVE_PATH="=${TAILSCALE_SERVE_PATH}"
+  fi
+  if [ -z "${TAILSCALE_SERVE_MODE}" ]; then
+    TAILSCALE_SERVE_MODE="https"
+  fi
+  if [ "${TAILSCALE_FUNNEL}" == "true" ]; then
+    echo "Enabling Funnel! See https://tailscale.com/kb/1223/funnel"
+    eval tailscale funnel --bg --"${TAILSCALE_SERVE_MODE}"=443${TAILSCALE_SERVE_PATH} http://localhost:"${TAILSCALE_SERVE_PORT}${TAILSCALE_SERVER_LOCALPATH}"
+  else
+    echo "Enabling Serve! See https://tailscale.com/kb/1312/serve"
+    eval tailscale serve --bg --"${TAILSCALE_SERVE_MODE}"=443${TAILSCALE_SERVE_PATH} http://localhost:"${TAILSCALE_SERVE_PORT}${TAILSCALE_SERVER_LOCALPATH}"
+  fi
+fi
