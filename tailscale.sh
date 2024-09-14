@@ -3,13 +3,20 @@
 #
 # For more information see: [Link TBD]
 
+error_handler() {
+  echo
+  echo "======================="
+  exit 1
+}
+
+echo "======================="
 echo
 if [[ ! -f /usr/bin/tailscale || ! -f /usr/bin/tailscaled ]]; then
   if [ ! -z "${TAILSCALE_EXIT_NODE_IP}" ]; then
     if [ ! -c /dev/net/tun ]; then
       echo "ERROR: Device /dev/net/tun not found!"
       echo "       Make sure to pass through /dev/net/tun to the container."
-      exit 1
+      error_handler
     fi
     APT_IPTABLES="iptables "
   fi
@@ -17,15 +24,15 @@ if [[ ! -f /usr/bin/tailscale || ! -f /usr/bin/tailscaled ]]; then
   echo "Detecting Package Manager..."
   if which apt-get >/dev/null 2>&1; then
     echo "Detected Advanced Package Tool!"
-    UPDATE_CMD="apt-get update"
-    INSTALL_CMD="apt-get -y install --no-install-recommends"
+    PACKAGES_UPDATE="apt-get update"
+    PACKAGES_INSTALL="apt-get -y install --no-install-recommends"
   elif which apk >/dev/null 2>&1; then
     echo "Detected Alpine Package Keeper!"
     PACKAGES_UPDATE="apk update"
     PACKAGES_INSTALL="apk add"
   else
     echo "ERROR: Detection failed!"
-    exit 1
+    error_handler
   fi
 
   echo "Installing dependencies..."
@@ -38,7 +45,7 @@ if [[ ! -f /usr/bin/tailscale || ! -f /usr/bin/tailscaled ]]; then
     if ! iptables -L >/dev/null 2>&1; then
       echo "ERROR: Cap: NET_ADMIN not available!"
       echo "       Make sure to add --cap-add=NET_ADMIN to the Extra Parameters"
-      exit 1
+      error_handler
     fi
   fi
 
@@ -49,7 +56,7 @@ if [[ ! -f /usr/bin/tailscale || ! -f /usr/bin/tailscaled ]]; then
 
   if [ -z "${TAILSCALE_JSON}" ]; then
     echo "ERROR: Can't get Tailscale JSON"
-    exit 1
+    error_handler
   fi
 
   TAILSCALE_TARBALL=$(echo "${TAILSCALE_JSON}" | jq -r .Tarballs.amd64)
@@ -64,7 +71,7 @@ if [[ ! -f /usr/bin/tailscale || ! -f /usr/bin/tailscaled ]]; then
   else
     echo "ERROR: Download from Tailscale version ${TAILSCALE_VERSION} failed!"
     rm -rf /tmp/tailscale
-    exit 1
+    error_handler
   fi
 
   cd /tmp/tailscale
@@ -115,7 +122,7 @@ else
       echo "ERROR: Device /dev/net/tun not found!"
       echo "       Make sure to pass through /dev/net/tun to the container and add the"
       echo "       parameter --cap-add=NET_ADMIN to the Extra Parameters!"
-      exit 1
+      error_handler
     fi
   fi
 fi
@@ -132,9 +139,20 @@ else
   TSD_PARAMS+=">/dev/null 2>&1 "
 fi
 
-if [ -z "${TAILSCALE_AUTHKEY}" ]; then
+if [[ -z "${TAILSCALE_AUTHKEY}" && ! -f ${TSD_STATE_DIR}/.initialized ]]; then
   echo "ERROR: No Authorization key defined! See https://tailscale.com/kb/1085/auth-keys#generate-an-auth-key"
-  exit 1
+  error_handler
+elif [[ ! -z "${TAILSCALE_AUTHKEY}" && -f ${TSD_STATE_DIR}/.initialized ]]; then
+  echo
+  echo "-> It is now save to remove the variable TAILSCALE_AUTHKEY from your template <-"
+  echo
+  unset TAILSCALE_AUTHKEY
+else
+  unset TAILSCALE_AUTHKEY
+fi
+
+if [ ! -z "${TAILSCALE_AUTHKEY}" ]; then
+  TS_AUTH="--authkey=${TAILSCALE_AUTHKEY} "
 fi
 
 if [ ! -z "${TAILSCALE_HOSTNAME}" ]; then
@@ -159,12 +177,28 @@ echo "Starting tailscaled${TSD_MSG}"
 eval tailscaled -statedir=${TSD_STATE_DIR} ${TSD_PARAMS}&
 
 echo "Starting tailscale"
-eval tailscale up --authkey=${TAILSCALE_AUTHKEY} ${TS_PARAMS}
+eval tailscale up  ${TS_AUTH}${TS_PARAMS}
+EXIT_STATUS="$?"
+
+if [ "${EXIT_STATUS}" == "0" ]; then
+  echo "Connecting to Tailscale successful!"
+  if [ ! -f ${TSD_STATE_DIR}/.initialized ]; then
+    echo "Please don't remove this file!" > ${TSD_STATE_DIR}/.initialized
+  fi
+else
+  echo "ERROR: Connecting to Tailscale not successful!"
+  if [ -f /var/log/tailscaled ]; then
+    echo "Please check the logs:"
+    tail -20 /var/log/tailscaled
+    echo "======================="
+  fi
+  error_handler
+fi
 
 if [[ ! -z "${TAILSCALE_SERVE_PORT}" && "$(tailscale status --json | jq -r '.CurrentTailnet.MagicDNSEnabled')" == "false" ]] ; then
   echo "ERROR: Enable HTTPS on your Tailscale account to use Tailscale Serve/Funnel."
   echo "See: https://tailscale.com/kb/1153/enabling-https"
-  exit 1
+  error_handler
 fi
 
 if [ ! -z ${TAILSCALE_SERVE_PORT} ]; then
@@ -182,3 +216,6 @@ if [ ! -z ${TAILSCALE_SERVE_PORT} ]; then
     eval tailscale serve --bg --"${TAILSCALE_SERVE_MODE}"=443${TAILSCALE_SERVE_PATH} http://localhost:"${TAILSCALE_SERVE_PORT}${TAILSCALE_SERVER_LOCALPATH}"
   fi
 fi
+
+echo
+echo "======================="
