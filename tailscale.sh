@@ -25,8 +25,7 @@ if [[ ! -f /usr/bin/tailscale || ! -f /usr/bin/tailscaled ]]; then
   if [ ! -z "${TAILSCALE_EXIT_NODE_IP}" ]; then
     if [ ! -c /dev/net/tun ]; then
       echo "ERROR: Device /dev/net/tun not found!"
-      echo "       Make sure to pass through /dev/net/tun to the container and add the"
-      echo "       parameter --cap-add=NET_ADMIN to the Extra Parameters!"
+      echo "       Make sure to pass through /dev/net/tun to the container."
       exit 1
     fi
     APT_IPTABLES="iptables "
@@ -36,6 +35,14 @@ if [[ ! -f /usr/bin/tailscale || ! -f /usr/bin/tailscaled ]]; then
   apt-get update >/dev/null 2>&1
   apt-get -y install --no-install-recommends jq wget ${APT_IPTABLES}>/dev/null 2>&1
   echo "Done"
+
+  if [ "${APT_IPTABLES}" == "iptables " ]; then
+    if ! iptables -L >/dev/null 2>&1; then
+      echo "ERROR: Cap: NET_ADMIN not available!"
+      echo "       Make sure to add --cap-add=NET_ADMIN to the Extra Parameters"
+      exit 1
+    fi
+  fi
 
   echo "Tailscale not found, downloading..."
   echo "Please wait..."
