@@ -3,6 +3,16 @@
 #
 # For more information see: [Link TBD]
 
+# Import variables from s6-overlay images
+if [ -x "/usr/bin/with-contenv" ]; then
+  echo "just-containers s6-overlay image found, importing variables..."
+  ENV_VARS="$(/usr/bin/with-contenv bash -c 'env')"
+
+  while IFS='=' read -r KEY VALUE; do
+    export "${KEY}"="${VALUE}"
+  done <<< "${ENV_VARS}"
+fi
+
 error_handler() {
   echo
   echo "======================="
@@ -11,6 +21,7 @@ error_handler() {
 
 echo "======================="
 echo
+
 if [[ ! -f /usr/bin/tailscale || ! -f /usr/bin/tailscaled ]]; then
   if [ ! -z "${TAILSCALE_EXIT_NODE_IP}" ]; then
     if [ ! -c /dev/net/tun ]; then
@@ -139,15 +150,10 @@ else
   TSD_PARAMS+=">/dev/null 2>&1 "
 fi
 
-if [[ -z "${TAILSCALE_AUTHKEY}" && ! -f ${TSD_STATE_DIR}/.initialized ]]; then
-  echo "ERROR: No Authorization key defined! See https://tailscale.com/kb/1085/auth-keys#generate-an-auth-key"
-  error_handler
-elif [[ ! -z "${TAILSCALE_AUTHKEY}" && -f ${TSD_STATE_DIR}/.initialized ]]; then
+if [[ ! -z "${TAILSCALE_AUTHKEY}" && -f ${TSD_STATE_DIR}/.initialized ]]; then
   echo
   echo "-> It is now save to remove the variable TAILSCALE_AUTHKEY from your template <-"
   echo
-  unset TAILSCALE_AUTHKEY
-else
   unset TAILSCALE_AUTHKEY
 fi
 
@@ -177,7 +183,7 @@ echo "Starting tailscaled${TSD_MSG}"
 eval tailscaled -statedir=${TSD_STATE_DIR} ${TSD_PARAMS}&
 
 echo "Starting tailscale"
-eval tailscale up  ${TS_AUTH}${TS_PARAMS}
+eval tailscale up ${TS_AUTH}${TS_PARAMS}
 EXIT_STATUS="$?"
 
 if [ "${EXIT_STATUS}" == "0" ]; then
