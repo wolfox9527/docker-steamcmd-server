@@ -214,15 +214,15 @@ if [ ! -z ${TAILSCALE_SERVE_PORT} ]; then
   if [ -z "${TAILSCALE_SERVE_MODE}" ]; then
     TAILSCALE_SERVE_MODE="https"
   fi
-  if [ -z "${TAILSCALE_SERVE_PORT}" ]; then
-    TAILSCALE_SERVE_PORT="=443"
+  if [ -z "${TAILSCALE_PORT_SERVE}" ]; then
+    TAILSCALE_PORT_SERVE="=443"
   fi
   if [ "${TAILSCALE_FUNNEL}" == "true" ]; then
     echo "Enabling Funnel! See https://tailscale.com/kb/1223/funnel"
-    eval tailscale funnel --bg --"${TAILSCALE_SERVE_MODE}"${TAILSCALE_SERVE_PORT}${TAILSCALE_SERVE_PATH} http://localhost:"${TAILSCALE_SERVE_PORT}${TAILSCALE_SERVER_LOCALPATH}"
+    eval tailscale funnel --bg --"${TAILSCALE_SERVE_MODE}"${TAILSCALE_PORT_SERVE}${TAILSCALE_SERVE_PATH} http://localhost:"${TAILSCALE_SERVE_PORT}${TAILSCALE_SERVER_LOCALPATH}"
   else
     echo "Enabling Serve! See https://tailscale.com/kb/1312/serve"
-    eval tailscale serve --bg --"${TAILSCALE_SERVE_MODE}"${TAILSCALE_SERVE_PORT}${TAILSCALE_SERVE_PATH} http://localhost:"${TAILSCALE_SERVE_PORT}${TAILSCALE_SERVER_LOCALPATH}"
+    eval tailscale serve --bg --"${TAILSCALE_SERVE_MODE}"${TAILSCALE_PORT_SERVE}${TAILSCALE_SERVE_PATH} http://localhost:"${TAILSCALE_SERVE_PORT}${TAILSCALE_SERVER_LOCALPATH}"
   fi
 fi
 
