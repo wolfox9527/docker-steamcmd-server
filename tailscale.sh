@@ -3,6 +3,15 @@
 #
 # For more information see: [Link TBD]
 
+error_handler() {
+  echo
+  echo "======================="
+  exit 1
+}
+
+echo "======================="
+echo
+
 # Import variables from s6-overlay images
 if [ -x "/usr/bin/with-contenv" ]; then
   echo "just-containers s6-overlay image found, importing variables..."
@@ -12,15 +21,6 @@ if [ -x "/usr/bin/with-contenv" ]; then
     export "${KEY}"="${VALUE}"
   done <<< "${ENV_VARS}"
 fi
-
-error_handler() {
-  echo
-  echo "======================="
-  exit 1
-}
-
-echo "======================="
-echo
 
 if [[ ! -f /usr/bin/tailscale || ! -f /usr/bin/tailscaled ]]; then
   if [ ! -z "${TAILSCALE_EXIT_NODE_IP}" ]; then
@@ -214,12 +214,15 @@ if [ ! -z ${TAILSCALE_SERVE_PORT} ]; then
   if [ -z "${TAILSCALE_SERVE_MODE}" ]; then
     TAILSCALE_SERVE_MODE="https"
   fi
+  if [ -z "${TAILSCALE_SERVE_PORT}" ]; then
+    TAILSCALE_SERVE_PORT="=443"
+  fi
   if [ "${TAILSCALE_FUNNEL}" == "true" ]; then
     echo "Enabling Funnel! See https://tailscale.com/kb/1223/funnel"
-    eval tailscale funnel --bg --"${TAILSCALE_SERVE_MODE}"=443${TAILSCALE_SERVE_PATH} http://localhost:"${TAILSCALE_SERVE_PORT}${TAILSCALE_SERVER_LOCALPATH}"
+    eval tailscale funnel --bg --"${TAILSCALE_SERVE_MODE}"${TAILSCALE_SERVE_PORT}${TAILSCALE_SERVE_PATH} http://localhost:"${TAILSCALE_SERVE_PORT}${TAILSCALE_SERVER_LOCALPATH}"
   else
     echo "Enabling Serve! See https://tailscale.com/kb/1312/serve"
-    eval tailscale serve --bg --"${TAILSCALE_SERVE_MODE}"=443${TAILSCALE_SERVE_PATH} http://localhost:"${TAILSCALE_SERVE_PORT}${TAILSCALE_SERVER_LOCALPATH}"
+    eval tailscale serve --bg --"${TAILSCALE_SERVE_MODE}"${TAILSCALE_SERVE_PORT}${TAILSCALE_SERVE_PATH} http://localhost:"${TAILSCALE_SERVE_PORT}${TAILSCALE_SERVER_LOCALPATH}"
   fi
 fi
 
