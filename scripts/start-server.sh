@@ -13,17 +13,55 @@ if [ "${USERNAME}" == "" ]; then
   +quit
 fi
 
+if [ -d ${SERVER_DIR}/.git ]; then
+  if [ -d ${SERVER_DIR}/Longvinter/Saved ]; then
+    echo "Found old folder structure, migrating to new folder stucture!"
+    echo "Please don't interrupt this process since this can lead to data loss!"
+    cp -R ${SERVER_DIR}/Longvinter/Saved /tmp/
+    echo "Backing up save game, please wait..."
+    rm -rf ${SERVER_DIR}/* ${SERVER_DIR}/.*
+    echo "Done!"
+  fi
+fi
+
 echo "---Update Server---"
-cd ${SERVER_DIR}
-if [ ! -f ${SERVER_DIR}/Longvinter/Binaries/Linux/LongvinterServer-Linux-Shipping ]; then
-  git clone https://github.com/Uuvana-Studios/longvinter-linux-server.git ${SERVER_DIR}
-elif git merge-base --is-ancestor origin/main main ; then
-  echo "---Nothing to do, game up to date!---"
+if [ "${USERNAME}" == "" ]; then
+    if [ "${VALIDATE}" == "true" ]; then
+    	echo "---Validating installation---"
+        ${STEAMCMD_DIR}/steamcmd.sh \
+        +force_install_dir ${SERVER_DIR} \
+        +login anonymous \
+        +app_update ${GAME_ID} validate \
+        +quit
+    else
+        ${STEAMCMD_DIR}/steamcmd.sh \
+        +force_install_dir ${SERVER_DIR} \
+        +login anonymous \
+        +app_update ${GAME_ID} \
+        +quit
+    fi
 else
-  echo "---Updating game, please wait!---"
-  git restore
-  sleep 1
-  git pull "https://github.com/Uuvana-Studios/longvinter-linux-server.git" main
+    if [ "${VALIDATE}" == "true" ]; then
+    	echo "---Validating installation---"
+        ${STEAMCMD_DIR}/steamcmd.sh \
+        +force_install_dir ${SERVER_DIR} \
+        +login ${USERNAME} ${PASSWRD} \
+        +app_update ${GAME_ID} validate \
+        +quit
+    else
+        ${STEAMCMD_DIR}/steamcmd.sh \
+        +force_install_dir ${SERVER_DIR} \
+        +login ${USERNAME} ${PASSWRD} \
+        +app_update ${GAME_ID} \
+        +quit
+    fi
+fi
+
+if [ -d /tmp/Saved ]; then
+  echo "Restoring savegame, please wait..."
+  cp -R /tmp/Saved ${SERVER_DIR}/Longvinter/
+  rm -rf /tmp/Saved
+  echo "Done!"
 fi
 
 echo "---Prepare Server---"
