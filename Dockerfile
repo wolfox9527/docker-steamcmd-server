@@ -10,7 +10,7 @@ RUN apt-get update && \
 ENV DATA_DIR="/serverdata"
 ENV STEAMCMD_DIR="${DATA_DIR}/steamcmd"
 ENV SERVER_DIR="${DATA_DIR}/serverfiles"
-ENV GAME_ID=""
+ENV GAME_ID="1639880"
 ENV GAME_NAME=""
 ENV GAME_PARAMS=""
 ENV GAME_PORT=27016
