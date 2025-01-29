@@ -1,0 +1,16 @@
+services:
+  vrising:
+    container_name: V-Rising
+    image: ich777/steamcmd:vrising
+    ports:
+      - "9876-9877:9876-9877/udp"
+    environment:
+      - GAME_ID=1829350
+      - SERVER_NAME="V Rising Docker"
+      - WORLD_NAME=world1
+      - UID=99 # a valid UID from the host
+      - GID=100 # a valid GID from the host
+      - ENABLE_BEPINEX=false
+    volumes:
+      - /path/to/steamcmd:/serverdata/steamcmd
+      - /path/to/vrising:/serverdata/serverfiles
