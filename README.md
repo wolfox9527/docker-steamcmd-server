@@ -6,7 +6,7 @@ Initial server configuration:
 
 **Configuration:** You'll find the configuration file in the main directory for the container: MoriaServerConfig.ini
 
-**Save Path:** The path for your game saves is .../returntomoria/Moria/Saved
+**Save Path:** The path for your game saves is: .../returntomoria/Moria/Saved
 
 **ATTENTION:** First startup can take very long since it downloads the gameserver files and it also installs the runtimes which can take quite some time! 
 
