@@ -31,7 +31,7 @@ RUN mkdir $DATA_DIR && \
 
 ADD /scripts/ /opt/scripts/
 RUN chmod -R 770 /opt/scripts/
-COPY MoriaServerconfig.ini /opt/MoriaServerconfig.ini
+COPY MoriaServerConfig.ini /opt/MoriaServerConfig.ini
 
 #Server Start
 ENTRYPOINT ["/opt/scripts/start.sh"]
