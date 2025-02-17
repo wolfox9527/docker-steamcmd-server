@@ -22,14 +22,14 @@ fi
 echo "---Taking ownership of data...---"
 chown -R root:${GID} /opt/scripts
 chmod -R 750 /opt/scripts
-chown ${UID}:${GID} /opt/ServerSettings.ini
-chmod 750 /opt/ServerSettings.ini
+chown ${UID}:${GID} /opt/MoriaServerconfig.ini
+chmod 750 /opt/MoriaServerconfig.ini
 chown -R ${UID}:${GID} ${DATA_DIR}
 
 echo "---Starting...---"
 term_handler() {
-	kill -SIGINT $(pidof IcarusServer.exe)
-	tail --pid=$(pidof IcarusServer.exe) -f 2>/dev/null
+	kill -SIGINT $(pidof MoriaServer-Win64-Shipping.exe)
+	tail --pid=$(pidof MoriaServer-Win64-Shipping.exe) -f 2>/dev/null
 	exit 143;
 
 }
