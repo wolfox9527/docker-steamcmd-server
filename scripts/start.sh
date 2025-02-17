@@ -22,8 +22,8 @@ fi
 echo "---Taking ownership of data...---"
 chown -R root:${GID} /opt/scripts
 chmod -R 750 /opt/scripts
-chown ${UID}:${GID} /opt/MoriaServerconfig.ini
-chmod 750 /opt/MoriaServerconfig.ini
+chown ${UID}:${GID} /opt/MoriaServerConfig.ini
+chmod 750 /opt/MoriaServerConfig.ini
 chown -R ${UID}:${GID} ${DATA_DIR}
 
 echo "---Starting...---"
