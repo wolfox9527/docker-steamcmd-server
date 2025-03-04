@@ -11,7 +11,7 @@ ENV STEAMCMD_DIR="${DATA_DIR}/steamcmd"
 ENV SERVER_DIR="${DATA_DIR}/serverfiles"
 ENV GAME_ID="template"
 ENV GAME_NAME="template"
-ENV GAME_PARAMS="template"
+ENV GAME_PARAMS="KF-bioticslab.rom?game=KFmod.KFGameType?VACSecured=true?MaxPlayers=6"
 ENV GAME_PORT=27015
 ENV VALIDATE=""
 ENV UMASK=000
