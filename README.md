@@ -11,7 +11,7 @@ To run this container you must provide a valid Steam username and password since
 | STEAMCMD_DIR | Folder for SteamCMD | /serverdata/steamcmd |
 | SERVER_DIR | Folder for gamefile | /serverdata/serverfiles |
 | GAME_ID | The GAME_ID that the container downloads at startup. If you want to install a static or beta version of the game change the value to: '215360 -beta YOURBRANCH' (without quotes, replace YOURBRANCH with the branch or version you want to install). | 215360 |
-| GAME_PARAMS | Values to start the server | empty |
+| GAME_PARAMS | Values to start the server | KF-bioticslab.rom?game=KFmod.KFGameType?VACSecured=true?MaxPlayers=6 |
 | UID | User Identifier | 99 |
 | GID | Group Identifier | 100 |
 | VALIDATE | Validates the game data | blank |
@@ -23,6 +23,7 @@ To run this container you must provide a valid Steam username and password since
 docker run --name KillingFloor -d \
 	-p 7707-7708:7707-7708/udp -p 7717:7717/udp -p 28852:28852 -p 28852:28852/udp -p 8075:8075 -p 20560:20560/udp \
 	--env 'GAME_ID=215360' \
+	--env 'GAME_PARAMS=KF-bioticslab.rom?game=KFmod.KFGameType?VACSecured=true?MaxPlayers=6' \
 	--env 'USERNAME=YOURSTEAMUSER' \
 	--env 'PASSWRD=YOURSTEAMPASSWORD' \
 	--env 'UID=99' \
