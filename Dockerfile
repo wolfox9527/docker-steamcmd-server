@@ -33,7 +33,7 @@ RUN mkdir $DATA_DIR && \
 ADD /scripts/ /opt/scripts/
 RUN chmod -R 770 /opt/scripts/
 
-mv -f /scripts/start-game-server.sh  "${DATA_DIR}/serverfiles"/start-server.sh
+copy /scripts/start-game-server.sh  "${DATA_DIR}/serverfiles"/start-server.sh
 
 #Server Start
 ENTRYPOINT ["/opt/scripts/start.sh"]
